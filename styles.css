@@ -70,6 +70,23 @@ button { color: inherit; font: inherit; }
 
 .quiet-link:hover, .soozhee-link:hover, .footer-about:hover, footer > a:hover { color: #fff; }
 
+.soozhee-arrow {
+  color: #c1121f;
+  -webkit-text-fill-color: #c1121f;
+  letter-spacing: 0;
+  font-weight: 300;
+  margin-left: .28em;
+  display: inline-block;
+  transform: translateY(.02em);
+  transition: transform 180ms ease;
+}
+
+.soozhee-link:hover .soozhee-arrow,
+.soozhee-link:focus-visible .soozhee-arrow {
+  transform: translate(.12rem, .02em);
+}
+
+
 .intro {
   padding: clamp(70px, 10vh, 120px) 24px clamp(72px, 9vh, 108px);
   text-align: center;
