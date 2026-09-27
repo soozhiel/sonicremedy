@@ -71,14 +71,21 @@ button { color: inherit; font: inherit; }
 .quiet-link:hover, .soozhee-link:hover, .footer-about:hover, footer > a:hover { color: #fff; }
 
 .soozhee-arrow {
-  color: #c1121f;
-  -webkit-text-fill-color: #c1121f;
+  color: #c9a55c;
+  -webkit-text-fill-color: #c9a55c;
   letter-spacing: 0;
   font-weight: 300;
   margin-left: .28em;
   display: inline-block;
   transform: translateY(.02em);
   transition: transform 180ms ease;
+}
+
+.site-header .soozhee-link {
+  display: inline-flex;
+  align-items: center;
+  color: var(--paper);
+  white-space: nowrap;
 }
 
 .soozhee-link:hover .soozhee-arrow,
@@ -359,6 +366,7 @@ footer > a { justify-self: end; }
   .site-header { min-height: 68px; padding: 0 20px; }
   .wordmark { font-size: .68rem; letter-spacing: .31em; }
   .site-header .quiet-link { display: none; }
+  .site-header .soozhee-link { display: inline-flex; font-size: .58rem; letter-spacing: .15em; }
   .soozhee-link { font-size: .58rem; letter-spacing: .15em; }
 
   .intro { padding: 56px 22px 68px; }
