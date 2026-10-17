@@ -13,10 +13,12 @@ for (const [cat, q, expect] of INPUTS) {
   if (expect) {
     const ids = res.map(x => x.id);
     if (expect.startsWith('!')) check = ids.includes(expect.slice(1)) ? 'FAIL' : 'ok';
+    else if (expect === 'F06') check = ids.length && ids.every(i => i.startsWith('SR-F06')) ? 'ok(all F06)' : ids[0] && ids[0].startsWith('SR-F06') ? 'ok(1st F06)' : 'MISS';
     else if (expect === 'NONE') check = r.status === 'none' || r.status === 'empty' ? 'ok' : 'FAIL';
+    else if (expect === 'SR-F07-T01' && r.sleepDefault) check = ids.join(',') === 'SR-F07-T01,SR-F07-T02,SR-F07-T03' ? 'ok(Ep1-3)' : 'MISS';
     else check = ids[0] === expect ? 'ok(1st)' : ids.includes(expect) ? 'ok(top3)' : 'MISS';
   }
-  rows.push({ cat, q, status: r.status, res, expect, check, concepts: Object.keys(r.query.concepts), pref: r.query.pref });
+  rows.push({ cat, q, status: r.status, sleepDefault: !!r.sleepDefault, res, expect, check, concepts: Object.keys(r.query.concepts), pref: r.query.pref });
 }
 if (process.argv[2] === '--json') fs.writeFileSync(process.argv[3], JSON.stringify(rows, null, 1));
 for (const r of rows) {

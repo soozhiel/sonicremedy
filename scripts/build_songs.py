@@ -138,8 +138,14 @@ def build(xlsx, why_path):
         else: dest, dtype = FORMULA_URL.get(fn), 'formula'
         ct = comp_type(i, bool(lyr.get(sid)))
         ev = evidence(i)
+        if (i.get('Source evidence') or '').lower().startswith('artist-confirmed') and ev['situations'] == 'ai-inferred':
+            ev['situations'] = ev['desired'] = 'artist-confirmed+ai-inferred'   # O/P artist-confirmed, D AI-inferred
         w = why[sid]
-        current = split(i.get('Current feeling or situation (match mode A)', '')) or split(i.get('Specific circumstances where it may resonate', ''))
+        # union of the song's own circumstances (D) and match-mode-A situations (O); for F07/F08
+        # these are identical, for F06 O adds the artist-confirmed formula-wide association
+        current = []
+        for e in split(i.get('Specific circumstances where it may resonate', '')) + split(i.get('Current feeling or situation (match mode A)', '')):
+            if e not in current: current.append(e)
         expressions = split(i.get('Alternative expressions people may use', ''))
         for e in split(i.get('Alternative everyday expressions', '')):
             if e not in expressions: expressions.append(e)

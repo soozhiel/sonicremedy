@@ -254,7 +254,11 @@
   }
 
   /* ---------------------------------------------------------------- engine */
-  var EVIDENCE = { 'artist-confirmed': 1, 'artist-script': 1, 'source-supported': 1, 'ai-inferred': 0.95 };
+  var EVIDENCE = { 'artist-confirmed': 1, 'artist-script': 1, 'source-supported': 1, 'artist-confirmed+ai-inferred': 1, 'ai-inferred': 0.95 };
+  // A sleep request with no particular subject ("help me sleep", "I just want to switch off and
+  // sleep") starts at the beginning of the Sleep Sequence: Episodes 1, 2, 3 (user decision 2026-10-18).
+  var SLEEP_DEFAULT = ['SR-F07-T01', 'SR-F07-T02', 'SR-F07-T03'];
+  var GENERIC_SLEEP = /\b((i )?(just |really |only )?(want|need|would like|would love|wanna) to (switch off|sleep|rest|relax|wind down|unwind|fall asleep|drift off|get some sleep)|help me (to )?(sleep|switch off|relax|wind down|unwind|fall asleep|drift off|rest)|something (to help me |for )?(sleep|sleeping|bed|bedtime)|(go to |get to |get some )?sleep\w*|asleep|bed(time)?|tonight|at night|insomnia|please|so tired|tired)\b/g;
   var CONF = { high: 1, 'medium-high': 0.97, medium: 0.94, 'low-medium': 0.9, low: 0.85 };
   // Channel weights. Lyrics/spoken-term bags are a light supporting signal only, so songs
   // without lyrics are not disadvantaged (no title-only penalty).
@@ -378,6 +382,15 @@
       var q = parseQuery(raw);
       var nConcepts = Object.keys(q.concepts).length;
       if (!raw || (q.n === 0 && nConcepts === 0)) return { status: 'empty', results: [], query: q };
+      if (q.pref.sleep === 1) {
+        var rest = parseQuery(normalise(raw).replace(GENERIC_SLEEP, ' '));
+        var topical = Object.keys(rest.concepts).filter(function (c) { return !rest.concepts[c].context && c !== 'calm' && c !== 'sleep'; });
+        if (!topical.length && rest.n <= 1) {
+          return { status: 'ok', sleepDefault: true, query: q, results: SLEEP_DEFAULT.map(function (id) {
+            return { song: byIdFn(id), score: 0, detail: { concepts: ['sleep'], state: 1, tokens: 0, phrase: 0 } };
+          }).filter(function (r) { return r.song; }) };
+        }
+      }
       var scored = [];
       idx.forEach(function (e) {
         for (var i = 0; i < e.notFor.length; i++) if (e.notFor[i].test(q.raw)) return;
@@ -433,10 +446,11 @@
       };
     }
 
-    return { recommend: recommend, parseQuery: parseQuery, byId: function (id) {
+    function byIdFn(id) {
       for (var i = 0; i < songs.length; i++) if (songs[i].id === id) return songs[i];
       return null;
-    } };
+    }
+    return { recommend: recommend, parseQuery: parseQuery, byId: byIdFn };
   }
 
   var api = { createEngine: createEngine, normalise: normalise, stems: stems, conceptsIn: conceptsIn };
@@ -492,12 +506,20 @@
     return img;
   }
   function formulaName(song) { return song.formula.name; }
+  // Recommendations open in a new tab so the results stay on the hub (user decision 2026-10-18).
+  function link(a, song) {
+    a.href = song.url;
+    a.target = '_blank';
+    a.rel = 'noopener';
+    a.setAttribute('aria-label', 'Listen to ' + song.title + ', ' + formulaName(song) +
+      (song.urlType === 'formula' ? ', on the ' + formulaName(song) + ' formula page' : '') + ' (opens in a new tab)');
+    var hint = el('span', 'discovery-label', '(opens in a new tab)');
+    a.appendChild(hint);
+  }
 
   function renderPrimary(song) {
     var a = el('a', 'remedy-primary');
-    a.href = song.url;
-    a.setAttribute('aria-label', 'Listen to ' + song.title + ', ' + formulaName(song) +
-      (song.urlType === 'formula' ? ' (opens the ' + formulaName(song) + ' formula page)' : ''));
+    link(a, song);
     var fig = el('div', 'remedy-primary-art'); fig.appendChild(cover(song, 600));
     var body = el('div', 'remedy-primary-body');
     body.appendChild(el('p', 'remedy-label', '01 / FIRST LISTEN'));
@@ -512,9 +534,7 @@
   function renderCard(song) {
     var li = el('li');
     var a = el('a', 'remedy-card');
-    a.href = song.url;
-    a.setAttribute('aria-label', 'Listen to ' + song.title + ', ' + formulaName(song) +
-      (song.urlType === 'formula' ? ' (opens the ' + formulaName(song) + ' formula page)' : ''));
+    link(a, song);
     var art = el('div', 'remedy-card-art'); art.appendChild(cover(song, 600));
     var body = el('div', 'remedy-card-body');
     body.appendChild(el('h4', 'remedy-card-title', song.title));
