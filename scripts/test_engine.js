@@ -1,0 +1,27 @@
+// Run: node scripts/test_engine.js [--json out.json]
+const fs = require('fs');
+const path = require('path');
+const { createEngine } = require('../discovery.js');
+const data = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'songs.json'), 'utf8'));
+const eng = createEngine(data);
+const INPUTS = require('./test_inputs.json');
+const rows = [];
+for (const [cat, q, expect] of INPUTS) {
+  const r = eng.recommend(q);
+  const res = r.results.map(x => ({ id: x.song.id, title: x.song.title, formula: x.song.formula.name, why: x.song.why, score: +x.score.toFixed(2), concepts: x.detail.concepts }));
+  let check = '';
+  if (expect) {
+    const ids = res.map(x => x.id);
+    if (expect.startsWith('!')) check = ids.includes(expect.slice(1)) ? 'FAIL' : 'ok';
+    else if (expect === 'NONE') check = r.status === 'none' || r.status === 'empty' ? 'ok' : 'FAIL';
+    else check = ids[0] === expect ? 'ok(1st)' : ids.includes(expect) ? 'ok(top3)' : 'MISS';
+  }
+  rows.push({ cat, q, status: r.status, res, expect, check, concepts: Object.keys(r.query.concepts), pref: r.query.pref });
+}
+if (process.argv[2] === '--json') fs.writeFileSync(process.argv[3], JSON.stringify(rows, null, 1));
+for (const r of rows) {
+  console.log(`[${r.cat}] "${r.q}" -> ${r.status} ${r.check ? '{' + r.expect + ' ' + r.check + '}' : ''}  concepts=${r.concepts.join(',')} pref=${JSON.stringify(r.pref)}`);
+  r.res.forEach((x, i) => console.log(`   ${i + 1}. ${x.id} ${x.title} (${x.formula}) ${x.score} [${x.concepts.join(',')}]`));
+}
+const checked = rows.filter(r => r.expect);
+console.log(`\n${checked.filter(r => r.check.startsWith('ok')).length}/${checked.length} expectation checks pass; ${rows.length} inputs`);

@@ -10,6 +10,7 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="discovery.css">
 </head>
 <body>
   <header class="site-header">
@@ -26,6 +27,34 @@
       <h1 id="page-title">SONIC REMEDY</h1>
       <div class="intro-rule" aria-hidden="true"></div>
       <p>Eight states. Eight formulas in sound.<br>Press play to enter.</p>
+    </section>
+
+    <!-- SONIC REMEDY STAGE 2: personal discovery (inserted section; rest of page unchanged) -->
+    <section class="discovery" id="discovery" aria-labelledby="discovery-title" data-state="input" hidden>
+      <div class="discovery-panel">
+        <div class="discovery-view" data-view="input">
+          <p class="discovery-eyebrow">A PERSONAL WAY IN</p>
+          <h2 class="discovery-heading" id="discovery-title">What's on your mind?</h2>
+          <p class="discovery-sub">Describe what's happening. Discover a song that might speak to it.</p>
+          <form class="discovery-form" novalidate>
+            <label class="discovery-label" for="discovery-text">Describe what's on your mind</label>
+            <textarea id="discovery-text" name="situation" rows="3" maxlength="600" placeholder="I've been carrying something that isn't mine to carry…" aria-describedby="discovery-hint"></textarea>
+            <p class="discovery-hint" id="discovery-hint" aria-live="polite"></p>
+            <button class="discovery-submit" type="submit" disabled>FIND MY REMEDY <span aria-hidden="true">→</span></button>
+          </form>
+        </div>
+        <div class="discovery-view discovery-results" data-view="results" aria-live="polite" hidden>
+          <p class="discovery-eyebrow">YOUR SONIC REMEDY</p>
+          <h2 class="discovery-heading" id="discovery-results-title" tabindex="-1">Start here.</h2>
+          <p class="discovery-note" hidden>A place to start. A few more words may bring a closer match.</p>
+          <div class="remedy-primary-slot"></div>
+          <div class="remedy-also" hidden>
+            <p class="remedy-also-label">ALSO FOR YOU</p>
+            <ul class="remedy-also-list" role="list"></ul>
+          </div>
+          <button class="discovery-reset" type="button">Try another situation</button>
+        </div>
+      </div>
     </section>
 
     <section class="formula-field" aria-label="Eight Sonic Remedy formulas">
@@ -113,5 +142,6 @@
   </footer>
 
   <script src="script.js"></script>
+  <script src="discovery.js" defer></script>
 </body>
 </html>
