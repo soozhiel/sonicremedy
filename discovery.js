@@ -192,12 +192,12 @@
     var parts = n.split(/[.!?;,\n]+/);
     var out = [];
     parts.forEach(function (p) {
-      var segs = p.split(/\b(but|though|although|however|yet|instead of|rather than|instead)\b/);
+      var segs = p.split(/\b(but|even though|though|although|however|yet|instead of|rather than|instead)\b/);
       var w = 1, role = null;
       for (var i = 0; i < segs.length; i++) {
         var s = segs[i];
         if (!s || !s.trim()) continue;
-        if (/^(but|though|although|however|yet)$/.test(s)) { w = 1.3; role = null; continue; }
+        if (/^(but|even though|though|although|however|yet)$/.test(s)) { w = 1.3; role = null; continue; }
         if (/^(instead of|rather than)$/.test(s)) { role = 'situation'; w = 0.9; continue; }
         if (s === 'instead') { role = 'desire'; w = 1.3; continue; }
         out.push({ text: s, weight: w, forced: role });
@@ -227,8 +227,72 @@
     return false;
   }
 
+  /* ---------------------------------------------- scope of a matched word (refinement 2, 2026-10-18)
+   * General rules about WHERE a word sits, not lists of failed sentences:
+   *  1. Figurative vehicle: inside "like a/an/the ...", "as if", "as though" the words describe the
+   *     image, not the visitor. Only state concepts (what condition the image is in: trapped,
+   *     drained, stuck, foggy...) carry over; event/agent concepts (letting go, courage, blame,
+   *     celebration...) describe what happens in the picture and are dropped.
+   *  2. Literal domain frame: in a clause about a sport, a school or work task, or a physical object,
+   *     physical words (carry, heavy, stuck, lost, let go, strong...) are literal unless the clause
+   *     also has an emotional predicate about the visitor (feel/felt, makes me, an affect word).
+   *  3. Absence predicates (far from, away from, miss, lost, without, long for, no longer) reverse a
+   *     positive state the same way "not" does: "far from where I belong" is a lack of belonging.
+   *  4. Noun-sense words: a word that is a concept only as a noun ("likes" on a post) does not count
+   *     when used as a verb ("likes what I like").                                                   */
+  var VEHICLE = /\b(like|as if|as though)\s+(a|an|the|some|someone|something|being|i am|i was|i have been|my)\b/;
+  var VEHICLE_OK = new Set(['trapped', 'overwhelm', 'fog', 'depleted', 'stagnant', 'burden', 'disconnected', 'different',
+    'defeat', 'controlLoss', 'rumination', 'sadness', 'uncertain', 'heard', 'sufferingAlone', 'selfDoubt', 'selfWorth']);
+  var DOMAIN = /\b(marathon|race|races|run|running|jog\w*|gym|workout|match|game|games|season|team|training|tournament|exam|exams|test|tests|assignment|homework|essay|class|lecture|semester|deadline|deadlines|project|report|presentation|meeting|meetings|shift|spreadsheet|bag|bags|box|boxes|suitcase|luggage|shopping|groceries|furniture|car|bike|rope|string|kite|balloon|door|lid|jar|weights|dumbbells?|barbell|ball|bus|train|traffic|lift|elevator|zip|drawer)\b/;
+  var LITERALISABLE = new Set(['burden', 'trapped', 'stagnant', 'defeat', 'strength', 'lettingGo', 'courage', 'controlLoss', 'depleted']);
+  var EMO_PRED = /\b(feel|feels|felt|feeling|makes? me|made me|leaves? me|left me (feeling)?|i am so|i am really|i am totally|gutted|devastated|heartbroken|thrilled|ashamed|scared|afraid|anxious|angry|upset|sad|miserable|exhausted|overwhelmed|stressed|hopeless|helpless|useless|worthless)\b/;
+  var ABSENCE = /\b(far from|away from|miss|missing|missed|lost|lose|without|long(ing)? for|no longer (have|feel)|wish i (had|felt))\s+(\w+\s+){0,3}$/;
+  var NOUN_SENSE = { approval: /^likes$/ };
+  var NOUN_ENV = /\b(the|my|your|their|any|no|more|few|many|enough|of|for|get|gets|got|getting|zero|\d+)\s+$/;
+  function scopeOf(k, word, before, clause, idx) {
+    word = word.trim();
+    var head = clause.slice(0, idx);
+    if (VEHICLE.test(head) && /\b(feel|feels|felt|feeling|am|is|are|was|were|seems?|looks?|life is|everything is)\b/.test(head) && !VEHICLE_OK.has(k)) return 'figurative';
+    if (LITERALISABLE.has(k) && DOMAIN.test(clause) && !EMO_PRED.test(clause)) return 'literal';
+    if (NOUN_SENSE[k] && NOUN_SENSE[k].test(word) && !NOUN_ENV.test(before) && !/^\s*on\b/.test(clause.slice(idx + word.length))) return 'verb';
+    if (POSITIVE.has(k) && ABSENCE.test(before)) return 'absent';
+    // a state adjective used as a quantity modifier before a noun ("the whole world", "a whole day") is not the state
+    if (/^whole$/.test(word) && /\b(the|a|my|your|our|this|that|their)\s+$/.test(before)) return 'modifier';
+    return null;
+  }
+  // Constructions that express an experience without its usual keyword (refinement 2):
+  //  - difference by comparison: a negative universal ("nobody", "no one", "none of my ...") whose
+  //    predicate ends in "like me / the way I do / what I like|think|do / my <taste>", or "I am the only one who|in".
+  //  - self-silencing: making oneself smaller / quieter / invisible for others.
+  var CONSTRUCTIONS = [
+    { k: 'different', re: /\b(nobody|no one|none of (them|us|my \w+)|not (one|a single) (person|one))\b(\s+\S+){0,8}?\s+(like me|like i do|the way i do|the way i (think|talk|dress|see things)|what i (like|do|think|say|want|love|enjoy)|my (sense of )?(humou?r|taste|interests|music|language|accent))\b/ },
+    { k: 'different', re: /\bi am the only one (who|that|in|at|here)\b/ },
+    { k: 'approval', re: /\b(shrink\w*|make|making|keep|keeping|tone|toning|dim|dimming|hide|hiding|water(ing)? down)\s+(myself|me|who i am)\s*(down|small|smaller|quiet|quieter|invisible|less)?\b(\s+\S+){0,6}?\s+(so|for|to keep|to make)\s+(other|others|everyone|people|they|them)\b/ }
+  ];
+  // Figurative schemas: conventional image families mapped to the experience they usually describe.
+  // They only fire in a figurative or abstract-subject clause, are always marked inferred, and never
+  // give more than a contextual (class 2) connection.
+  var SCHEMAS = [
+    { k: 'depleted', name: 'running out of fuel', re: /\b(burn(ing|t|ed)? (out|the candle|at both ends)|candle\w*|running on (empty|fumes)|out of (fuel|gas|battery|steam|juice)|battery (is |feels )?(dead|flat|low|drained)|tank is empty|nothing left in the tank)\b/ },
+    { k: 'depleted', name: 'moving through resistance', re: /\b(wading|walking|moving|swimming|dragging myself) through (wet |thick )?(concrete|mud|treacle|molasses|sand|syrup|glue|water)|everything takes (twice|double|so much|three times)\b/ },
+    { k: 'overwhelm', name: 'too much noise', re: /\b(volume|turned up|too loud|so loud|deafening|white noise|static|noise in my head)\b/ },
+    { k: 'sadness', name: 'colour drained', re: /\b(grey|gray|colou?rless|black and white|washed out|drained of colou?r|no colou?r)\b/ }
+  ];
+  var ABSTRACT_SUBJ = /\b(everything|life|(the|my) (whole )?world|my days|days|it all|my head|my brain|my mind|my life|i am|i feel|feels like|is like)\b/;
+
+  // the visitor's own wording for each normalised clause (explanations quote what they actually typed)
+  function originalClauses(text) {
+    var map = {};
+    String(text || '').split(/[.!?;,\n]+/).forEach(function (p) {
+      p.split(/\b(but|even though|though|although|however|yet|instead of|rather than|instead)\b/i).forEach(function (s) {
+        var n = normalise(s).trim();
+        if (n && !map[n]) map[n] = s.trim();
+      });
+    });
+    return map;
+  }
   function parseQuery(text) {
-    var q = { tokens: {}, concepts: {}, pref: {}, raw: normalise(text), n: 0 };
+    var q = { tokens: {}, concepts: {}, pref: {}, raw: normalise(text), n: 0, orig: originalClauses(text) };
     var cl = clauses(text);
     cl.forEach(function (c) {
       var t = ' ' + c.text + ' ';
@@ -248,6 +312,9 @@
             !/\b(can|could|will|would) not\s+(\w+\s+)?$/.test(before);
           var role = c.forced || (desire ? 'desire' : 'situation'), fromNeg = false;
           if (weakTrigger(k, m[0], before, role, t)) continue;
+          var scope = scopeOf(k, m[0], before, t, m.index);
+          if (scope === 'figurative' || scope === 'literal' || scope === 'verb' || scope === 'modifier') { (q.scoped = q.scoped || []).push({ k: k, words: m[0].trim(), scope: scope }); continue; }
+          if (scope === 'absent' && !desire && !fear) negHere = true;
           var w = c.weight;
           if (negHere && !fear && !desire) {
             // "not hopeful", "no clarity": a missing positive state is a felt need.
@@ -260,8 +327,17 @@
           if (CONTEXT.has(k)) w *= 0.45;
           if (w <= 0) continue;
           var prev = q.concepts[k];
-          if (!prev || prev.weight < w) q.concepts[k] = { weight: w, role: role, context: CONTEXT.has(k), fromNeg: fromNeg && role === 'desire', words: m[0].trim() };
+          if (!prev || prev.weight < w) q.concepts[k] = { weight: w, role: role, context: CONTEXT.has(k), fromNeg: fromNeg && role === 'desire', words: m[0].trim(), clause: c.text.trim() };
         }
+      });
+      CONSTRUCTIONS.forEach(function (x) {
+        var mm = t.match(x.re);
+        if (mm && !q.concepts[x.k]) q.concepts[x.k] = { weight: c.weight, role: 'situation', context: false, words: mm[0].trim(), clause: c.text.trim(), construction: true };
+      });
+      var figurative = VEHICLE.test(t) || ABSTRACT_SUBJ.test(t);
+      SCHEMAS.forEach(function (x) {
+        var mm = t.match(x.re);
+        if (mm && figurative && !q.concepts[x.k]) q.concepts[x.k] = { weight: 0.7 * c.weight, role: 'situation', context: false, words: mm[0].trim(), clause: c.text.trim(), inferred: true, schema: x.name };
       });
       stems(c.text).forEach(function (s) {
         if (dropped.has(s) && !kept.has(s)) return;
@@ -463,13 +539,19 @@
         var st = Array.from(new Set(stems(p)));
         st.concepts = conceptsIn(p).filter(function (c) { return !CONTEXT.has(c); });
         st.text = p;
+        // words joined into a hyphenated compound ("people-pleasing") are one content unit, even if a part is closed-class
+        st.compound = new Set(stems((p.match(/\b[\w']+(?:-[\w']+)+\b/g) || []).join(' ').replace(/-/g, ' ')));
         return st;
       }).filter(function (p) { return p.length >= 1; });
       var notFor = (s.notFor || []).map(function (p) { return new RegExp('\\b' + normalise(p).replace(/[.*+?^${}()|[\]\\]/g, '\\$&')); });
       var mult = (EVIDENCE[s.ev.situations] || 1) * (s.conf ? (CONF[s.conf] || 1) : 1);
       // concepts in the song's own meaning and circumstances (F06: without the formula-wide association)
       var ownCon = new Set(conceptsIn([m.meaning].concat(m.circ || []).join(' ; ')));
-      return { song: s, tok: tok, con: con, phrases: phrases, notFor: notFor, mult: mult, ownCon: ownCon };
+      // a celebratory listening tone: the record's moods / intentions / meaning are about joy or play,
+      // or the track is energetic. Only these answer a purely positive moment (refinement 2).
+      var tone = [].concat(m.moods || [], m.intentions || [], m.desired || [], [m.meaning]).join(' ; ');
+      var celebratory = /\b(celebrat\w*|joy|joyful|playful\w*|savouring|glamorous|exuberan\w*|euphori\w*|festive|bliss)\b/i.test(tone) || (s.experience || []).indexOf('energetic') >= 0;
+      return { song: s, tok: tok, con: con, phrases: phrases, notFor: notFor, mult: mult, ownCon: ownCon, celebratory: celebratory };
     });
     // inverse document frequencies over songs (any channel)
     var N = idx.length, dfT = {}, dfC = {};
@@ -497,8 +579,16 @@
     // everyday words the meaning layer reads (listening preferences, roles) must never be 'corrected'
     ('talking speaking voice voices words lyrics singing vocals spoken narration instrumental wordless sleepy drowsy awake ' +
      'upbeat dance dancing study studying music song songs playing background quiet soft morning evening betrayed blamed blaming ' +
-     'cheated lied grieving passed died hurt trust forgive sorry proud happy').split(' ').forEach(function (w) { VOCAB.add(w); });
+     'cheated lied grieving passed died hurt trust forgive sorry proud happy ' +
+     // number words are real words too ("three" must not become "there")
+     'one two three four five six seven eight nine ten eleven twelve twenty thirty forty fifty hundred thousand ' +
+     'first second third fourth fifth').split(' ').forEach(function (w) { VOCAB.add(w); });
     var respell = makeSpeller(VOCAB);
+    // closed-class words (refinement 2): never evidence of a shared situation on their own
+    var CLOSED = new Set(('finally again always never ever every time times still just really away up out off down back over ' +
+      'keep keeps kept get gets got getting make makes made thing things way ways people person others other someone everyone ' +
+      'anyone one day days today year years week lot lots much many feel feels felt go going went come came put take took ' +
+      'want need').split(' ').map(function (w) { return stem(w); }));
 
     var SLEEP_WORDS = new Set(stems('sleep sleeping asleep bed bedtime night nights tonight awake lie lying rest insomnia'));
     function scoreSong(e, q) {
@@ -522,7 +612,7 @@
         var qc = q.concepts[c], best = 0, bestK = null;
         for (var k in W) {
           if (k === 'L' || k === 'F' || !e.con[k].has(c)) continue;
-          if (qc.inferred && k !== 'M') continue;
+          if (qc.inferred && !qc.schema && k !== 'M') continue;   // a figurative schema may meet the song's situations (capped at class 2 below)
           var w = W[k];
           if (k === 'D') w = qc.role === 'desire' ? 1.35 : 0.6;
           if ((k === 'S' || k === 'X') && qc.role === 'desire' && POSITIVE.has(c)) w *= 0.75;
@@ -539,10 +629,11 @@
       // phrase-level match against the song's own everyday expressions and situations
       var bestP = 0, secondP = 0;
       e.phrases.forEach(function (p) {
-        var hit = 0, tot = 0, live = 0, nh = 0;
+        var hit = 0, tot = 0, live = 0, nh = 0, mc = 0;
         p.forEach(function (t) {
           if (sleepPref && SLEEP_WORDS.has(t)) return;
-          var w = idfT(t); tot += w; live++; if (q.tokens[t]) { hit += w; if ((dfT[t] || 0) <= 8) nh++; }
+          if (CLOSED.has(t) && !p.compound.has(t)) return;   // time/frequency adverbs, particles and generic nouns are not meaning
+          var w = idfT(t); tot += w; live++; if (q.tokens[t]) { hit += w; mc++; if ((dfT[t] || 0) <= 8) nh++; }
         });
         var f = tot ? hit / tot : 0;
         // a one-word phrase ("trapped", "hopeful") only counts when it carries a felt state the
@@ -551,7 +642,7 @@
           var shared = p.concepts.some(function (c) { return q.concepts[c] && !q.concepts[c].context; });
           f = shared ? f * 0.8 : 0;
         }
-        if (f > bestP) { secondP = bestP; bestP = f; why.phraseText = p.text; why.phraseHits = nh; } else if (f > secondP) secondP = f;
+        if (f > bestP) { secondP = bestP; bestP = f; why.phraseText = p.text; why.phraseHits = nh; why.phraseMatched = mc; } else if (f > secondP) secondP = f;
       });
       var pb = (bestP >= 0.6 ? 6 * bestP * bestP : 1.5 * bestP * bestP) + (secondP >= 0.6 ? 2 * secondP * secondP : 0);
       s += pb; why.phrase = bestP;
@@ -648,7 +739,13 @@
       // a purely positive input is not turned into a problem to fix
       if (f && f.polarity === 'positive' && detail && !(detail.exprStrong)) {
         var ent = idx.filter(function (x) { return x.song.id === song.id; })[0];
-        var pos = (detail.concepts || []).some(function (c) { return (POSITIVE.has(c) || c === 'play' || c === 'gratitude') && ent && (ent.con.M.has(c) || ent.con.D.has(c)); });
+        // a positive moment is answered by a song that shares that positive state in its own meaning, or by a
+        // celebratory track; an achievement is not read as a need (progress, battles, fixing)
+        var pos = (detail.concepts || []).some(function (c) {
+          if (!ent) return false;
+          if (c === 'celebration') return ent.celebratory;
+          return (POSITIVE.has(c) || c === 'play' || c === 'gratitude') && !(q.concepts[c] && q.concepts[c].inferred) && (ent.con.M.has(c) || ent.con.D.has(c));
+        });
         if (!pos && detail.phrase < 0.6 && !detail.prefCompanion) return false;
       }
       return true;
@@ -659,8 +756,10 @@
       var d = c.detail;
       if (c.fill) return 4;
       // a song-record phrase counts as direct only when two or more of its words were used (one shared word is not a match)
-      var phraseDirect = d.phrase >= 0.6 && (d.phraseHits >= 2 || d.phrase >= 0.8 || d.own >= 1);
+      var phraseDirect = (d.phrase >= 0.8 && (d.phraseHits >= 2 || d.phraseMatched >= 2)) || (d.phrase >= 0.6 && d.own >= 1 && d.phraseMatched >= 2);
       if (d.exprStrong || phraseDirect || (d.own >= 1 && c.score >= 6) || (d.own >= 2 && c.score >= 4.5)) return 1;
+      // a candidate with nothing that can be explained (no shared concept, phrase, TAB 05 row or preference) is not shown as a match
+      if (!(d.concepts || []).length && !d.expr && !d.prefCompanion && !d.inferredFit && !(d.phrase >= 0.6)) return d.affinity ? 3 : 5;
       if (d.own >= 1 || d.expr || d.prefCompanion || d.inferredFit || (d.phrase >= 0.6 && d.phraseHits >= 1 && d.state >= 1)) return 2;
       if (d.affinity) return 3;
       return 5;
@@ -693,6 +792,14 @@
     var ROLE_TOPIC = { betrayed: 'someone breaking your trust', caused: 'repairing hurt you caused', blamed: 'being blamed',
       blaming: 'blaming or judging others', supporting: 'supporting someone' };
 
+    // Quote only a complete clause the visitor wrote (12 words or fewer); never an isolated fragment.
+    var QORIG = {};
+    function quoteOf(con) {
+      if (!con || !con.clause) return null;
+      var cl = (QORIG[con.clause.trim()] || con.clause).replace(/^(and|so|but|because|cause|then)\s+/i, '').replace(/\s+(and|so|but|even|or|because)$/i, '').trim();
+      if (!cl || cl.split(/\s+/).length > 12) return null;
+      return '"' + cl.replace(/\bi\b/g, 'I').replace(/^./, function (x) { return x.toUpperCase(); }) + '"';
+    }
     function explain(c, cls, f, q, ctx) {
       var song = c.e.song, about = aboutOf(song), d = c.detail;
       if (ctx.sleepDefault) return 'You asked for something for sleep, so the Sleep Sequence starts at the beginning: ' + about + '.';
@@ -718,7 +825,8 @@
         var oc = q.concepts[own[0]];
         if (own[0] === 'sadness' && f && f.situation.indexOf('grief') >= 0) topic = 'grief';
         else if (own[0] === 'celebration' && oc.inferred && f) topic = f.positive.indexOf('pride') >= 0 && /\bproud\b/.test(q.raw) ? 'feeling proud' : null, said = topic ? null : 'You shared some good news';
-        else if (oc.words) said = 'You said "' + oc.words + '"';
+        else if (oc.schema) return 'Your image ' + (quoteOf(oc) || '') + ' may point to ' + (TOPIC[own[0]] || own[0]) + '; this is a possible connection, not a certainty: ' + about + '.';
+        else if (quoteOf(oc)) said = 'You said ' + quoteOf(oc);
         else topic = TOPIC[own[0]];
       }
       var lead;
@@ -728,10 +836,12 @@
       else if (topic) lead = 'You mentioned ' + topic;
       else if (said) lead = said;
       else if (desire.length && q.concepts[desire[0]].fromNeg && TOPIC[desire[0]]) lead = 'You mentioned ' + TOPIC[desire[0]];   // "not hopeful": a need we infer, not a stated want
+      else if (desire.length && quoteOf(q.concepts[desire[0]])) lead = 'You said ' + quoteOf(q.concepts[desire[0]]);
+      // a want read from the shape of the message (a question, "I keep flip-flopping") is not a stated wish
+      else if (desire.length && q.concepts[desire[0]].frameWant && TOPIC[desire[0]]) lead = 'You mentioned ' + TOPIC[desire[0]];
       else if (desire.length && WANT[desire[0]]) lead = "You said you'd like " + WANT[desire[0]];
-      else if (desire.length && q.concepts[desire[0]].words) lead = 'You asked for "' + q.concepts[desire[0]].words + '"';
       else if (desire.length && TOPIC[desire[0]]) lead = "You said you'd like " + TOPIC[desire[0]];
-      else if (d.exprPhrase) lead = (d.exprExact ? 'You said "' : 'Your words are close to "') + d.exprPhrase + '"';
+      else if (d.exprPhrase) lead = (d.exprExact ? 'You said "' : 'Your words are close to "') + d.exprPhrase.replace(/\bi\b/g, 'I').replace(/^./, function (x) { return x.toUpperCase(); }) + '"';
       else if (d.prefCompanion) lead = 'You asked for ' + d.prefCompanion;
       else if (d.phraseText && d.phrase >= 0.6) return 'Close to a situation this song was written around ("' + d.phraseText.replace(/\.$/, '') + '"): ' + about + '.';
       else lead = 'Your words connect with this record';
@@ -746,6 +856,13 @@
       if (f.situation.indexOf('grief') >= 0 && f.role !== 'supporting') del('supportOther');
       var ROLE_CONCEPT = { betrayed: 'betrayed', caused: 'causedHurt', blamed: 'blamed', blaming: 'blameOthers', supporting: 'supportOther' };
       if (ROLE_CONCEPT[f.role] && !q.concepts[ROLE_CONCEPT[f.role]]) q.concepts[ROLE_CONCEPT[f.role]] = { weight: 1, role: 'situation', context: false };
+      (f.want || []).forEach(function (w) {
+        if (CONCEPTS[w] && !q.concepts[w]) {
+          var ex = (f.explicit || []).filter(function (e) { return e.key === w; })[0];
+          var cl = clauses(q.raw).filter(function (c) { return ex && ex.words && c.text.indexOf(ex.words) >= 0; })[0];
+          q.concepts[w] = { weight: 1, role: 'desire', context: false, words: ex && ex.words, clause: cl ? cl.text.trim() : null, frameWant: true };
+        }
+      });
       if (f.role === 'betrayed') del('causedHurt');
       if (f.role === 'caused') del('betrayed');
       if (f.role === 'blamed') del('blameOthers');
@@ -753,7 +870,13 @@
       // "curious about alien sounds" asks for a sound, not a feeling of alienation (TAB 06 T13)
       if (f.prefs.alien && !/\b(i (feel|am|always feel|felt) (so |really )?(different|alien|out of place|like an outsider)|(do not|never) (fit|belong))\b/.test(q.raw)) del('different');
       // a stated positive state ("proud", "over the moon") is read as something to celebrate: inferred, and labelled so
-      if (f.positive.length && !q.concepts.celebration) {
+      // ... unless every positive phrase sits in a subordinate background clause ("calm feels strange NOW life is
+      // going well"): there the good circumstance is the setting, and the visitor's felt state is something else
+      var posWords = (f.explicit || []).filter(function (e) { return e.dim === 'positive' && e.words; }).map(function (e) { return e.words; });
+      var backgrounded = posWords.length && posWords.every(function (w) {
+        return new RegExp('\\b(now|now that|since|when|while|because|although|though|even though)\\b[^.,;!?]{0,25}' + w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')).test(q.raw);
+      });
+      if (f.positive.length && !q.concepts.celebration && !backgrounded) {
         q.concepts.celebration = { weight: 0.8, role: 'situation', context: false, inferred: true };
         f.inferred.push({ key: 'celebration', from: f.positive.join(','), note: 'a positive state read as something to celebrate' });
       }
@@ -765,6 +888,7 @@
       if (!raw || !meaningful(raw)) return { status: 'empty', results: [], query: parseQuery(raw) };
       raw = respell(raw);
       var q = parseQuery(raw);
+      QORIG = q.orig || {};
       var f = frameOf(raw, q);
       var noSleepDefault = f && (f.prefs.noSpoken || f.prefs.notSleepy);
       if (f && f.prefs.notSleepy) q.pref.sleep = -1;
@@ -798,6 +922,7 @@
         var shared = affConcepts[n].filter(function (c) { return stated.indexOf(c) >= 0; });
         if (shared.length) affScore[n] = shared.length * (AFF[String(n)].status === 'artist-confirmed' ? 1 : 0.8);
       });
+      var f06Core = stated.some(function (k) { return F06_CORE.indexOf(k) >= 0; });
       var prefKeys = [];
       if (f && (f.prefs.noLyrics || f.prefs.noSpoken)) prefKeys.push('instrumental');
       var alienIds = f && f.prefs.alien ? idx.filter(function (x) { return x.song.formula.number === 6 || x.song.id === 'SR-F05-T05'; }).map(function (x) { return x.song.id; }) : [];
@@ -823,6 +948,7 @@
           r.detail.inferredFit = true;
           if (ex.indexOf('energetic') >= 0) r.score += 0.5;   // celebratory tracks first for a stated good mood
         }
+        if ((r.detail.concepts || []).some(function (k) { return q.concepts[k] && q.concepts[k].schema; })) r.detail.inferredFit = true;
         if (!allowed(e.song, f, q, r.detail)) return;
         var c = { e: e, score: r.score, detail: r.detail };
         c.cls = classOf(c);
@@ -832,12 +958,16 @@
         if (e.song.rule === 'f06_affinity_only' && c.cls <= 2 && !r.detail.prefCompanion) {
           var mine = (r.detail.concepts || []).some(function (k) { return e.ownCon.has(k) && !q.concepts[k].context && F06_CORE.indexOf(k) < 0; });
           var core = stated.some(function (k) { return F06_CORE.indexOf(k) >= 0; });
-          if (!mine && core) { c.cls = 1; r.detail.confirmedAffinity = true; }   // artist-confirmed entry point for a stated experience
+          if (!mine && core) { c.cls = 2; r.detail.confirmedAffinity = true; c.score = Math.max(c.score, 2.5); }   // artist-confirmed entry point: contextual, never the song's own story
           else if (!mine) c.cls = Math.max(c.cls, 3);
         }
+        // F06 is always CONSIDERED for a stated difference / isolation / not fitting in, even with no word overlap
+        if (e.song.rule === 'f06_affinity_only' && f06Core && c.cls > 2 && !r.detail.prefCompanion) { c.cls = 2; r.detail.confirmedAffinity = true; c.score = Math.max(c.score, 2.5); }
         if (e.song.rule === 'heartbreak_not_rejection' && c.cls === 1 && !/\b(romance|romantic|fairy ?tale|the one|soulmate|love story|same relationship|pattern)\b/.test(q.raw)) c.cls = 2;
         if (c.cls === 3) c.score = a * 3 + r.score * 0.2;
-        if (c.cls <= 4 && (r.score > 0 || c.cls === 3)) cands.push(c);
+        // figurative schemas are inferred: at most a contextual connection
+        if (c.cls === 1 && !r.detail.exprStrong && (r.detail.concepts || []).length && r.detail.concepts.every(function (k) { return q.concepts[k] && q.concepts[k].inferred && q.concepts[k].schema; })) c.cls = 2;
+        if (c.cls <= 4 && (r.score > 0 || c.cls === 3 || r.detail.confirmedAffinity)) cands.push(c);
       });
       cands.sort(function (a, b) {
         return a.cls - b.cls || b.score - a.score || b.detail.phrase - a.detail.phrase || b.e.mult - a.e.mult || (a.e.song.id < b.e.song.id ? -1 : 1);
@@ -889,6 +1019,17 @@
           for (var r = picked.length - 1; r > 0; r--) if (!need(picked[r])) { picked[r] = cand; break; }
         });
       }
+      // F06 consideration (artist-confirmed affinity): when difference / isolation / not fitting in is stated, one
+      // Alien Frequencies track is always among the three. It leads only when nothing has a stronger song-specific
+      // (class 1) connection; otherwise it takes the last place instead of a weaker alternative.
+      if (f06Core && !picked.some(function (p) { return p.e.song.formula.number === 6; })) {
+        var f6 = cands.filter(function (o) { return o.e.song.formula.number === 6 && !pairBlocked(o); })[0];
+        if (f6) {
+          if (picked.length < 3) picked.push(f6);
+          else picked[2] = f6;
+          picked.sort(function (a, b) { return a.cls - b.cls || b.score - a.score; });
+        }
+      }
       // exploratory starting points last, respecting the visitor's constraints and the guardrails
       if (picked.length < 3) {
         var starts = START_HERE.concat(['SR-F08-T02', 'SR-F08-T01', 'SR-F08-T06', 'SR-F08-T05', 'SR-F07-T01', 'SR-F07-T02', 'SR-F02-T05', 'SR-F01-T01']);
@@ -904,6 +1045,7 @@
       var lead = picked[0];
       var status = !lead || lead.cls >= 4 ? 'fallback' : lead.cls === 3 ? 'weak' : 'ok';
       if (status === 'ok' && lead.cls === 2 && picked.filter(function (p) { return !p.fill; }).length < 2) status = 'weak';
+      if (status === 'ok' && lead && !lead.detail.exprStrong && (lead.detail.concepts || []).length && lead.detail.concepts.every(function (k) { return q.concepts[k] && q.concepts[k].schema; })) status = 'weak';
       if (lead && lead.cls === 2 && !lead.detail.prefCompanion && (lead.score < 4 || (exprLowOnly && lead.detail.expr && !lead.detail.own))) status = 'weak';
       var nothingStated = f && !f.situation.length && !f.response.length && !f.want.length && !f.positive.length && !f.role && !hits.length;
       if (status === 'ok' && nothingStated && !(lead.detail.prefCompanion) && f.uncertainty) status = 'weak';

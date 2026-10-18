@@ -24,7 +24,8 @@ ok(r.results.every(x => !/progress|improv/i.test(x.explanation)), 'T04 no progre
 r = rec('Everyone has advice. Is my choice even mine?');
 ok(real(r).includes('SR-F02-T01') || real(r).includes('SR-F07-T15'), 'T05 outside voices / own choice');
 r = rec('I never feel I belong.');
-ok(r.results[0].song.formula.number === 6, 'T06 F06 (artist-confirmed affinity) for not belonging');
+ok(r.results.some(x => x.song.formula.number === 6), 'T06 F06 (artist-confirmed affinity) is considered for not belonging');
+ok(r.results[0].song.formula.number === 6 || r.results[0].cls === 1, 'T06 another song leads only with a stronger (class-1) individual connection');
 r = rec("I don't want to be angry anymore.");
 ok(ids(r)[0] === 'SR-F07-T06', 'T07 Anger Free Living leads');
 r = rec("I'm not angry. I need to make a decision.");
@@ -99,6 +100,27 @@ ok(Array.isArray(r2.results) && r2.results.length === 3, 're-rank hook is option
 // ---- data build fails on a corrupted export (negative validation)
 const tmp = fs.mkdtempSync(path.join(os.tmpdir(), 'srbuild-'));
 const src = process.env.SR_MASTER_XLSX;
+// ---- refinement 2 (2026-10-18): general scope / construction / quoting rules ----
+const C = t => rec(t).query.concepts;
+r = rec('Today I finally finished the marathon I trained a year for.');
+ok(!ids(r).includes('SR-F01-T09'), 'R2 marathon achievement is not "pick your battles"');
+ok(r.results.every(x => !/progress|struggl/i.test(x.explanation)), 'R2 achievement: no need for progress attributed');
+ok(!C('Nobody in my class talks like me or likes what I like.').approval, 'R2 verb "likes" is not approval');
+ok(!!C('Nobody in my class talks like me or likes what I like.').different, 'R2 comparison construction reads as difference');
+ok(rec('Nobody in my class talks like me or likes what I like.').results.some(x => x.song.formula.number === 6), 'R2 F06 considered for difference construction');
+ok(!C('I feel like a balloon someone let go of.').lettingGo, 'R2 event inside a simile vehicle is not the visitor letting go');
+ok(!C('I lifted the heavy boxes at work.').burden, 'R2 literal physical weight in a task frame is not burden');
+r = rec("I'm homesick and far from where I belong.");
+ok(r.results.every(x => !/You said "I belong"/.test(x.explanation)), 'R2 no fragment quote under an absence predicate');
+ok(!C('The whole world looks washed out lately.').connection, 'R2 "the whole X" is a quantity modifier, not wholeness');
+r = rec('Lately it feels like my candle is burning at both ends.');
+ok(!!C('Lately it feels like my candle is burning at both ends.').depleted && r.results.every(x => x.cls >= 2) && r.status !== 'ok', 'R2 figurative schema is tentative (never class 1, not ok status)');
+r = rec('I moved to a new country last year and even though it\'s great here I still feel like I don\'t belong.');
+ok(r.results.some(x => x.song.formula.number === 6), 'R2 F06 considered for not belonging after a move');
+ok(r.results.every(x => !/You said "[^"]*\b(and|even)"/.test(x.explanation)), 'R2 quotes end on a complete clause');
+r = rec('It keeps me up that people with power get away with hurting others.');
+ok(r.results.every(x => !/^Your words connect with this record/.test(x.explanation)), 'R2 no unexplainable class-2 match');
+
 if (src && fs.existsSync(src)) {
   const bad = path.join(tmp, 'bad.xlsx');
   cp.execFileSync('python3', ['-c', `
