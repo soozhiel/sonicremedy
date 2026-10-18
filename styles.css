@@ -300,6 +300,8 @@ button { color: inherit; font: inherit; }
   line-height: 1.55;
 }
 
+#about-title ~ p:not([class]) { margin-bottom: 1em; }
+
 .about .principle {
   padding-top: 28px;
   color: var(--paper) !important;
