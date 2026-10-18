@@ -1,6 +1,6 @@
 {
  "schemaVersion": 1,
- "generated": "2026-10-18T06:40:56Z",
+ "generated": "2026-10-18T07:39:03Z",
  "source": "SONIC REMEDY — MASTER SONG INDEX / TAB 06 — MEANING & CONNECTION INTELLIGENCE",
  "songs": {
   "SR-F01-T01": {
@@ -547,21 +547,6 @@
      "id": "SR-F02-T09",
      "field": "Central meaning",
      "text": "Answer song to Track 08"
-    }
-   ]
-  },
-  "progress": {
-   "ids": [
-    "SR-F07-T12",
-    "SR-F07-T13"
-   ],
-   "kind": "related",
-   "prefer": null,
-   "basis": [
-    {
-     "id": "SR-F07-T13",
-     "field": "Confidence / verification status",
-     "text": "Overlaps thematically with T12 (title-based)"
     }
    ]
   }

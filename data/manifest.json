@@ -1,10 +1,10 @@
 {
- "dataVersion": "2026-10-18-83f5d039e378",
- "generated": "2026-10-18T06:40:56Z",
+ "dataVersion": "2026-10-18-f1bbc39d86db",
+ "generated": "2026-10-18T07:39:03Z",
  "source": "SONIC REMEDY — MASTER SONG INDEX",
  "sheetExport": {
-  "file": "master-t11-after.xlsx",
-  "sha256": "e12bdfd15ba27cacdd37795b2204c5b8b386014a256f16e0f3f6c7ee27fe8dd1"
+  "file": "master-tab04-after.xlsx",
+  "sha256": "8aba565ff49939e914f5e549ebd4b49f6193290d9d525d6884bc97a52c113824"
  },
  "tabs": [
   "TAB 01",
@@ -14,20 +14,20 @@
  ],
  "files": {
   "songs.json": {
-   "sha256": "97b5aa6af17b1feeff7e85f137d7c183e4df86813bb5d7046c6e6df58fd122fe",
-   "bytes": 141733
+   "sha256": "cd0e592c77fd11c55eaf082f7af2cd4ff9089df2c9b54fbc177a35a8b242f2ca",
+   "bytes": 158267
   },
   "expressions.json": {
-   "sha256": "c40f820bd1cd9998ea177ee634c545625a323e92873fdad29d635e34f24da741",
+   "sha256": "b65bb871c8a4e2c8f6f1a13ce05827e0b8314a3c6fd4621f7d385a6a4fffdb7f",
    "bytes": 51512
   },
   "affinities.json": {
-   "sha256": "f9601e3742f9378ae235c90f096fc177e8d20cd8aa78e4be7273be39655c3951",
+   "sha256": "e3c92f8a33d86c9c4451f50b21047fe1b8d12bb5b6c4e8796996748a96b78275",
    "bytes": 4788
   },
   "meaning.json": {
-   "sha256": "5181ca2b09770b03c0a3120cf660ab2e4febf897dbba5599db405ed62d740645",
-   "bytes": 32038
+   "sha256": "c853f025882eb11d19a4ebb47c03abf6bf68429ffb66e85377fce2041c6efaa1",
+   "bytes": 31757
   }
  },
  "validation": {
@@ -46,7 +46,9 @@
   "only F06 affinity artist-confirmed": "pass",
   "affinity formula names match TAB 01": "pass",
   "about line for every song, health-free": "pass",
-  "TAB 05 links valid": "pass"
+  "TAB 05 links valid": "pass",
+  "every track has a vocal profile with a source": "pass",
+  "vocal profiles consistent with composition type": "pass"
  },
  "affinityStatus": {
   "1": "proposed",
@@ -110,20 +112,36 @@
      "text": "Answer song to Track 08"
     }
    ]
-  },
+  }
+ },
+ "notNearDuplicates": {
   "progress": {
    "ids": [
     "SR-F07-T12",
     "SR-F07-T13"
    ],
-   "kind": "related",
-   "basis": [
-    {
-     "id": "SR-F07-T13",
-     "field": "Confidence / verification status",
-     "text": "Overlaps thematically with T12 (title-based)"
-    }
-   ]
+   "reason": "Removed 2026-10-18 (user decision): similar themes do not make compositions duplicates. The only source link is TAB 02 T13 \"Overlaps thematically with T12 (title-based)\"; no composition-level basis (shared lyrics, recording or version) was found."
   }
+ },
+ "vocalProfiles": {
+  "values": [
+   "spoken_narration",
+   "sung_lyrics",
+   "wordless_vocals",
+   "instrumental",
+   "unverified"
+  ],
+  "counts": {
+   "spoken_narration": 16,
+   "sung_lyrics": 13,
+   "wordless_vocals": 1,
+   "instrumental": 5,
+   "unverified": 35
+  },
+  "mixed": [
+   "SR-F05-T02",
+   "SR-F05-T03"
+  ],
+  "note": "Listening constraints use vocal_flags per track; unverified tracks are excluded from constrained requests."
  }
 }

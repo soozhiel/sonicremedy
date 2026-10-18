@@ -39,9 +39,21 @@ PAIRS = OrderedDict([
                                 ('SR-F05-T05', 'Composition type', "sung in the artist's extracelestial language with English")]}),
     ('bet', {'ids': ['SR-F02-T08', 'SR-F02-T09'], 'kind': 'related', 'prefer': None,
              'basis': [('SR-F02-T09', 'Central meaning', 'Answer song to Track 08')]}),
-    ('progress', {'ids': ['SR-F07-T12', 'SR-F07-T13'], 'kind': 'related', 'prefer': None,
-                  'basis': [('SR-F07-T13', 'Confidence / verification status', 'Overlaps thematically with T12 (title-based)')]}),
 ])
+# Pairs reviewed and deliberately NOT treated as near-duplicates (kept out of PAIRS and out of the songs'
+# `group`), with the reason. Recorded in manifest.json so the decision stays visible.
+NOT_PAIRS = OrderedDict([
+    ('progress', {'ids': ['SR-F07-T12', 'SR-F07-T13'],
+                  'reason': 'Removed 2026-10-18 (user decision): similar themes do not make compositions duplicates. '
+                            'The only source link is TAB 02 T13 "Overlaps thematically with T12 (title-based)"; '
+                            'no composition-level basis (shared lyrics, recording or version) was found.'}),
+])
+
+# Per-track vocal profile. Values: spoken_narration | sung_lyrics | wordless_vocals | instrumental | unverified.
+# Every value is derived only from source text (TAB 02 Composition type / Support type / Specific circumstances,
+# TAB 03 Related theme, TAB 04 corrective action); the quoted source is stored with it. When the sources do
+# not state how a track is voiced it is 'unverified' and listening-constraint requests exclude it.
+VOCAL_VALUES = ('spoken_narration', 'sung_lyrics', 'wordless_vocals', 'instrumental', 'unverified')
 
 # Machine rules derived from TAB 06 col H (Inference guardrail). `cue` must appear in that song's H text,
 # so if the Sheet guardrail is reworded the build stops and the rule is reviewed by a person.
@@ -173,6 +185,9 @@ def build(xlsx, ddir):
             if quote not in (t2[sid].get(field) or ''): bad.append((g, sid, field, 'basis text not found'))
         grp = {x['group'] for x in songs if x['id'] in p['ids']}
         if grp != {g}: bad.append((g, 'songs.json group mismatch', grp))
+    for g, p in NOT_PAIRS.items():
+        grp = {x['group'] for x in songs if x['id'] in p['ids']}
+        if grp != {None}: bad.append((g, 'removed pair still grouped in songs.json', grp))
     check('near-duplicate pairs valid with TAB 02 basis', not bad, bad)
 
     # guardrails
@@ -214,10 +229,58 @@ def build(xlsx, ddir):
         expr = None
         check('TAB 05 links valid', False, str(e))
 
+    # --- vocal profiles (per track, from source text only)
+    t3 = {}
+    for r in build_songs.rows(build_songs.tab(wb, 'TAB 03')):
+        if ID_RE.match(r.get('Song ID', '')): t3.setdefault(r['Song ID'], []).append(r)
+    t4 = {}
+    for r in build_songs.rows(build_songs.tab(wb, 'TAB 04')):
+        if ID_RE.match(r.get('Song ID', '')): t4.setdefault(r['Song ID'], []).append(r)
+    vocal = OrderedDict()
+    for sid in ids:
+        a = t2[sid]
+        ct = s(a.get('Composition type'))
+        flags, src = [], []
+        if ct.lower().startswith('spoken'):
+            flags.append('spoken_narration'); src.append(f'TAB 02 Composition type: "{ct}"')
+        elif ct == 'Instrumental':
+            flags.append('instrumental'); src.append(f'TAB 02 Composition type: "{ct}"')
+        elif ct.lower().startswith('instrumental with wordless vocals'):
+            flags.append('wordless_vocals'); src.append(f'TAB 02 Composition type: "{ct}"')
+        elif ct.lower().startswith('song'):
+            flags.append('sung_lyrics'); src.append(f'TAB 02 Composition type: "{ct}"')
+        else:
+            k = s(a.get('Support type'))
+            m3 = [r for r in t3.get(sid, []) if re.search(r'\bsung\b', s(r.get('Related theme or situation')))]
+            m4 = [r for r in t4.get(sid, []) if 'sung lyric version' in s(r.get('Recommended corrective action'))]
+            if 'sung lyrics' in k:
+                flags.append('sung_lyrics'); src.append('TAB 02 Support type: "sung lyrics are in an invented/\"alien\" language"')
+                if m3: src.append(f'TAB 03 Related theme: "{s(m3[0].get("Related theme or situation"))}"')
+            elif m4:
+                flags.append('sung_lyrics'); src.append(f'TAB 04 Recommended corrective action: "{s(m4[0].get("Recommended corrective action"))}"')
+        # scat / vocalese lines are wordless vocals alongside the sung lyrics
+        sc = [(f, s(a.get(f))) for f in ('Composition type', 'Specific circumstances where it may resonate') if re.search(r'\bscat\b', s(a.get(f)))]
+        if sc and 'wordless_vocals' not in flags:
+            flags.append('wordless_vocals'); src.append(f'TAB 02 {sc[0][0]}: "...{re.search(r"[^;]*scat[^;]*", sc[0][1]).group(0).strip()}"')
+        lyr = bool(s(t1[sid].get('Original lyrics Drive reference'))) and any(s(r.get('Verification status')).startswith('Verified') for r in t3.get(sid, []))
+        if not flags:
+            flags = ['unverified']
+            src.append('TAB 02 Composition type blank; no source states how the track is voiced'
+                       + (' (lyrics exist: TAB 01 lyrics document + verified TAB 03 excerpts; sung vs spoken delivery not stated)' if lyr else ''))
+        vocal[sid] = OrderedDict([('vocal_profile', flags[0]), ('vocal_flags', flags), ('vocal_source', '; '.join(src)), ('lyrics_verified', lyr)])
+    bad = [sid for sid in ids if sid not in vocal or vocal[sid]['vocal_profile'] not in VOCAL_VALUES
+           or any(f not in VOCAL_VALUES for f in vocal[sid]['vocal_flags']) or not vocal[sid]['vocal_source']]
+    check('every track has a vocal profile with a source', not bad, bad)
+    TYPE_OK = {'spoken-sleep': {'spoken_narration'}, 'instrumental': {'instrumental'}, 'instrumental-wordless': {'wordless_vocals'},
+               'song': {'sung_lyrics', 'unverified'}}
+    bad = [(x['id'], x['type'], vocal[x['id']]['vocal_profile']) for x in songs if vocal[x['id']]['vocal_profile'] not in TYPE_OK.get(x['type'], set())]
+    check('vocal profiles consistent with composition type', not bad, bad)
+
     if errs:
         return None, errs, checks
 
     for x in songs:
+        x.update(vocal[x['id']])
         x['about'] = about[x['id']]
         # the song's own TAB 02 circumstances (without the formula-wide F06 association merged into m.situations)
         x['m']['circ'] = build_songs.split(t2[x['id']].get('Specific circumstances where it may resonate', ''))
@@ -271,7 +334,12 @@ def main():
                             ('sheetExport', OrderedDict([('file', os.path.basename(xlsx)), ('sha256', sha(xlsx))])),
                             ('tabs', ['TAB 01', 'TAB 02', 'TAB 05', 'TAB 06']), ('files', files), ('validation', checks),
                             ('affinityStatus', {k: v['status'] for k, v in out['affinities'].items()}),
-                            ('pairs', {g: {'ids': p['ids'], 'kind': p['kind'], 'basis': p['basis']} for g, p in out['pairs'].items()})])
+                            ('pairs', {g: {'ids': p['ids'], 'kind': p['kind'], 'basis': p['basis']} for g, p in out['pairs'].items()}),
+                            ('notNearDuplicates', {g: {'ids': p['ids'], 'reason': p['reason']} for g, p in NOT_PAIRS.items()}),
+                            ('vocalProfiles', OrderedDict([('values', list(VOCAL_VALUES)),
+                                ('counts', {v: sum(1 for x in out['songs'] if x['vocal_profile'] == v) for v in VOCAL_VALUES}),
+                                ('mixed', [x['id'] for x in out['songs'] if len(x['vocal_flags']) > 1]),
+                                ('note', 'Listening constraints use vocal_flags per track; unverified tracks are excluded from constrained requests.')]))])
     json.dump(manifest, open(os.path.join(ddir, 'manifest.json'), 'w'), ensure_ascii=False, indent=1)
     print(f"\nOK data {manifest['dataVersion']} -> {ddir}")
 

@@ -64,9 +64,13 @@
 
   // listening preferences and constraints
   var PREF = {
-    noSpoken: /\b((do not|dont) want (anyone|anybody|someone|somebody|a voice|people|any voice) (talking|speaking)|no (spoken|talking|voice|voices|speaking|narration|words|lyrics)|without (talking|a voice|words|lyrics|speaking|narration)|nothing spoken|wordless|instrumental|no one talking|just music)\b/,
-    noLyrics: /\b(no (spoken )?(words|lyrics|singing|vocals)|without (words|lyrics|singing|vocals)|wordless|instrumental|just music)\b/,
-    noVocals: /\b(no (vocals|voice|voices|singing)|without (vocals|a voice|any voice|singing)|purely instrumental|fully instrumental|only instrumental)\b/,
+    // three distinct listening constraints (2026-10-18), applied per track from the verified vocal profile:
+    //  noSpoken  - no spoken narration / talking / voice-over (sung tracks stay eligible)
+    //  noLyrics  - no lyrics / words of any kind, sung or spoken (wordless vocals and instrumentals stay eligible)
+    //  noVocals  - instrumental only: no vocals of any kind (wordless vocals excluded)
+    noSpoken: /\b((do not|dont) want (anyone|anybody|someone|somebody|people) (talking|speaking)|no (spoken( word| words| narration)?|talking|speaking|narration|narrator|voice ?-?overs?)|without (talking|speaking|narration|a narrator|(a |any )?voice ?-?overs?)|nothing spoken|no one talking|nobody talking)\b/,
+    noLyrics: /\b(no (spoken )?(words|lyrics|singing)|without (any )?(words|lyrics|singing)|nothing with (words|lyrics)|wordless|lyric-?less)\b/,
+    noVocals: /\b(instrumental( only| please| music)?|just music|only music|no (vocals|voices?(?![- ]?overs?\b))|without (vocals|(a |any )?voices?(?![- ]?overs?\b))|purely instrumental|fully instrumental|only instrumental)\b/,
     wantSpoken: /\b(spoken|talk me through|read me|read to me|guided|guide me|narrat\w*|a voice to|voice (to )?(talk|guide)|someone talking|meditation)\b/,
     wantLyrics: /\b(lyrics i can|sing along|singalong|something to sing|with (words|lyrics))\b/,
     notSleepy: /\b(not|nothing|no|without|never)\b(\s+\w+){0,4}\s+(sleep\w*|drows\w*|asleep)\b|\b(stay|keep me) awake\b/,
@@ -118,7 +122,22 @@
 
     Object.keys(PREF).forEach(function (k) { if (PREF[k].test(n)) f.prefs[k] = true; });
     if (f.prefs.wantSpoken && (f.prefs.noSpoken || /\b(not|no|without|do not want)\b(\s+\w+){0,3}\s+(spoken|guided|meditation|voice)\b/.test(n))) delete f.prefs.wantSpoken;
-    if (f.prefs.noVocals) { f.prefs.noSpoken = true; f.prefs.noLyrics = true; }
+    // "I have no words" / "no words can describe" is speechlessness, not a listening request
+    if (f.prefs.noLyrics && /\b((have|had|got) no words|no words (can|could) (describe|express|say)|no words for (how|what|it|this|that))\b/.test(n) && !/\b(no (lyrics|singing)|without (any )?(words|lyrics)|nothing with words|wordless)\b/.test(n)) delete f.prefs.noLyrics;
+    // negations that lift a constraint: "I don't mind lyrics", "vocals are fine", "doesn't have to be instrumental"
+    var OK_WORDS = /\b((do not|dont|would not|wouldnt) mind (the )?(lyrics|words|singing)|(lyrics|words|singing) (are|is) (fine|ok|okay|good)|with (words|lyrics)|lyrics (welcome|ok))\b/;
+    var OK_VOCALS = /\b((do not|dont|would not|wouldnt) mind (the )?(vocals|voices|a voice|singing)|(vocals|voices|singing) (are|is) (fine|ok|okay|good)|not (just |only )?instrumental|(does not|doesnt|need not) (have to )?be instrumental)\b/;
+    var OK_TALK = /\b((do not|dont|would not|wouldnt) mind (the )?(talking|narration|a narrator|a voice|spoken( word)?|voice ?-?overs?)|(talking|narration|spoken word) (is|are) (fine|ok|okay|good))\b/;
+    // "nothing with words" is a constraint, not a request for lyrics
+    var NOTHING_WITH = /\b(nothing|not anything|no songs?|no tracks?) with (words|lyrics)\b/;
+    if (NOTHING_WITH.test(n)) { f.prefs.noLyrics = true; delete f.prefs.wantLyrics; }
+    else if (OK_WORDS.test(n)) { delete f.prefs.noLyrics; delete f.prefs.noVocals; }
+    if (OK_VOCALS.test(n)) delete f.prefs.noVocals;
+    if (OK_TALK.test(n)) delete f.prefs.noSpoken;
+    if (f.prefs.noVocals && /\b(not (just |only )?instrumental)\b/.test(n)) delete f.prefs.noVocals;
+    // strictness implies the weaker constraints: no vocals => no words => no spoken narration
+    if (f.prefs.noVocals) f.prefs.noLyrics = true;
+    if (f.prefs.noLyrics) f.prefs.noSpoken = true;
     // "I can't sleep" is a sleep problem, not a request to stay awake
     if (f.prefs.notSleepy && /\b(can|could|cannot|will) not (\w+ ){0,2}(sleep|fall asleep|get to sleep|stay asleep)\b/.test(n) && !/\b(not sleepy|not drowsy|stay awake|keep me awake|nothing (sleepy|that makes me (sleepy|drowsy)))\b/.test(n)) delete f.prefs.notSleepy;
     if (f.prefs.alien && /\b(feel|feels|felt|am|like) (an |a )?alien\b/.test(n)) delete f.prefs.alien;   // "I feel like an alien" is not a sound request

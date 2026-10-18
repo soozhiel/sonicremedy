@@ -509,7 +509,7 @@
 
   // Near-duplicate pairs (data/meaning.json is the source; this mirrors it if that file is unavailable).
   var DEFAULT_PAIRS = { shay: { kind: 'version', prefer: 'darker' }, 'city-of-gold': { kind: 'version', prefer: 'alien' },
-    bet: { kind: 'related', prefer: null }, progress: { kind: 'related', prefer: null } };
+    bet: { kind: 'related', prefer: null } };   // F07 'progress' pair removed 2026-10-18 (similar themes are not duplicates)
   function safeRequire(p) { try { return require(p); } catch (e) { return null; } }
 
   // extras (all optional): { affinities: data/affinities.json, pairs: meaning.json pairs, meaning: meaning module }
@@ -709,11 +709,21 @@
     function allowed(song, f, q, detail) {
       var ty = song.type, r = song.rule, p = f ? f.prefs : {};
       if (f) {
-        if (p.noSpoken && ty === 'spoken-sleep') return false;
-        if (p.wantLyrics && ty !== 'song') return false;
+        // listening constraints, per track, from the verified vocal profile (unverified tracks are excluded)
+        var vf = song.vocal_flags || null;
+        if (vf) {
+          var unv = vf.indexOf('unverified') >= 0;
+          if (p.noVocals && !(vf.length === 1 && vf[0] === 'instrumental')) return false;
+          if (p.noLyrics && (unv || vf.indexOf('sung_lyrics') >= 0 || vf.indexOf('spoken_narration') >= 0)) return false;
+          if (p.noSpoken && (unv || vf.indexOf('spoken_narration') >= 0)) return false;
+          if (p.wantLyrics && !(vf.indexOf('sung_lyrics') >= 0 || (unv && song.lyrics_verified))) return false;
+        } else {
+          if (p.noSpoken && ty === 'spoken-sleep') return false;
+          if (p.noLyrics && ty === 'song') return false;
+          if (p.noVocals && ty === 'instrumental-wordless') return false;
+          if (p.wantLyrics && ty !== 'song') return false;
+        }
         if (p.wantSpoken && !p.noSpoken && /\b(spoken|voice|talk|talking|guided|guide me|narrat\w*|read me|read to me)\b/.test(q.raw) && ty !== 'spoken-sleep') return false;
-        if (p.noLyrics && ty === 'song') return false;
-        if (p.noVocals && ty === 'instrumental-wordless') return false;
         if (p.notSleepy && ty === 'spoken-sleep') return false;
       }
       var has = function (k) { return !!(q.concepts[k] && q.concepts[k].weight > 0); };
@@ -923,11 +933,10 @@
         if (shared.length) affScore[n] = shared.length * (AFF[String(n)].status === 'artist-confirmed' ? 1 : 0.8);
       });
       var f06Core = stated.some(function (k) { return F06_CORE.indexOf(k) >= 0; });
-      var prefKeys = [];
-      if (f && (f.prefs.noLyrics || f.prefs.noSpoken)) prefKeys.push('instrumental');
+      var constrained = f && (f.prefs.noLyrics || f.prefs.noSpoken || f.prefs.noVocals);
       var alienIds = f && f.prefs.alien ? idx.filter(function (x) { return x.song.formula.number === 6 || x.song.id === 'SR-F05-T05'; }).map(function (x) { return x.song.id; }) : [];
       var energetic = q.pref.energetic === 1 && !(f && f.prefs.noLyrics);
-      var prefLabel = f && /\bspoken\b/.test(q.raw) && f.prefs.noSpoken ? 'something without spoken words' : f && f.prefs.noLyrics ? 'something without words' : f && f.prefs.noSpoken ? 'something without spoken words' : null;
+      var prefLabel = !f ? null : f.prefs.noVocals ? 'something purely instrumental' : f.prefs.noLyrics ? 'something without words' : f.prefs.noSpoken ? 'something without spoken narration' : null;
       var cands = [];
       idx.forEach(function (e) {
         for (var i = 0; i < e.notFor.length; i++) if (e.notFor[i].test(q.raw)) return;   // e.g. Rebuild Trust for betrayal wording
@@ -937,7 +946,8 @@
         if (strongFor[e.song.id]) r.detail.exprStrong = true;
         if (phraseFor[e.song.id]) { r.detail.exprPhrase = phraseFor[e.song.id].p; r.detail.exprExact = phraseFor[e.song.id].exact; }
         var ex = e.song.experience || [];
-        if (prefKeys.some(function (k) { return ex.indexOf(k) >= 0; }) && prefLabel) { r.detail.prefCompanion = prefLabel; r.score += 3; }
+        // every track still in play already satisfies the constraint (allowed() below enforces it per track)
+        if (constrained && prefLabel && allowed(e.song, f, q, null)) { r.detail.prefCompanion = prefLabel; r.score += 3; }
         if (energetic && ex.indexOf('energetic') >= 0 && !r.detail.prefCompanion) { r.detail.prefCompanion = 'something upbeat'; r.score += 3; }
         if (f && f.prefs.wantSpoken && !f.prefs.noSpoken && e.song.type === 'spoken-sleep' && !r.detail.prefCompanion) { r.detail.prefCompanion = 'a spoken voice'; r.score += 3; }
         if (f && f.prefs.wantLyrics && e.song.type === 'song' && !r.detail.prefCompanion) { r.detail.prefCompanion = 'songs with lyrics'; r.score += (ex.indexOf('energetic') >= 0 ? 3 : 2); }
