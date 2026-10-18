@@ -67,7 +67,7 @@
     noSpoken: /\b((do not|dont) want (anyone|anybody|someone|somebody|a voice|people|any voice) (talking|speaking)|no (spoken|talking|voice|voices|speaking|narration|words|lyrics)|without (talking|a voice|words|lyrics|speaking|narration)|nothing spoken|wordless|instrumental|no one talking|just music)\b/,
     noLyrics: /\b(no (spoken )?(words|lyrics|singing|vocals)|without (words|lyrics|singing|vocals)|wordless|instrumental|just music)\b/,
     noVocals: /\b(no (vocals|voice|voices|singing)|without (vocals|a voice|any voice|singing)|purely instrumental|fully instrumental|only instrumental)\b/,
-    wantSpoken: /\b(spoken|talk me through|guided|guide me|narrat\w*|a voice to|voice (to )?(talk|guide)|someone talking|meditation)\b/,
+    wantSpoken: /\b(spoken|talk me through|read me|read to me|guided|guide me|narrat\w*|a voice to|voice (to )?(talk|guide)|someone talking|meditation)\b/,
     wantLyrics: /\b(lyrics i can|sing along|singalong|something to sing|with (words|lyrics))\b/,
     notSleepy: /\b(not|nothing|no|without|never)\b(\s+\w+){0,4}\s+(sleep\w*|drows\w*|asleep)\b|\b(stay|keep me) awake\b/,
     alien: /\b(alien|extraterrestrial|extracelestial|otherworldly|another language|made-up language|other-?worldly)\b/,
