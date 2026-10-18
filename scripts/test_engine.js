@@ -3,7 +3,10 @@ const fs = require('fs');
 const path = require('path');
 const { createEngine } = require('../discovery.js');
 const data = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'songs.json'), 'utf8'));
-const eng = createEngine(data);
+// the live site loads the TAB 05 expression library too; test what visitors get
+const exprPath = path.join(__dirname, '..', 'data', 'expressions.json');
+const expr = fs.existsSync(exprPath) ? JSON.parse(fs.readFileSync(exprPath, 'utf8')) : null;
+const eng = createEngine(data, expr);
 const INPUTS = require('./test_inputs.json');
 const rows = [];
 for (const [cat, q, expect] of INPUTS) {

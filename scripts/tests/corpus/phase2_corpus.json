@@ -1,0 +1,2599 @@
+{
+ "frozen": "2026-10-18, before TAB 05 and before any Phase 2 engine change (engine at main 682c745)",
+ "note": "Authored by the agent (not real visitors). Held-out subset (heldout=true) written in the same pass and not consulted while authoring TAB 05; it is not independent of the author.",
+ "count": 432,
+ "items": [
+  {
+   "id": "C001",
+   "theme": "injustice",
+   "text": "The world is so unfair.",
+   "heldout": false
+  },
+  {
+   "id": "C002",
+   "theme": "injustice",
+   "text": "It's not fair.",
+   "heldout": false
+  },
+  {
+   "id": "C003",
+   "theme": "injustice",
+   "text": "Life isn't fair and I'm sick of it.",
+   "heldout": false
+  },
+  {
+   "id": "C004",
+   "theme": "injustice",
+   "text": "I can't stand injustice.",
+   "heldout": false
+  },
+  {
+   "id": "C005",
+   "theme": "injustice",
+   "text": "I've been thinking about how unjust everything is.",
+   "heldout": false
+  },
+  {
+   "id": "C006",
+   "theme": "injustice",
+   "text": "Why do bad people get away with everything?",
+   "heldout": false
+  },
+  {
+   "id": "C007",
+   "theme": "injustice",
+   "text": "The system is rigged.",
+   "heldout": false
+  },
+  {
+   "id": "C008",
+   "theme": "injustice",
+   "text": "I feel like I'm always getting the short end of the stick.",
+   "heldout": false
+  },
+  {
+   "id": "C009",
+   "theme": "injustice",
+   "text": "It's so unfair how I've been treated at work.",
+   "heldout": false
+  },
+  {
+   "id": "C010",
+   "theme": "injustice",
+   "text": "I got passed over for a promotion I deserved.",
+   "heldout": false
+  },
+  {
+   "id": "C011",
+   "theme": "injustice",
+   "text": "People who cheat keep winning.",
+   "heldout": false
+  },
+  {
+   "id": "C012",
+   "theme": "injustice",
+   "text": "I'm angry about what's happening in the world.",
+   "heldout": false
+  },
+  {
+   "id": "C013",
+   "theme": "injustice",
+   "text": "The news makes me furious.",
+   "heldout": false
+  },
+  {
+   "id": "C014",
+   "theme": "injustice",
+   "text": "I feel helpless watching all the suffering in the world.",
+   "heldout": false
+  },
+  {
+   "id": "C015",
+   "theme": "injustice",
+   "text": "Nobody is held accountable.",
+   "heldout": false
+  },
+  {
+   "id": "C016",
+   "theme": "injustice",
+   "text": "I was treated unfairly and nobody cares.",
+   "heldout": false
+  },
+  {
+   "id": "C017",
+   "theme": "injustice",
+   "text": "Why does this always happen to me?",
+   "heldout": false
+  },
+  {
+   "id": "C018",
+   "theme": "injustice",
+   "text": "I keep thinking about the injustice of it all.",
+   "heldout": false
+  },
+  {
+   "id": "C019",
+   "theme": "injustice",
+   "text": "It's just wrong, the way some people are treated.",
+   "heldout": false
+  },
+  {
+   "id": "C020",
+   "theme": "injustice",
+   "text": "I'm fed up with hypocrites.",
+   "heldout": false
+  },
+  {
+   "id": "C021",
+   "theme": "injustice",
+   "text": "I don't want to be bitter about it anymore.",
+   "heldout": false
+  },
+  {
+   "id": "C022",
+   "theme": "injustice",
+   "text": "The world feels broken.",
+   "heldout": false
+  },
+  {
+   "id": "C023",
+   "theme": "injustice",
+   "text": "I feel powerless against the way things are.",
+   "heldout": false
+  },
+  {
+   "id": "C024",
+   "theme": "injustice",
+   "text": "It eats me up that they got away with it.",
+   "heldout": false
+  },
+  {
+   "id": "C025",
+   "theme": "injustice",
+   "text": "I'm sick of double standards.",
+   "heldout": false
+  },
+  {
+   "id": "C026",
+   "theme": "injustice",
+   "text": "everything is so unfair rn",
+   "heldout": false
+  },
+  {
+   "id": "C027",
+   "theme": "overwhelm",
+   "text": "I feel congested.",
+   "heldout": false
+  },
+  {
+   "id": "C028",
+   "theme": "overwhelm",
+   "text": "Everything is happening at once.",
+   "heldout": false
+  },
+  {
+   "id": "C029",
+   "theme": "overwhelm",
+   "text": "I want some breathing room.",
+   "heldout": false
+  },
+  {
+   "id": "C030",
+   "theme": "overwhelm",
+   "text": "I have too much on my plate.",
+   "heldout": false
+  },
+  {
+   "id": "C031",
+   "theme": "overwhelm",
+   "text": "I'm drowning in work and life.",
+   "heldout": false
+  },
+  {
+   "id": "C032",
+   "theme": "overwhelm",
+   "text": "My head feels congested.",
+   "heldout": false
+  },
+  {
+   "id": "C033",
+   "theme": "overwhelm",
+   "text": "There's no room to breathe.",
+   "heldout": false
+  },
+  {
+   "id": "C034",
+   "theme": "overwhelm",
+   "text": "I'm juggling too many things.",
+   "heldout": false
+  },
+  {
+   "id": "C035",
+   "theme": "overwhelm",
+   "text": "Everything is piling up.",
+   "heldout": false
+  },
+  {
+   "id": "C036",
+   "theme": "overwhelm",
+   "text": "I can't keep up with everything.",
+   "heldout": false
+  },
+  {
+   "id": "C037",
+   "theme": "overwhelm",
+   "text": "I'm stretched too thin.",
+   "heldout": false
+  },
+  {
+   "id": "C038",
+   "theme": "overwhelm",
+   "text": "I feel swamped.",
+   "heldout": false
+  },
+  {
+   "id": "C039",
+   "theme": "overwhelm",
+   "text": "It's all too much right now.",
+   "heldout": false
+  },
+  {
+   "id": "C040",
+   "theme": "overwhelm",
+   "text": "I need a minute to myself.",
+   "heldout": false
+  },
+  {
+   "id": "C041",
+   "theme": "overwhelm",
+   "text": "I'm at capacity.",
+   "heldout": false
+  },
+  {
+   "id": "C042",
+   "theme": "overwhelm",
+   "text": "So much going on I can't think.",
+   "heldout": false
+  },
+  {
+   "id": "C043",
+   "theme": "overwhelm",
+   "text": "I feel buried under everything.",
+   "heldout": false
+  },
+  {
+   "id": "C044",
+   "theme": "overwhelm",
+   "text": "Things keep piling on and on.",
+   "heldout": false
+  },
+  {
+   "id": "C045",
+   "theme": "overwhelm",
+   "text": "I'm spinning too many plates.",
+   "heldout": false
+  },
+  {
+   "id": "C046",
+   "theme": "overwhelm",
+   "text": "I feel like I'm about to snap.",
+   "heldout": false
+  },
+  {
+   "id": "C047",
+   "theme": "overwhelm",
+   "text": "I'm completely frazzled.",
+   "heldout": false
+  },
+  {
+   "id": "C048",
+   "theme": "overwhelm",
+   "text": "My brain is fried.",
+   "heldout": false
+  },
+  {
+   "id": "C049",
+   "theme": "overwhelm",
+   "text": "I need some space to breathe.",
+   "heldout": false
+  },
+  {
+   "id": "C050",
+   "theme": "overwhelm",
+   "text": "Everything feels crowded.",
+   "heldout": false
+  },
+  {
+   "id": "C051",
+   "theme": "overwhelm",
+   "text": "I feel blocked up inside.",
+   "heldout": false
+  },
+  {
+   "id": "C052",
+   "theme": "overwhelm",
+   "text": "too much at once i cant cope",
+   "heldout": false
+  },
+  {
+   "id": "C053",
+   "theme": "work_burnout",
+   "text": "I'm burnt out.",
+   "heldout": false
+  },
+  {
+   "id": "C054",
+   "theme": "work_burnout",
+   "text": "I'm so tired of my job.",
+   "heldout": false
+  },
+  {
+   "id": "C055",
+   "theme": "work_burnout",
+   "text": "Work is draining the life out of me.",
+   "heldout": false
+  },
+  {
+   "id": "C056",
+   "theme": "work_burnout",
+   "text": "I dread Mondays.",
+   "heldout": false
+  },
+  {
+   "id": "C057",
+   "theme": "work_burnout",
+   "text": "My boss micromanages everything I do.",
+   "heldout": false
+  },
+  {
+   "id": "C058",
+   "theme": "work_burnout",
+   "text": "I'm exhausted from work.",
+   "heldout": false
+  },
+  {
+   "id": "C059",
+   "theme": "work_burnout",
+   "text": "I'm running on empty.",
+   "heldout": false
+  },
+  {
+   "id": "C060",
+   "theme": "work_burnout",
+   "text": "I've got nothing left to give.",
+   "heldout": false
+  },
+  {
+   "id": "C061",
+   "theme": "work_burnout",
+   "text": "I'm working so hard and getting nowhere.",
+   "heldout": false
+  },
+  {
+   "id": "C062",
+   "theme": "work_burnout",
+   "text": "I hate my job but I can't leave.",
+   "heldout": false
+  },
+  {
+   "id": "C063",
+   "theme": "work_burnout",
+   "text": "I'm over this job.",
+   "heldout": false
+  },
+  {
+   "id": "C064",
+   "theme": "work_burnout",
+   "text": "I feel like a hamster on a wheel at work.",
+   "heldout": false
+  },
+  {
+   "id": "C065",
+   "theme": "work_burnout",
+   "text": "I'm completely burned out and need a break.",
+   "heldout": false
+  },
+  {
+   "id": "C066",
+   "theme": "work_burnout",
+   "text": "Work stress is keeping me up at night.",
+   "heldout": false
+  },
+  {
+   "id": "C067",
+   "theme": "work_burnout",
+   "text": "I feel undervalued at work.",
+   "heldout": false
+  },
+  {
+   "id": "C068",
+   "theme": "work_burnout",
+   "text": "I can't switch off from work.",
+   "heldout": false
+  },
+  {
+   "id": "C069",
+   "theme": "work_burnout",
+   "text": "My job is sucking my soul.",
+   "heldout": false
+  },
+  {
+   "id": "C070",
+   "theme": "work_burnout",
+   "text": "I'm sick of carrying my whole team.",
+   "heldout": false
+  },
+  {
+   "id": "C071",
+   "theme": "work_burnout",
+   "text": "I'm stuck in a dead-end job.",
+   "heldout": false
+  },
+  {
+   "id": "C072",
+   "theme": "work_burnout",
+   "text": "I want to quit but I'm scared.",
+   "heldout": false
+  },
+  {
+   "id": "C073",
+   "theme": "work_burnout",
+   "text": "I'm tired.",
+   "heldout": false
+  },
+  {
+   "id": "C074",
+   "theme": "work_burnout",
+   "text": "I'm so tired all the time.",
+   "heldout": false
+  },
+  {
+   "id": "C075",
+   "theme": "work_burnout",
+   "text": "I'm knackered.",
+   "heldout": false
+  },
+  {
+   "id": "C076",
+   "theme": "work_burnout",
+   "text": "Totally fried after this week.",
+   "heldout": false
+  },
+  {
+   "id": "C077",
+   "theme": "work_burnout",
+   "text": "I'm done with the grind.",
+   "heldout": false
+  },
+  {
+   "id": "C078",
+   "theme": "work_burnout",
+   "text": "work is killing me lol",
+   "heldout": false
+  },
+  {
+   "id": "C079",
+   "theme": "relationships_trust",
+   "text": "My partner cheated on me.",
+   "heldout": false
+  },
+  {
+   "id": "C080",
+   "theme": "relationships_trust",
+   "text": "I was betrayed by my best friend.",
+   "heldout": false
+  },
+  {
+   "id": "C081",
+   "theme": "relationships_trust",
+   "text": "I can't trust anyone anymore.",
+   "heldout": false
+  },
+  {
+   "id": "C082",
+   "theme": "relationships_trust",
+   "text": "I have trust issues.",
+   "heldout": false
+  },
+  {
+   "id": "C083",
+   "theme": "relationships_trust",
+   "text": "Someone I loved lied to me.",
+   "heldout": false
+  },
+  {
+   "id": "C084",
+   "theme": "relationships_trust",
+   "text": "I feel stabbed in the back.",
+   "heldout": false
+  },
+  {
+   "id": "C085",
+   "theme": "relationships_trust",
+   "text": "I don't know if I can trust him again.",
+   "heldout": false
+  },
+  {
+   "id": "C086",
+   "theme": "relationships_trust",
+   "text": "I hurt someone I love and I want to make it right.",
+   "heldout": false
+  },
+  {
+   "id": "C087",
+   "theme": "relationships_trust",
+   "text": "I broke my partner's trust.",
+   "heldout": false
+  },
+  {
+   "id": "C088",
+   "theme": "relationships_trust",
+   "text": "My relationship is falling apart.",
+   "heldout": false
+  },
+  {
+   "id": "C089",
+   "theme": "relationships_trust",
+   "text": "We keep fighting.",
+   "heldout": false
+  },
+  {
+   "id": "C090",
+   "theme": "relationships_trust",
+   "text": "I'm heartbroken.",
+   "heldout": false
+  },
+  {
+   "id": "C091",
+   "theme": "relationships_trust",
+   "text": "I keep choosing the wrong people.",
+   "heldout": false
+  },
+  {
+   "id": "C092",
+   "theme": "relationships_trust",
+   "text": "My family doesn't understand me.",
+   "heldout": false
+  },
+  {
+   "id": "C093",
+   "theme": "relationships_trust",
+   "text": "I feel used.",
+   "heldout": false
+  },
+  {
+   "id": "C094",
+   "theme": "relationships_trust",
+   "text": "I'm always the one who gives more.",
+   "heldout": false
+  },
+  {
+   "id": "C095",
+   "theme": "relationships_trust",
+   "text": "I gave everything and got nothing back.",
+   "heldout": false
+  },
+  {
+   "id": "C096",
+   "theme": "relationships_trust",
+   "text": "I don't want to be angry anymore.",
+   "heldout": false
+  },
+  {
+   "id": "C097",
+   "theme": "relationships_trust",
+   "text": "I want to forgive but I can't.",
+   "heldout": false
+  },
+  {
+   "id": "C098",
+   "theme": "relationships_trust",
+   "text": "I feel like nobody has my back.",
+   "heldout": false
+  },
+  {
+   "id": "C099",
+   "theme": "relationships_trust",
+   "text": "Got ghosted again.",
+   "heldout": false
+  },
+  {
+   "id": "C100",
+   "theme": "relationships_trust",
+   "text": "My friend is going through a hard time and I want to help.",
+   "heldout": false
+  },
+  {
+   "id": "C101",
+   "theme": "relationships_trust",
+   "text": "I'm grateful for my partner.",
+   "heldout": false
+  },
+  {
+   "id": "C102",
+   "theme": "relationships_trust",
+   "text": "I feel lonely in my relationship.",
+   "heldout": false
+  },
+  {
+   "id": "C103",
+   "theme": "relationships_trust",
+   "text": "I want us to work it out.",
+   "heldout": false
+  },
+  {
+   "id": "C104",
+   "theme": "relationships_trust",
+   "text": "she lied to me and i cant get over it",
+   "heldout": false
+  },
+  {
+   "id": "C105",
+   "theme": "identity_different",
+   "text": "I feel different from everyone.",
+   "heldout": false
+  },
+  {
+   "id": "C106",
+   "theme": "identity_different",
+   "text": "I've never fit in.",
+   "heldout": false
+  },
+  {
+   "id": "C107",
+   "theme": "identity_different",
+   "text": "I feel like an alien.",
+   "heldout": false
+  },
+  {
+   "id": "C108",
+   "theme": "identity_different",
+   "text": "Nobody gets me.",
+   "heldout": false
+  },
+  {
+   "id": "C109",
+   "theme": "identity_different",
+   "text": "I'm the odd one out.",
+   "heldout": false
+  },
+  {
+   "id": "C110",
+   "theme": "identity_different",
+   "text": "I don't belong anywhere.",
+   "heldout": false
+  },
+  {
+   "id": "C111",
+   "theme": "identity_different",
+   "text": "I feel like an outsider in my own family.",
+   "heldout": false
+  },
+  {
+   "id": "C112",
+   "theme": "identity_different",
+   "text": "I'm weird and I know it.",
+   "heldout": false
+  },
+  {
+   "id": "C113",
+   "theme": "identity_different",
+   "text": "I feel like a square peg in a round hole.",
+   "heldout": false
+  },
+  {
+   "id": "C114",
+   "theme": "identity_different",
+   "text": "I'm a misfit.",
+   "heldout": false
+  },
+  {
+   "id": "C115",
+   "theme": "identity_different",
+   "text": "I feel out of place.",
+   "heldout": false
+  },
+  {
+   "id": "C116",
+   "theme": "identity_different",
+   "text": "I don't feel like myself lately.",
+   "heldout": false
+  },
+  {
+   "id": "C117",
+   "theme": "identity_different",
+   "text": "I don't know who I am anymore.",
+   "heldout": false
+  },
+  {
+   "id": "C118",
+   "theme": "identity_different",
+   "text": "I've lost myself.",
+   "heldout": false
+  },
+  {
+   "id": "C119",
+   "theme": "identity_different",
+   "text": "I feel like I'm wearing a mask.",
+   "heldout": false
+  },
+  {
+   "id": "C120",
+   "theme": "identity_different",
+   "text": "I want to be my true self.",
+   "heldout": false
+  },
+  {
+   "id": "C121",
+   "theme": "identity_different",
+   "text": "I'm tired of pretending to be someone I'm not.",
+   "heldout": false
+  },
+  {
+   "id": "C122",
+   "theme": "identity_different",
+   "text": "I feel invisible.",
+   "heldout": false
+  },
+  {
+   "id": "C123",
+   "theme": "identity_different",
+   "text": "I'm too much for people.",
+   "heldout": false
+  },
+  {
+   "id": "C124",
+   "theme": "identity_different",
+   "text": "I march to the beat of my own drum.",
+   "heldout": false
+  },
+  {
+   "id": "C125",
+   "theme": "identity_different",
+   "text": "I want to accept that I'm different.",
+   "heldout": false
+  },
+  {
+   "id": "C126",
+   "theme": "identity_different",
+   "text": "I feel like the black sheep.",
+   "heldout": false
+  },
+  {
+   "id": "C127",
+   "theme": "identity_different",
+   "text": "I'm homesick.",
+   "heldout": false
+  },
+  {
+   "id": "C128",
+   "theme": "identity_different",
+   "text": "I live overseas and miss home.",
+   "heldout": false
+  },
+  {
+   "id": "C129",
+   "theme": "identity_different",
+   "text": "I feel like I'm from another planet.",
+   "heldout": false
+  },
+  {
+   "id": "C130",
+   "theme": "identity_different",
+   "text": "idk who i am anymore",
+   "heldout": false
+  },
+  {
+   "id": "C131",
+   "theme": "creative",
+   "text": "I have writer's block.",
+   "heldout": false
+  },
+  {
+   "id": "C132",
+   "theme": "creative",
+   "text": "I've lost my creative spark.",
+   "heldout": false
+  },
+  {
+   "id": "C133",
+   "theme": "creative",
+   "text": "I can't make anything good.",
+   "heldout": false
+  },
+  {
+   "id": "C134",
+   "theme": "creative",
+   "text": "Nothing I make is good enough.",
+   "heldout": false
+  },
+  {
+   "id": "C135",
+   "theme": "creative",
+   "text": "I keep starting projects and never finishing.",
+   "heldout": false
+  },
+  {
+   "id": "C136",
+   "theme": "creative",
+   "text": "I'm scared to share my work.",
+   "heldout": false
+  },
+  {
+   "id": "C137",
+   "theme": "creative",
+   "text": "I only create for likes.",
+   "heldout": false
+  },
+  {
+   "id": "C138",
+   "theme": "creative",
+   "text": "I'm a perfectionist and it's killing my art.",
+   "heldout": false
+  },
+  {
+   "id": "C139",
+   "theme": "creative",
+   "text": "I have so many ideas but never start.",
+   "heldout": false
+  },
+  {
+   "id": "C140",
+   "theme": "creative",
+   "text": "I'm stuck creatively.",
+   "heldout": false
+  },
+  {
+   "id": "C141",
+   "theme": "creative",
+   "text": "I feel uninspired.",
+   "heldout": false
+  },
+  {
+   "id": "C142",
+   "theme": "creative",
+   "text": "My music isn't going anywhere.",
+   "heldout": false
+  },
+  {
+   "id": "C143",
+   "theme": "creative",
+   "text": "I'm comparing my art to everyone else's.",
+   "heldout": false
+  },
+  {
+   "id": "C144",
+   "theme": "creative",
+   "text": "I want to make things just for fun again.",
+   "heldout": false
+  },
+  {
+   "id": "C145",
+   "theme": "creative",
+   "text": "I'm afraid people will judge my work.",
+   "heldout": false
+  },
+  {
+   "id": "C146",
+   "theme": "creative",
+   "text": "I keep putting off my project.",
+   "heldout": false
+  },
+  {
+   "id": "C147",
+   "theme": "creative",
+   "text": "I'm creatively blocked.",
+   "heldout": false
+  },
+  {
+   "id": "C148",
+   "theme": "creative",
+   "text": "I feel like a fraud as an artist.",
+   "heldout": false
+  },
+  {
+   "id": "C149",
+   "theme": "creative",
+   "text": "My creative well has run dry.",
+   "heldout": false
+  },
+  {
+   "id": "C150",
+   "theme": "creative",
+   "text": "I'm frustrated that my work isn't getting noticed.",
+   "heldout": false
+  },
+  {
+   "id": "C151",
+   "theme": "creative",
+   "text": "I want to create without worrying what people think.",
+   "heldout": false
+  },
+  {
+   "id": "C152",
+   "theme": "creative",
+   "text": "I'm in a creative rut.",
+   "heldout": false
+  },
+  {
+   "id": "C153",
+   "theme": "creative",
+   "text": "I want to start a new project but I'm hesitant.",
+   "heldout": false
+  },
+  {
+   "id": "C154",
+   "theme": "creative",
+   "text": "I don't have time to create.",
+   "heldout": false
+  },
+  {
+   "id": "C155",
+   "theme": "creative",
+   "text": "I want to dream big with my art.",
+   "heldout": false
+  },
+  {
+   "id": "C156",
+   "theme": "creative",
+   "text": "cant finish anything i start",
+   "heldout": false
+  },
+  {
+   "id": "C157",
+   "theme": "loss_grief",
+   "text": "I'm grieving.",
+   "heldout": false
+  },
+  {
+   "id": "C158",
+   "theme": "loss_grief",
+   "text": "I lost someone close to me.",
+   "heldout": false
+  },
+  {
+   "id": "C159",
+   "theme": "loss_grief",
+   "text": "My dad passed away.",
+   "heldout": false
+  },
+  {
+   "id": "C160",
+   "theme": "loss_grief",
+   "text": "I miss my mum so much.",
+   "heldout": false
+  },
+  {
+   "id": "C161",
+   "theme": "loss_grief",
+   "text": "I'm sad.",
+   "heldout": false
+  },
+  {
+   "id": "C162",
+   "theme": "loss_grief",
+   "text": "I feel so sad today.",
+   "heldout": false
+  },
+  {
+   "id": "C163",
+   "theme": "loss_grief",
+   "text": "I'm heartbroken after the breakup.",
+   "heldout": false
+  },
+  {
+   "id": "C164",
+   "theme": "loss_grief",
+   "text": "I lost my job.",
+   "heldout": false
+  },
+  {
+   "id": "C165",
+   "theme": "loss_grief",
+   "text": "I feel empty.",
+   "heldout": false
+  },
+  {
+   "id": "C166",
+   "theme": "loss_grief",
+   "text": "I'm going through a loss.",
+   "heldout": false
+  },
+  {
+   "id": "C167",
+   "theme": "loss_grief",
+   "text": "I can't stop crying.",
+   "heldout": false
+  },
+  {
+   "id": "C168",
+   "theme": "loss_grief",
+   "text": "I feel numb.",
+   "heldout": false
+  },
+  {
+   "id": "C169",
+   "theme": "loss_grief",
+   "text": "I don't know how to move on.",
+   "heldout": false
+  },
+  {
+   "id": "C170",
+   "theme": "loss_grief",
+   "text": "I'm holding on to the past.",
+   "heldout": false
+  },
+  {
+   "id": "C171",
+   "theme": "loss_grief",
+   "text": "I miss how things used to be.",
+   "heldout": false
+  },
+  {
+   "id": "C172",
+   "theme": "loss_grief",
+   "text": "My pet died.",
+   "heldout": false
+  },
+  {
+   "id": "C173",
+   "theme": "loss_grief",
+   "text": "I feel a heaviness I can't shake.",
+   "heldout": false
+  },
+  {
+   "id": "C174",
+   "theme": "loss_grief",
+   "text": "I'm mourning a friendship.",
+   "heldout": false
+  },
+  {
+   "id": "C175",
+   "theme": "loss_grief",
+   "text": "Everything reminds me of them.",
+   "heldout": false
+  },
+  {
+   "id": "C176",
+   "theme": "loss_grief",
+   "text": "I want to let go but I can't.",
+   "heldout": false
+  },
+  {
+   "id": "C177",
+   "theme": "loss_grief",
+   "text": "I feel low.",
+   "heldout": false
+  },
+  {
+   "id": "C178",
+   "theme": "loss_grief",
+   "text": "I'm feeling down.",
+   "heldout": false
+  },
+  {
+   "id": "C179",
+   "theme": "loss_grief",
+   "text": "I lost my way.",
+   "heldout": false
+  },
+  {
+   "id": "C180",
+   "theme": "loss_grief",
+   "text": "Life feels pointless since they left.",
+   "heldout": false
+  },
+  {
+   "id": "C181",
+   "theme": "loss_grief",
+   "text": "I'm feeling blue.",
+   "heldout": false
+  },
+  {
+   "id": "C182",
+   "theme": "loss_grief",
+   "text": "im so sad",
+   "heldout": false
+  },
+  {
+   "id": "C183",
+   "theme": "f08_states",
+   "text": "I want to feel free.",
+   "heldout": false
+  },
+  {
+   "id": "C184",
+   "theme": "f08_states",
+   "text": "I feel trapped.",
+   "heldout": false
+  },
+  {
+   "id": "C185",
+   "theme": "f08_states",
+   "text": "I want clarity.",
+   "heldout": false
+  },
+  {
+   "id": "C186",
+   "theme": "f08_states",
+   "text": "My mind is foggy.",
+   "heldout": false
+  },
+  {
+   "id": "C187",
+   "theme": "f08_states",
+   "text": "I feel ready for something new.",
+   "heldout": false
+  },
+  {
+   "id": "C188",
+   "theme": "f08_states",
+   "text": "I'm not ready.",
+   "heldout": false
+  },
+  {
+   "id": "C189",
+   "theme": "f08_states",
+   "text": "I need strength.",
+   "heldout": false
+  },
+  {
+   "id": "C190",
+   "theme": "f08_states",
+   "text": "I feel weak.",
+   "heldout": false
+  },
+  {
+   "id": "C191",
+   "theme": "f08_states",
+   "text": "I want to feel hopeful again.",
+   "heldout": false
+  },
+  {
+   "id": "C192",
+   "theme": "f08_states",
+   "text": "I've lost hope.",
+   "heldout": false
+  },
+  {
+   "id": "C193",
+   "theme": "f08_states",
+   "text": "I feel disconnected.",
+   "heldout": false
+  },
+  {
+   "id": "C194",
+   "theme": "f08_states",
+   "text": "I want to feel whole.",
+   "heldout": false
+  },
+  {
+   "id": "C195",
+   "theme": "f08_states",
+   "text": "I want to feel connected to something bigger.",
+   "heldout": false
+  },
+  {
+   "id": "C196",
+   "theme": "f08_states",
+   "text": "I want to feel strong.",
+   "heldout": false
+  },
+  {
+   "id": "C197",
+   "theme": "f08_states",
+   "text": "I need a clear head.",
+   "heldout": false
+  },
+  {
+   "id": "C198",
+   "theme": "f08_states",
+   "text": "I want to feel ready.",
+   "heldout": false
+  },
+  {
+   "id": "C199",
+   "theme": "f08_states",
+   "text": "I feel boxed in.",
+   "heldout": false
+  },
+  {
+   "id": "C200",
+   "theme": "f08_states",
+   "text": "I want to break free.",
+   "heldout": false
+  },
+  {
+   "id": "C201",
+   "theme": "f08_states",
+   "text": "I need hope.",
+   "heldout": false
+  },
+  {
+   "id": "C202",
+   "theme": "f08_states",
+   "text": "I feel like I'm falling apart.",
+   "heldout": false
+  },
+  {
+   "id": "C203",
+   "theme": "f08_states",
+   "text": "I want to feel at one with everything.",
+   "heldout": false
+  },
+  {
+   "id": "C204",
+   "theme": "f08_states",
+   "text": "I want to be brave.",
+   "heldout": false
+  },
+  {
+   "id": "C205",
+   "theme": "f08_states",
+   "text": "I want to feel unstoppable.",
+   "heldout": false
+  },
+  {
+   "id": "C206",
+   "theme": "f08_states",
+   "text": "I feel lost.",
+   "heldout": false
+  },
+  {
+   "id": "C207",
+   "theme": "f08_states",
+   "text": "Give me some hope.",
+   "heldout": false
+  },
+  {
+   "id": "C208",
+   "theme": "f08_states",
+   "text": "need clarity asap",
+   "heldout": false
+  },
+  {
+   "id": "C209",
+   "theme": "sleep",
+   "text": "I can't sleep.",
+   "heldout": false
+  },
+  {
+   "id": "C210",
+   "theme": "sleep",
+   "text": "Help me sleep.",
+   "heldout": false
+  },
+  {
+   "id": "C211",
+   "theme": "sleep",
+   "text": "I can't switch off.",
+   "heldout": false
+  },
+  {
+   "id": "C212",
+   "theme": "sleep",
+   "text": "My mind won't stop at night.",
+   "heldout": false
+  },
+  {
+   "id": "C213",
+   "theme": "sleep",
+   "text": "I just want to switch off and sleep.",
+   "heldout": false
+  },
+  {
+   "id": "C214",
+   "theme": "sleep",
+   "text": "I need to rest.",
+   "heldout": false
+  },
+  {
+   "id": "C215",
+   "theme": "sleep",
+   "text": "I'm lying awake again.",
+   "heldout": false
+  },
+  {
+   "id": "C216",
+   "theme": "sleep",
+   "text": "I keep waking up at 3am.",
+   "heldout": false
+  },
+  {
+   "id": "C217",
+   "theme": "sleep",
+   "text": "Something for bedtime.",
+   "heldout": false
+  },
+  {
+   "id": "C218",
+   "theme": "sleep",
+   "text": "I want to wind down.",
+   "heldout": false
+  },
+  {
+   "id": "C219",
+   "theme": "sleep",
+   "text": "My thoughts are racing at night.",
+   "heldout": false
+  },
+  {
+   "id": "C220",
+   "theme": "sleep",
+   "text": "I'm too wired to sleep.",
+   "heldout": false
+  },
+  {
+   "id": "C221",
+   "theme": "sleep",
+   "text": "I can't turn my brain off.",
+   "heldout": false
+  },
+  {
+   "id": "C222",
+   "theme": "sleep",
+   "text": "I need some rest.",
+   "heldout": false
+  },
+  {
+   "id": "C223",
+   "theme": "sleep",
+   "text": "I went to bed angry.",
+   "heldout": false
+  },
+  {
+   "id": "C224",
+   "theme": "sleep",
+   "text": "I keep replaying the argument in bed.",
+   "heldout": false
+  },
+  {
+   "id": "C225",
+   "theme": "sleep",
+   "text": "I want to fall asleep without overthinking.",
+   "heldout": false
+  },
+  {
+   "id": "C226",
+   "theme": "sleep",
+   "text": "I can't sleep because of work.",
+   "heldout": false
+  },
+  {
+   "id": "C227",
+   "theme": "sleep",
+   "text": "Insomnia again.",
+   "heldout": false
+  },
+  {
+   "id": "C228",
+   "theme": "sleep",
+   "text": "I want to relax before bed.",
+   "heldout": false
+  },
+  {
+   "id": "C229",
+   "theme": "sleep",
+   "text": "I'm exhausted but can't sleep.",
+   "heldout": false
+  },
+  {
+   "id": "C230",
+   "theme": "sleep",
+   "text": "Something to listen to while I fall asleep.",
+   "heldout": false
+  },
+  {
+   "id": "C231",
+   "theme": "sleep",
+   "text": "I'm restless.",
+   "heldout": false
+  },
+  {
+   "id": "C232",
+   "theme": "sleep",
+   "text": "I need to unwind after a long day.",
+   "heldout": false
+  },
+  {
+   "id": "C233",
+   "theme": "sleep",
+   "text": "I can't stop overthinking at night.",
+   "heldout": false
+  },
+  {
+   "id": "C234",
+   "theme": "sleep",
+   "text": "cant sleep pls help",
+   "heldout": false
+  },
+  {
+   "id": "C235",
+   "theme": "positive",
+   "text": "I'm doing well but want to feel more inspired.",
+   "heldout": false
+  },
+  {
+   "id": "C236",
+   "theme": "positive",
+   "text": "I feel great today.",
+   "heldout": false
+  },
+  {
+   "id": "C237",
+   "theme": "positive",
+   "text": "I'm happy and want to celebrate.",
+   "heldout": false
+  },
+  {
+   "id": "C238",
+   "theme": "positive",
+   "text": "I got good news!",
+   "heldout": false
+  },
+  {
+   "id": "C239",
+   "theme": "positive",
+   "text": "I'm feeling grateful.",
+   "heldout": false
+  },
+  {
+   "id": "C240",
+   "theme": "positive",
+   "text": "I want to dance.",
+   "heldout": false
+  },
+  {
+   "id": "C241",
+   "theme": "positive",
+   "text": "Life is good right now.",
+   "heldout": false
+  },
+  {
+   "id": "C242",
+   "theme": "positive",
+   "text": "I'm in a really good place.",
+   "heldout": false
+  },
+  {
+   "id": "C243",
+   "theme": "positive",
+   "text": "I want to keep this good energy going.",
+   "heldout": false
+  },
+  {
+   "id": "C244",
+   "theme": "positive",
+   "text": "I'm excited about what's coming.",
+   "heldout": false
+  },
+  {
+   "id": "C245",
+   "theme": "positive",
+   "text": "I just got engaged!",
+   "heldout": false
+  },
+  {
+   "id": "C246",
+   "theme": "positive",
+   "text": "I want something uplifting.",
+   "heldout": false
+  },
+  {
+   "id": "C247",
+   "theme": "positive",
+   "text": "I'm feeling good but want more motivation.",
+   "heldout": false
+  },
+  {
+   "id": "C248",
+   "theme": "positive",
+   "text": "I want to feel even more alive.",
+   "heldout": false
+  },
+  {
+   "id": "C249",
+   "theme": "positive",
+   "text": "Things are going well and I want to stay grounded.",
+   "heldout": false
+  },
+  {
+   "id": "C250",
+   "theme": "positive",
+   "text": "I'm proud of myself.",
+   "heldout": false
+  },
+  {
+   "id": "C251",
+   "theme": "positive",
+   "text": "I want to celebrate a win.",
+   "heldout": false
+  },
+  {
+   "id": "C252",
+   "theme": "positive",
+   "text": "I feel blessed.",
+   "heldout": false
+  },
+  {
+   "id": "C253",
+   "theme": "positive",
+   "text": "I'm thankful for my life.",
+   "heldout": false
+  },
+  {
+   "id": "C254",
+   "theme": "positive",
+   "text": "I'm in a good mood and want music to match.",
+   "heldout": false
+  },
+  {
+   "id": "C255",
+   "theme": "positive",
+   "text": "I want to feel joyful.",
+   "heldout": false
+  },
+  {
+   "id": "C256",
+   "theme": "positive",
+   "text": "I'm content.",
+   "heldout": false
+  },
+  {
+   "id": "C257",
+   "theme": "positive",
+   "text": "I feel calm and want to stay that way.",
+   "heldout": false
+  },
+  {
+   "id": "C258",
+   "theme": "positive",
+   "text": "I'm happy but a bit restless for something more.",
+   "heldout": false
+  },
+  {
+   "id": "C259",
+   "theme": "positive",
+   "text": "Feeling on top of the world.",
+   "heldout": false
+  },
+  {
+   "id": "C260",
+   "theme": "positive",
+   "text": "vibing today",
+   "heldout": false
+  },
+  {
+   "id": "C261",
+   "theme": "physical",
+   "text": "My chest feels tight. I'm cautious to why I feel that way.",
+   "heldout": false
+  },
+  {
+   "id": "C262",
+   "theme": "physical",
+   "text": "My chest feels tight.",
+   "heldout": false
+  },
+  {
+   "id": "C263",
+   "theme": "physical",
+   "text": "I have a knot in my stomach.",
+   "heldout": false
+  },
+  {
+   "id": "C264",
+   "theme": "physical",
+   "text": "My shoulders are so tense.",
+   "heldout": false
+  },
+  {
+   "id": "C265",
+   "theme": "physical",
+   "text": "I feel heavy.",
+   "heldout": false
+  },
+  {
+   "id": "C266",
+   "theme": "physical",
+   "text": "My body feels heavy.",
+   "heldout": false
+  },
+  {
+   "id": "C267",
+   "theme": "physical",
+   "text": "I have butterflies in my stomach.",
+   "heldout": false
+  },
+  {
+   "id": "C268",
+   "theme": "physical",
+   "text": "I feel a lump in my throat.",
+   "heldout": false
+  },
+  {
+   "id": "C269",
+   "theme": "physical",
+   "text": "My heart is racing.",
+   "heldout": false
+  },
+  {
+   "id": "C270",
+   "theme": "physical",
+   "text": "I feel tension in my body.",
+   "heldout": false
+  },
+  {
+   "id": "C271",
+   "theme": "physical",
+   "text": "I can't catch my breath.",
+   "heldout": false
+  },
+  {
+   "id": "C272",
+   "theme": "physical",
+   "text": "My jaw is clenched.",
+   "heldout": false
+  },
+  {
+   "id": "C273",
+   "theme": "physical",
+   "text": "I feel shaky.",
+   "heldout": false
+  },
+  {
+   "id": "C274",
+   "theme": "physical",
+   "text": "I feel restless in my body.",
+   "heldout": false
+  },
+  {
+   "id": "C275",
+   "theme": "physical",
+   "text": "My head is pounding.",
+   "heldout": false
+  },
+  {
+   "id": "C276",
+   "theme": "physical",
+   "text": "I feel tight all over.",
+   "heldout": false
+  },
+  {
+   "id": "C277",
+   "theme": "physical",
+   "text": "There's a weight on my chest.",
+   "heldout": false
+  },
+  {
+   "id": "C278",
+   "theme": "physical",
+   "text": "I feel sick to my stomach about it.",
+   "heldout": false
+  },
+  {
+   "id": "C279",
+   "theme": "physical",
+   "text": "My stomach is in knots and I don't know why.",
+   "heldout": false
+  },
+  {
+   "id": "C280",
+   "theme": "physical",
+   "text": "I feel wound up tight.",
+   "heldout": false
+  },
+  {
+   "id": "C281",
+   "theme": "physical",
+   "text": "I feel a heaviness in my chest and I'm not sure what it's about.",
+   "heldout": false
+  },
+  {
+   "id": "C282",
+   "theme": "physical",
+   "text": "My body is telling me something but I don't know what.",
+   "heldout": false
+  },
+  {
+   "id": "C283",
+   "theme": "physical",
+   "text": "I feel tingly and on edge.",
+   "heldout": false
+  },
+  {
+   "id": "C284",
+   "theme": "physical",
+   "text": "I have a pit in my stomach.",
+   "heldout": false
+  },
+  {
+   "id": "C285",
+   "theme": "physical",
+   "text": "I feel physically drained.",
+   "heldout": false
+  },
+  {
+   "id": "C286",
+   "theme": "physical",
+   "text": "my chest is tight idk why",
+   "heldout": false
+  },
+  {
+   "id": "C287",
+   "theme": "vague",
+   "text": "I don't know what I need.",
+   "heldout": false
+  },
+  {
+   "id": "C288",
+   "theme": "vague",
+   "text": "I don't know.",
+   "heldout": false
+  },
+  {
+   "id": "C289",
+   "theme": "vague",
+   "text": "Not sure what I want.",
+   "heldout": false
+  },
+  {
+   "id": "C290",
+   "theme": "vague",
+   "text": "Something.",
+   "heldout": false
+  },
+  {
+   "id": "C291",
+   "theme": "vague",
+   "text": "I don't know how I feel.",
+   "heldout": false
+  },
+  {
+   "id": "C292",
+   "theme": "vague",
+   "text": "I just need something.",
+   "heldout": false
+  },
+  {
+   "id": "C293",
+   "theme": "vague",
+   "text": "Surprise me.",
+   "heldout": false
+  },
+  {
+   "id": "C294",
+   "theme": "vague",
+   "text": "I'm not sure.",
+   "heldout": false
+  },
+  {
+   "id": "C295",
+   "theme": "vague",
+   "text": "Help.",
+   "heldout": false
+  },
+  {
+   "id": "C296",
+   "theme": "vague",
+   "text": "Can you help me?",
+   "heldout": false
+  },
+  {
+   "id": "C297",
+   "theme": "vague",
+   "text": "I feel weird.",
+   "heldout": false
+  },
+  {
+   "id": "C298",
+   "theme": "vague",
+   "text": "I feel off.",
+   "heldout": false
+  },
+  {
+   "id": "C299",
+   "theme": "vague",
+   "text": "I feel meh.",
+   "heldout": false
+  },
+  {
+   "id": "C300",
+   "theme": "vague",
+   "text": "I'm okay I guess.",
+   "heldout": false
+  },
+  {
+   "id": "C301",
+   "theme": "vague",
+   "text": "Just want to listen to something.",
+   "heldout": false
+  },
+  {
+   "id": "C302",
+   "theme": "vague",
+   "text": "Anything.",
+   "heldout": false
+  },
+  {
+   "id": "C303",
+   "theme": "vague",
+   "text": "I don't know what's wrong.",
+   "heldout": false
+  },
+  {
+   "id": "C304",
+   "theme": "vague",
+   "text": "I'm a bit all over the place.",
+   "heldout": false
+  },
+  {
+   "id": "C305",
+   "theme": "vague",
+   "text": "I need something but I don't know what.",
+   "heldout": false
+  },
+  {
+   "id": "C306",
+   "theme": "vague",
+   "text": "I don't really know how to explain it.",
+   "heldout": false
+  },
+  {
+   "id": "C307",
+   "theme": "vague",
+   "text": "Hard to say.",
+   "heldout": false
+  },
+  {
+   "id": "C308",
+   "theme": "vague",
+   "text": "I just feel blah.",
+   "heldout": false
+  },
+  {
+   "id": "C309",
+   "theme": "vague",
+   "text": "idk",
+   "heldout": false
+  },
+  {
+   "id": "C310",
+   "theme": "vague",
+   "text": "something good",
+   "heldout": false
+  },
+  {
+   "id": "C311",
+   "theme": "vague",
+   "text": "dunno what i need",
+   "heldout": false
+  },
+  {
+   "id": "C312",
+   "theme": "vague",
+   "text": "whatever works",
+   "heldout": false
+  },
+  {
+   "id": "C313",
+   "theme": "typos_curly",
+   "text": "I don’t want to be angry anymore.",
+   "heldout": false
+  },
+  {
+   "id": "C314",
+   "theme": "typos_curly",
+   "text": "I’m doing well but want to feel more inspired.",
+   "heldout": false
+  },
+  {
+   "id": "C315",
+   "theme": "typos_curly",
+   "text": "I’ve been thinking about the injustice in the world in general. I’d like to feel less congested.",
+   "heldout": false
+  },
+  {
+   "id": "C316",
+   "theme": "typos_curly",
+   "text": "My chest feels tight. I’m cautious to why I feel that way.",
+   "heldout": false
+  },
+  {
+   "id": "C317",
+   "theme": "typos_curly",
+   "text": "I don’t know what I need.",
+   "heldout": false
+  },
+  {
+   "id": "C318",
+   "theme": "typos_curly",
+   "text": "I cant sleep",
+   "heldout": false
+  },
+  {
+   "id": "C319",
+   "theme": "typos_curly",
+   "text": "im so overwelmed",
+   "heldout": false
+  },
+  {
+   "id": "C320",
+   "theme": "typos_curly",
+   "text": "i feel congestd",
+   "heldout": false
+  },
+  {
+   "id": "C321",
+   "theme": "typos_curly",
+   "text": "the wolrd is unfair",
+   "heldout": false
+  },
+  {
+   "id": "C322",
+   "theme": "typos_curly",
+   "text": "I'm burnt ouut",
+   "heldout": false
+  },
+  {
+   "id": "C323",
+   "theme": "typos_curly",
+   "text": "i dont fit in",
+   "heldout": false
+  },
+  {
+   "id": "C324",
+   "theme": "typos_curly",
+   "text": "evrything is happening at once",
+   "heldout": false
+  },
+  {
+   "id": "C325",
+   "theme": "typos_curly",
+   "text": "i want some breathing rooom",
+   "heldout": false
+  },
+  {
+   "id": "C326",
+   "theme": "typos_curly",
+   "text": "i feel trappd",
+   "heldout": false
+  },
+  {
+   "id": "C327",
+   "theme": "typos_curly",
+   "text": "I can’t switch off.",
+   "heldout": false
+  },
+  {
+   "id": "C328",
+   "theme": "typos_curly",
+   "text": "Im tired of thinking about it",
+   "heldout": false
+  },
+  {
+   "id": "C329",
+   "theme": "typos_curly",
+   "text": "dont want to be angry anymore",
+   "heldout": false
+  },
+  {
+   "id": "C330",
+   "theme": "typos_curly",
+   "text": "I’m sad",
+   "heldout": false
+  },
+  {
+   "id": "C331",
+   "theme": "typos_curly",
+   "text": "I’m tired.",
+   "heldout": false
+  },
+  {
+   "id": "C332",
+   "theme": "typos_curly",
+   "text": "I’m heartbroken.",
+   "heldout": false
+  },
+  {
+   "id": "C333",
+   "theme": "negation",
+   "text": "I don't want to be angry anymore.",
+   "heldout": false
+  },
+  {
+   "id": "C334",
+   "theme": "negation",
+   "text": "I'm not angry, just disappointed.",
+   "heldout": false
+  },
+  {
+   "id": "C335",
+   "theme": "negation",
+   "text": "I don't want to feel stuck anymore.",
+   "heldout": false
+  },
+  {
+   "id": "C336",
+   "theme": "negation",
+   "text": "I'm not sad, I'm just tired.",
+   "heldout": false
+  },
+  {
+   "id": "C337",
+   "theme": "negation",
+   "text": "It's not about work.",
+   "heldout": false
+  },
+  {
+   "id": "C338",
+   "theme": "negation",
+   "text": "I don't want to feel like this anymore.",
+   "heldout": false
+  },
+  {
+   "id": "C339",
+   "theme": "negation",
+   "text": "I'm not okay.",
+   "heldout": false
+  },
+  {
+   "id": "C340",
+   "theme": "negation",
+   "text": "I'm not happy.",
+   "heldout": false
+  },
+  {
+   "id": "C341",
+   "theme": "negation",
+   "text": "I'm not ready to let go.",
+   "heldout": false
+  },
+  {
+   "id": "C342",
+   "theme": "negation",
+   "text": "I don't feel like myself.",
+   "heldout": false
+  },
+  {
+   "id": "C343",
+   "theme": "negation",
+   "text": "I no longer want to carry everyone's problems.",
+   "heldout": false
+  },
+  {
+   "id": "C344",
+   "theme": "negation",
+   "text": "I'm not looking for sleep music.",
+   "heldout": false
+  },
+  {
+   "id": "C345",
+   "theme": "negation",
+   "text": "I don't want to overthink everything.",
+   "heldout": false
+  },
+  {
+   "id": "C346",
+   "theme": "negation",
+   "text": "I'm tired of being bitter.",
+   "heldout": false
+  },
+  {
+   "id": "C347",
+   "theme": "negation",
+   "text": "I don't want to feel lonely anymore.",
+   "heldout": false
+  },
+  {
+   "id": "C348",
+   "theme": "negation",
+   "text": "I wish I wasn't so hard on myself.",
+   "heldout": false
+  },
+  {
+   "id": "C349",
+   "theme": "negation",
+   "text": "I'm not depressed, just flat.",
+   "heldout": false
+  },
+  {
+   "id": "C350",
+   "theme": "negation",
+   "text": "I don't want to be afraid anymore.",
+   "heldout": false
+  },
+  {
+   "id": "C351",
+   "theme": "negation",
+   "text": "Not trapped exactly, just restless.",
+   "heldout": false
+  },
+  {
+   "id": "C352",
+   "theme": "negation",
+   "text": "I'm not sure what's wrong but something is.",
+   "heldout": false
+  },
+  {
+   "id": "C353",
+   "theme": "long",
+   "text": "The world is unfair and I'm tired of thinking about it.",
+   "heldout": false
+  },
+  {
+   "id": "C354",
+   "theme": "long",
+   "text": "I've been thinking about the injustice in the world in general. I'd like to feel less congested.",
+   "heldout": false
+  },
+  {
+   "id": "C355",
+   "theme": "long",
+   "text": "Lately work has been relentless and I come home with nothing left. I'd love to feel like myself again on the weekend.",
+   "heldout": false
+  },
+  {
+   "id": "C356",
+   "theme": "long",
+   "text": "My sister and I had a huge fight and I said things I regret. I want to make it right but I don't know how.",
+   "heldout": false
+  },
+  {
+   "id": "C357",
+   "theme": "long",
+   "text": "I moved to a new country last year and even though it's great here I still feel like I don't belong.",
+   "heldout": false
+  },
+  {
+   "id": "C358",
+   "theme": "long",
+   "text": "I have a big presentation tomorrow and I keep doubting myself. I want to walk in feeling ready.",
+   "heldout": false
+  },
+  {
+   "id": "C359",
+   "theme": "long",
+   "text": "I'm doing okay overall but there's this background hum of stress and I'd like some breathing room.",
+   "heldout": false
+  },
+  {
+   "id": "C360",
+   "theme": "long",
+   "text": "Everything is happening at once: moving house, a new job, my mum being unwell. I just need a moment to breathe.",
+   "heldout": false
+  },
+  {
+   "id": "C361",
+   "theme": "long",
+   "text": "I keep reading the news and feeling sick about how unfair it all is. I want to stop feeling so helpless.",
+   "heldout": false
+  },
+  {
+   "id": "C362",
+   "theme": "long",
+   "text": "I've been making music for ten years and lately I don't feel anything when I play. I want the spark back.",
+   "heldout": false
+  },
+  {
+   "id": "C363",
+   "theme": "long",
+   "text": "I lost my grandmother last month and I keep thinking I should be over it by now.",
+   "heldout": false
+  },
+  {
+   "id": "C364",
+   "theme": "long",
+   "text": "I'm in a good place honestly, just looking for something to keep me inspired and moving.",
+   "heldout": false
+  },
+  {
+   "id": "C365",
+   "theme": "long",
+   "text": "My chest has been tight all week and I can't tell if it's stress or something else. I want to slow down and listen to myself.",
+   "heldout": false
+  },
+  {
+   "id": "C366",
+   "theme": "long",
+   "text": "Nobody at work listens to my ideas and it's making me feel invisible.",
+   "heldout": false
+  },
+  {
+   "id": "C367",
+   "theme": "long",
+   "text": "I have a million things to do and I can't decide where to start, so I end up doing nothing.",
+   "heldout": false
+  },
+  {
+   "id": "C368",
+   "theme": "long",
+   "text": "I don't know what I need, I just know I don't feel right.",
+   "heldout": false
+  },
+  {
+   "id": "C369",
+   "theme": "long",
+   "text": "My partner and I keep going round in circles with the same argument and I'm exhausted.",
+   "heldout": false
+  },
+  {
+   "id": "C370",
+   "theme": "long",
+   "text": "I feel like I'm always the responsible one and I'm tired of holding it all together.",
+   "heldout": false
+  },
+  {
+   "id": "C371",
+   "theme": "long",
+   "text": "I want to celebrate finishing my degree but I also feel a bit lost about what's next.",
+   "heldout": false
+  },
+  {
+   "id": "C372",
+   "theme": "long",
+   "text": "I can't stop replaying a conversation from today and it's 1am.",
+   "heldout": false
+  },
+  {
+   "id": "H001",
+   "theme": "heldout",
+   "text": "It's so unjust what happened to her.",
+   "heldout": true
+  },
+  {
+   "id": "H002",
+   "theme": "heldout",
+   "text": "Rules for thee but not for me, that's how it feels.",
+   "heldout": true
+  },
+  {
+   "id": "H003",
+   "theme": "heldout",
+   "text": "I'm seething about how they treated my friend.",
+   "heldout": true
+  },
+  {
+   "id": "H004",
+   "theme": "heldout",
+   "text": "I'm snowed under.",
+   "heldout": true
+  },
+  {
+   "id": "H005",
+   "theme": "heldout",
+   "text": "My life feels cluttered and loud.",
+   "heldout": true
+  },
+  {
+   "id": "H006",
+   "theme": "heldout",
+   "text": "I feel boxed in by all these commitments.",
+   "heldout": true
+  },
+  {
+   "id": "H007",
+   "theme": "heldout",
+   "text": "I've got a hundred tabs open in my brain.",
+   "heldout": true
+  },
+  {
+   "id": "H008",
+   "theme": "heldout",
+   "text": "I need to come up for air.",
+   "heldout": true
+  },
+  {
+   "id": "H009",
+   "theme": "heldout",
+   "text": "My job has chewed me up and spat me out.",
+   "heldout": true
+  },
+  {
+   "id": "H010",
+   "theme": "heldout",
+   "text": "I'm so over working weekends.",
+   "heldout": true
+  },
+  {
+   "id": "H011",
+   "theme": "heldout",
+   "text": "I feel like a cog in a machine.",
+   "heldout": true
+  },
+  {
+   "id": "H012",
+   "theme": "heldout",
+   "text": "I'm emotionally exhausted.",
+   "heldout": true
+  },
+  {
+   "id": "H013",
+   "theme": "heldout",
+   "text": "My ex really did a number on me.",
+   "heldout": true
+  },
+  {
+   "id": "H014",
+   "theme": "heldout",
+   "text": "He went behind my back.",
+   "heldout": true
+  },
+  {
+   "id": "H015",
+   "theme": "heldout",
+   "text": "I keep forgiving people who don't deserve it.",
+   "heldout": true
+  },
+  {
+   "id": "H016",
+   "theme": "heldout",
+   "text": "I said something hurtful and I feel awful.",
+   "heldout": true
+  },
+  {
+   "id": "H017",
+   "theme": "heldout",
+   "text": "I feel like I'm on the outside looking in.",
+   "heldout": true
+  },
+  {
+   "id": "H018",
+   "theme": "heldout",
+   "text": "Everyone else seems to have it figured out except me.",
+   "heldout": true
+  },
+  {
+   "id": "H019",
+   "theme": "heldout",
+   "text": "I never feel like I belong in groups.",
+   "heldout": true
+  },
+  {
+   "id": "H020",
+   "theme": "heldout",
+   "text": "I'm the weird one in my friend group.",
+   "heldout": true
+  },
+  {
+   "id": "H021",
+   "theme": "heldout",
+   "text": "I want to make art again but I'm frozen.",
+   "heldout": true
+  },
+  {
+   "id": "H022",
+   "theme": "heldout",
+   "text": "Every idea I have feels stale.",
+   "heldout": true
+  },
+  {
+   "id": "H023",
+   "theme": "heldout",
+   "text": "I'm scared my work isn't original.",
+   "heldout": true
+  },
+  {
+   "id": "H024",
+   "theme": "heldout",
+   "text": "I keep tearing up my drafts.",
+   "heldout": true
+  },
+  {
+   "id": "H025",
+   "theme": "heldout",
+   "text": "Grief keeps hitting me in waves.",
+   "heldout": true
+  },
+  {
+   "id": "H026",
+   "theme": "heldout",
+   "text": "I can't believe they're gone.",
+   "heldout": true
+  },
+  {
+   "id": "H027",
+   "theme": "heldout",
+   "text": "I feel hollow.",
+   "heldout": true
+  },
+  {
+   "id": "H028",
+   "theme": "heldout",
+   "text": "There's a hole in my life.",
+   "heldout": true
+  },
+  {
+   "id": "H029",
+   "theme": "heldout",
+   "text": "I want to feel light again.",
+   "heldout": true
+  },
+  {
+   "id": "H030",
+   "theme": "heldout",
+   "text": "I'm craving a fresh start.",
+   "heldout": true
+  },
+  {
+   "id": "H031",
+   "theme": "heldout",
+   "text": "I want to feel like I can do anything.",
+   "heldout": true
+  },
+  {
+   "id": "H032",
+   "theme": "heldout",
+   "text": "I feel scattered and want to feel together.",
+   "heldout": true
+  },
+  {
+   "id": "H033",
+   "theme": "heldout",
+   "text": "I'm ready to stop hiding.",
+   "heldout": true
+  },
+  {
+   "id": "H034",
+   "theme": "heldout",
+   "text": "My brain won't shut up when I lie down.",
+   "heldout": true
+  },
+  {
+   "id": "H035",
+   "theme": "heldout",
+   "text": "I'm wide awake at 2am again.",
+   "heldout": true
+  },
+  {
+   "id": "H036",
+   "theme": "heldout",
+   "text": "Something gentle to drift off to.",
+   "heldout": true
+  },
+  {
+   "id": "H037",
+   "theme": "heldout",
+   "text": "I need to decompress.",
+   "heldout": true
+  },
+  {
+   "id": "H038",
+   "theme": "heldout",
+   "text": "Today was a great day and I want to keep the vibe.",
+   "heldout": true
+  },
+  {
+   "id": "H039",
+   "theme": "heldout",
+   "text": "I'm feeling hopeful and want more of that.",
+   "heldout": true
+  },
+  {
+   "id": "H040",
+   "theme": "heldout",
+   "text": "I feel lucky.",
+   "heldout": true
+  },
+  {
+   "id": "H041",
+   "theme": "heldout",
+   "text": "I want something to celebrate my friend's birthday.",
+   "heldout": true
+  },
+  {
+   "id": "H042",
+   "theme": "heldout",
+   "text": "My throat feels tight when I think about it.",
+   "heldout": true
+  },
+  {
+   "id": "H043",
+   "theme": "heldout",
+   "text": "I have a heavy feeling in my gut.",
+   "heldout": true
+  },
+  {
+   "id": "H044",
+   "theme": "heldout",
+   "text": "My whole body feels clenched.",
+   "heldout": true
+  },
+  {
+   "id": "H045",
+   "theme": "heldout",
+   "text": "I'm buzzing with nervous energy.",
+   "heldout": true
+  },
+  {
+   "id": "H046",
+   "theme": "heldout",
+   "text": "I can't put my finger on what I need.",
+   "heldout": true
+  },
+  {
+   "id": "H047",
+   "theme": "heldout",
+   "text": "Just play me something.",
+   "heldout": true
+  },
+  {
+   "id": "H048",
+   "theme": "heldout",
+   "text": "I'm all at sea.",
+   "heldout": true
+  },
+  {
+   "id": "H049",
+   "theme": "heldout",
+   "text": "I'm not angry anymore, just tired of it all.",
+   "heldout": true
+  },
+  {
+   "id": "H050",
+   "theme": "heldout",
+   "text": "I don't want to feel guilty all the time.",
+   "heldout": true
+  },
+  {
+   "id": "H051",
+   "theme": "heldout",
+   "text": "I don't need advice, I just want to feel calm.",
+   "heldout": true
+  },
+  {
+   "id": "H052",
+   "theme": "heldout",
+   "text": "Life has been a rollercoaster.",
+   "heldout": true
+  },
+  {
+   "id": "H053",
+   "theme": "heldout",
+   "text": "I feel like I'm treading water.",
+   "heldout": true
+  },
+  {
+   "id": "H054",
+   "theme": "heldout",
+   "text": "I've hit a wall.",
+   "heldout": true
+  },
+  {
+   "id": "H055",
+   "theme": "heldout",
+   "text": "I'm running on fumes.",
+   "heldout": true
+  },
+  {
+   "id": "H056",
+   "theme": "heldout",
+   "text": "I'm in a funk.",
+   "heldout": true
+  },
+  {
+   "id": "H057",
+   "theme": "heldout",
+   "text": "I feel like a ghost in my own life.",
+   "heldout": true
+  },
+  {
+   "id": "H058",
+   "theme": "heldout",
+   "text": "I'm sick of being nice and getting walked over.",
+   "heldout": true
+  },
+  {
+   "id": "H059",
+   "theme": "heldout",
+   "text": "Why does everyone else get a break except me?",
+   "heldout": true
+  },
+  {
+   "id": "H060",
+   "theme": "heldout",
+   "text": "I'm grateful but exhausted.",
+   "heldout": true
+  }
+ ]
+}

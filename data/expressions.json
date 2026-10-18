@@ -1,0 +1,2670 @@
+{
+ "schemaVersion": 1,
+ "generated": "2026-10-18T04:37:39Z",
+ "source": "SONIC REMEDY — MASTER SONG INDEX / TAB 05 — HUMAN EXPRESSION LIBRARY",
+ "count": 159,
+ "expressions": [
+  {
+   "id": "EXP-001",
+   "phrases": [
+    "The world is unfair",
+    "the world is so unfair",
+    "world is not fair",
+    "everything is so unfair",
+    "everything is unfair",
+    "it is all so unfair"
+   ],
+   "songs": [
+    "SR-F01-T09",
+    "SR-F08-T05",
+    "SR-F08-T06"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Injustice / unfairness",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-002",
+   "phrases": [
+    "It's not fair",
+    "it is not fair",
+    "that is not fair",
+    "so unfair",
+    "unfairly",
+    "not fair"
+   ],
+   "songs": [
+    "SR-F01-T09",
+    "SR-F08-T05"
+   ],
+   "conf": "low-medium",
+   "register": "negation",
+   "theme": "Injustice / unfairness",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-003",
+   "phrases": [
+    "Life isn't fair",
+    "life is not fair",
+    "life is unfair",
+    "life is so unfair"
+   ],
+   "songs": [
+    "SR-F01-T09",
+    "SR-F08-T06",
+    "SR-F08-T05"
+   ],
+   "conf": "low-medium",
+   "register": "negation",
+   "theme": "Injustice / unfairness",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-004",
+   "phrases": [
+    "the injustice in the world",
+    "injustice",
+    "injustices",
+    "the injustice of it all",
+    "thinking about injustice"
+   ],
+   "songs": [
+    "SR-F01-T09",
+    "SR-F08-T05",
+    "SR-F07-T02"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Injustice / unfairness",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-005",
+   "phrases": [
+    "The system is rigged",
+    "it is rigged",
+    "rigged against me",
+    "the game is rigged"
+   ],
+   "songs": [
+    "SR-F08-T05",
+    "SR-F01-T09"
+   ],
+   "conf": "low",
+   "register": "slang",
+   "theme": "Injustice / unfairness",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-006",
+   "phrases": [
+    "I always get the short end of the stick",
+    "short end of the stick"
+   ],
+   "songs": [
+    "SR-F02-T06",
+    "SR-F04-T05"
+   ],
+   "conf": "low-medium",
+   "register": "metaphor",
+   "theme": "Injustice / unfairness",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-007",
+   "phrases": [
+    "I was treated unfairly",
+    "treated unfairly",
+    "treated so unfairly",
+    "unfair how i have been treated"
+   ],
+   "songs": [
+    "SR-F01-T05",
+    "SR-F02-T06",
+    "SR-F03-T03"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Injustice / unfairness",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-008",
+   "phrases": [
+    "They got away with it",
+    "nobody is held accountable",
+    "no one is held accountable",
+    "get away with everything",
+    "eats me up that they"
+   ],
+   "songs": [
+    "SR-F01-T04",
+    "SR-F07-T06",
+    "SR-F01-T09"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Injustice / unfairness",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-009",
+   "phrases": [
+    "I'm tired of thinking about it",
+    "tired of thinking about",
+    "sick of thinking about",
+    "can not stop thinking about it"
+   ],
+   "songs": [
+    "SR-F07-T02",
+    "SR-F07-T14",
+    "SR-F01-T01"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Injustice / unfairness",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-010",
+   "phrases": [
+    "I feel helpless",
+    "helpless",
+    "feel so helpless",
+    "powerless against"
+   ],
+   "songs": [
+    "SR-F08-T05",
+    "SR-F08-T06"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Injustice / unfairness",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-011",
+   "phrases": [
+    "double standards",
+    "hypocrites",
+    "hypocrisy"
+   ],
+   "songs": [
+    "SR-F04-T02"
+   ],
+   "conf": "low",
+   "register": "plain",
+   "theme": "Injustice / unfairness",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-012",
+   "phrases": [
+    "I don't want to be bitter about it anymore",
+    "do not want to be bitter",
+    "tired of being bitter",
+    "stop being bitter"
+   ],
+   "songs": [
+    "SR-F07-T06"
+   ],
+   "conf": "medium",
+   "register": "negation",
+   "theme": "Injustice / unfairness",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-013",
+   "phrases": [
+    "The news makes me angry",
+    "the news makes me furious",
+    "angry about what is happening in the world",
+    "news makes me"
+   ],
+   "songs": [
+    "SR-F07-T02",
+    "SR-F07-T06"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Injustice / unfairness",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-014",
+   "phrases": [
+    "The world feels broken",
+    "the world is broken",
+    "world is falling apart"
+   ],
+   "songs": [
+    "SR-F08-T06",
+    "SR-F03-T03"
+   ],
+   "conf": "low",
+   "register": "metaphor",
+   "theme": "Injustice / unfairness",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-015",
+   "phrases": [
+    "I feel congested",
+    "congested",
+    "congestion",
+    "less congested"
+   ],
+   "songs": [
+    "SR-F01-T01",
+    "SR-F08-T01",
+    "SR-F08-T03"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-016",
+   "phrases": [
+    "My head feels congested",
+    "head is congested",
+    "mind feels congested",
+    "brain feels congested"
+   ],
+   "songs": [
+    "SR-F01-T01",
+    "SR-F08-T03"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-017",
+   "phrases": [
+    "I feel blocked up inside",
+    "blocked up",
+    "feel blocked"
+   ],
+   "songs": [
+    "SR-F01-T01",
+    "SR-F08-T01"
+   ],
+   "conf": "low-medium",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-018",
+   "phrases": [
+    "Everything is happening at once",
+    "everything at once",
+    "all at once",
+    "too much at once",
+    "everything happening at the same time"
+   ],
+   "songs": [
+    "SR-F07-T09",
+    "SR-F01-T01",
+    "SR-F01-T09"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-019",
+   "phrases": [
+    "I want some breathing room",
+    "breathing room",
+    "breathing space",
+    "room to breathe",
+    "space to breathe",
+    "a moment to breathe",
+    "a minute to myself",
+    "a moment to myself"
+   ],
+   "songs": [
+    "SR-F08-T01",
+    "SR-F04-T06",
+    "SR-F01-T01",
+    "SR-F05-T06"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-020",
+   "phrases": [
+    "There's no room to breathe",
+    "no room to breathe",
+    "no space to breathe"
+   ],
+   "songs": [
+    "SR-F08-T01",
+    "SR-F01-T01"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-021",
+   "phrases": [
+    "I have too much on my plate",
+    "on my plate",
+    "full plate",
+    "at capacity"
+   ],
+   "songs": [
+    "SR-F01-T09",
+    "SR-F01-T01"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-022",
+   "phrases": [
+    "I'm stretched too thin",
+    "stretched too thin",
+    "spread too thin",
+    "spreading myself too thin",
+    "stretched thin"
+   ],
+   "songs": [
+    "SR-F01-T09"
+   ],
+   "conf": "high",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-023",
+   "phrases": [
+    "I'm juggling too many things",
+    "juggling too many",
+    "spinning too many plates",
+    "spinning plates",
+    "too many balls in the air"
+   ],
+   "songs": [
+    "SR-F01-T09",
+    "SR-F01-T01"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-024",
+   "phrases": [
+    "It's all too much",
+    "all too much",
+    "it is too much",
+    "too much right now",
+    "too much going on"
+   ],
+   "songs": [
+    "SR-F01-T01",
+    "SR-F07-T09"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-025",
+   "phrases": [
+    "I feel swamped",
+    "swamped"
+   ],
+   "songs": [
+    "SR-F01-T01",
+    "SR-F01-T09"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-026",
+   "phrases": [
+    "Everything is piling up",
+    "piling up",
+    "piling on",
+    "buried under"
+   ],
+   "songs": [
+    "SR-F01-T01",
+    "SR-F01-T09"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-027",
+   "phrases": [
+    "I can't keep up",
+    "can not keep up",
+    "falling behind"
+   ],
+   "songs": [
+    "SR-F01-T09",
+    "SR-F01-T01"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-028",
+   "phrases": [
+    "I'm frazzled",
+    "frazzled"
+   ],
+   "songs": [
+    "SR-F08-T05",
+    "SR-F04-T06"
+   ],
+   "conf": "low-medium",
+   "register": "slang",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-029",
+   "phrases": [
+    "My brain is fried",
+    "brain is fried",
+    "brain feels fried",
+    "my head is fried"
+   ],
+   "songs": [
+    "SR-F01-T01",
+    "SR-F08-T05"
+   ],
+   "conf": "low-medium",
+   "register": "slang",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-030",
+   "phrases": [
+    "I need space",
+    "need some space",
+    "give me space"
+   ],
+   "songs": [
+    "SR-F08-T01",
+    "SR-F01-T01"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-031",
+   "phrases": [
+    "It feels like fog",
+    "like fog",
+    "in a fog",
+    "foggy head",
+    "brain fog"
+   ],
+   "songs": [
+    "SR-F08-T03",
+    "SR-F07-T14"
+   ],
+   "conf": "high",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-032",
+   "phrases": [
+    "It feels like a storm inside",
+    "like a storm",
+    "storm inside",
+    "inner storm"
+   ],
+   "songs": [
+    "SR-F07-T09"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-033",
+   "phrases": [
+    "I feel like I'm about to snap",
+    "about to snap",
+    "going to snap",
+    "i keep snapping"
+   ],
+   "songs": [
+    "SR-F07-T06"
+   ],
+   "conf": "medium",
+   "register": "slang",
+   "theme": "Overwhelm / congestion / no breathing room",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-034",
+   "phrases": [
+    "I'm burnt out",
+    "burnt out",
+    "burned out",
+    "burnout",
+    "burn out"
+   ],
+   "songs": [
+    "SR-F06-T03",
+    "SR-F01-T02",
+    "SR-F04-T06"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-035",
+   "phrases": [
+    "I'm running on empty",
+    "running on empty"
+   ],
+   "songs": [
+    "SR-F01-T02",
+    "SR-F08-T05"
+   ],
+   "conf": "high",
+   "register": "metaphor",
+   "theme": "Work / burnout",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-036",
+   "phrases": [
+    "I've got nothing left to give",
+    "nothing left to give",
+    "nothing left",
+    "got nothing left"
+   ],
+   "songs": [
+    "SR-F08-T05",
+    "SR-F01-T02"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-037",
+   "phrases": [
+    "I feel drained",
+    "drained",
+    "so drained",
+    "physically drained"
+   ],
+   "songs": [
+    "SR-F08-T05",
+    "SR-F01-T02"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-038",
+   "phrases": [
+    "I'm wiped out",
+    "wiped out",
+    "knackered",
+    "totally fried"
+   ],
+   "songs": [
+    "SR-F08-T05",
+    "SR-F04-T06"
+   ],
+   "conf": "medium",
+   "register": "slang",
+   "theme": "Work / burnout",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-039",
+   "phrases": [
+    "I'm tired",
+    "tired",
+    "so tired",
+    "tired all the time",
+    "exhausted",
+    "worn out"
+   ],
+   "songs": [
+    "SR-F08-T05",
+    "SR-F01-T02",
+    "SR-F04-T06"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-040",
+   "phrases": [
+    "I'm working so hard and getting nowhere",
+    "getting nowhere",
+    "spinning my wheels"
+   ],
+   "songs": [
+    "SR-F06-T03"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-041",
+   "phrases": [
+    "I feel like a hamster on a wheel",
+    "hamster wheel",
+    "hamster on a wheel",
+    "on a treadmill"
+   ],
+   "songs": [
+    "SR-F07-T12"
+   ],
+   "conf": "high",
+   "register": "metaphor",
+   "theme": "Work / burnout",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-042",
+   "phrases": [
+    "I'm done with the grind",
+    "the grind",
+    "daily grind",
+    "life feels like a grind"
+   ],
+   "songs": [
+    "SR-F02-T05",
+    "SR-F05-T04"
+   ],
+   "conf": "medium",
+   "register": "slang",
+   "theme": "Work / burnout",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-043",
+   "phrases": [
+    "I hate my job",
+    "hate my job",
+    "dead-end job",
+    "dead end job"
+   ],
+   "songs": [
+    "SR-F06-T03",
+    "SR-F02-T07"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-044",
+   "phrases": [
+    "My boss micromanages everything",
+    "micromanage",
+    "micromanaged",
+    "micromanages",
+    "controlling boss"
+   ],
+   "songs": [
+    "SR-F08-T01",
+    "SR-F01-T10"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-045",
+   "phrases": [
+    "I'm sick of carrying my whole team",
+    "carrying my whole team",
+    "carrying the team"
+   ],
+   "songs": [
+    "SR-F04-T05",
+    "SR-F02-T06"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-046",
+   "phrases": [
+    "I can't switch off from work",
+    "switch off from work",
+    "can not stop thinking about work"
+   ],
+   "songs": [
+    "SR-F07-T02"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-047",
+   "phrases": [
+    "I want to quit but I'm scared",
+    "want to quit",
+    "scared to quit",
+    "thinking of quitting"
+   ],
+   "songs": [
+    "SR-F02-T03",
+    "SR-F08-T04"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-048",
+   "phrases": [
+    "I'm fed up",
+    "fed up",
+    "over it",
+    "had enough"
+   ],
+   "songs": [
+    "SR-F01-T03",
+    "SR-F04-T05"
+   ],
+   "conf": "low-medium",
+   "register": "slang",
+   "theme": "Work / burnout",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-049",
+   "phrases": [
+    "I feel undervalued at work",
+    "undervalued",
+    "unappreciated at work"
+   ],
+   "songs": [],
+   "conf": "n/a",
+   "register": "plain",
+   "theme": "Work / burnout",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-050",
+   "phrases": [
+    "I was betrayed",
+    "betrayed",
+    "betrayal",
+    "betrayed by"
+   ],
+   "songs": [
+    "SR-F03-T03",
+    "SR-F01-T05",
+    "SR-F04-T07"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-051",
+   "phrases": [
+    "My partner cheated on me",
+    "cheated on me"
+   ],
+   "songs": [
+    "SR-F03-T08",
+    "SR-F03-T03"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-052",
+   "phrases": [
+    "Someone lied to me",
+    "lied to me",
+    "lying to me",
+    "lies about me"
+   ],
+   "songs": [
+    "SR-F01-T05"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-053",
+   "phrases": [
+    "I feel stabbed in the back",
+    "stabbed in the back",
+    "backstabbed"
+   ],
+   "songs": [
+    "SR-F03-T03",
+    "SR-F01-T05"
+   ],
+   "conf": "low-medium",
+   "register": "metaphor",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-054",
+   "phrases": [
+    "I can't trust anyone anymore",
+    "can not trust anyone",
+    "trust issues",
+    "can not trust people"
+   ],
+   "songs": [
+    "SR-F03-T03",
+    "SR-F04-T07"
+   ],
+   "conf": "low",
+   "register": "negation",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-055",
+   "phrases": [
+    "I hurt someone and want to make it right",
+    "make it right",
+    "i messed up",
+    "i hurt someone",
+    "win back their trust"
+   ],
+   "songs": [
+    "SR-F07-T07"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-056",
+   "phrases": [
+    "I broke my partner's trust",
+    "broke their trust",
+    "broke his trust",
+    "broke her trust"
+   ],
+   "songs": [
+    "SR-F07-T07"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-057",
+   "phrases": [
+    "We keep fighting",
+    "keep fighting",
+    "keep arguing",
+    "always arguing",
+    "same argument"
+   ],
+   "songs": [
+    "SR-F06-T01",
+    "SR-F07-T06"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-058",
+   "phrases": [
+    "I'm heartbroken",
+    "heartbroken",
+    "broken heart",
+    "heartbreak"
+   ],
+   "songs": [
+    "SR-F03-T08"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-059",
+   "phrases": [
+    "I keep choosing the wrong people",
+    "wrong people",
+    "same relationship pattern"
+   ],
+   "songs": [
+    "SR-F03-T08"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-060",
+   "phrases": [
+    "Nobody has my back",
+    "no one has my back",
+    "nobody is on my side",
+    "no one is on my side"
+   ],
+   "songs": [
+    "SR-F03-T03"
+   ],
+   "conf": "high",
+   "register": "slang",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-061",
+   "phrases": [
+    "I feel used",
+    "feel used"
+   ],
+   "songs": [
+    "SR-F02-T06",
+    "SR-F01-T02"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-062",
+   "phrases": [
+    "I gave everything and got nothing back",
+    "gave everything",
+    "always the one who gives",
+    "i always give more"
+   ],
+   "songs": [
+    "SR-F01-T02"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-063",
+   "phrases": [
+    "I don't want to be angry anymore",
+    "do not want to be angry",
+    "stop being angry",
+    "no longer want to be angry",
+    "tired of being angry",
+    "do not want to feel angry"
+   ],
+   "songs": [
+    "SR-F07-T06",
+    "SR-F01-T04"
+   ],
+   "conf": "high",
+   "register": "negation",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-064",
+   "phrases": [
+    "I can't let go of my anger",
+    "let go of my anger",
+    "holding on to anger",
+    "holding onto anger"
+   ],
+   "songs": [
+    "SR-F07-T06"
+   ],
+   "conf": "high",
+   "register": "negation",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-065",
+   "phrases": [
+    "I want to forgive but I can't",
+    "want to forgive",
+    "can not forgive"
+   ],
+   "songs": [
+    "SR-F07-T06",
+    "SR-F01-T04"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-066",
+   "phrases": [
+    "My friend is going through a hard time",
+    "friend is struggling",
+    "friend is going through",
+    "be there for them"
+   ],
+   "songs": [
+    "SR-F03-T07"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-067",
+   "phrases": [
+    "I'm grateful for my partner",
+    "grateful for my partner",
+    "thank you for believing in me"
+   ],
+   "songs": [
+    "SR-F02-T08"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-068",
+   "phrases": [
+    "I feel lonely in my relationship",
+    "lonely in my relationship",
+    "lonely in my marriage"
+   ],
+   "songs": [
+    "SR-F06-T06",
+    "SR-F08-T02"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-069",
+   "phrases": [
+    "I want us to work it out",
+    "work it out",
+    "make it work",
+    "make this work",
+    "stick together"
+   ],
+   "songs": [
+    "SR-F06-T01"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-070",
+   "phrases": [
+    "They're toxic",
+    "toxic person",
+    "toxic relationship",
+    "toxic people"
+   ],
+   "songs": [
+    "SR-F01-T05",
+    "SR-F02-T10"
+   ],
+   "conf": "medium",
+   "register": "slang",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-071",
+   "phrases": [
+    "Got ghosted",
+    "ghosted",
+    "ghosting"
+   ],
+   "songs": [],
+   "conf": "n/a",
+   "register": "slang",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-072",
+   "phrases": [
+    "I feel like a fish out of water",
+    "fish out of water"
+   ],
+   "songs": [
+    "SR-F06-T01",
+    "SR-F06-T02",
+    "SR-F06-T06"
+   ],
+   "conf": "high",
+   "register": "metaphor",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-073",
+   "phrases": [
+    "I feel like a square peg in a round hole",
+    "square peg",
+    "round hole"
+   ],
+   "songs": [
+    "SR-F06-T01",
+    "SR-F06-T02",
+    "SR-F06-T06"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-074",
+   "phrases": [
+    "I'm the black sheep",
+    "black sheep"
+   ],
+   "songs": [
+    "SR-F06-T01",
+    "SR-F06-T02",
+    "SR-F06-T06"
+   ],
+   "conf": "low-medium",
+   "register": "metaphor",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-075",
+   "phrases": [
+    "I'm the odd one out",
+    "odd one out"
+   ],
+   "songs": [
+    "SR-F06-T01",
+    "SR-F06-T02",
+    "SR-F06-T06"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-076",
+   "phrases": [
+    "I'm a misfit",
+    "misfit",
+    "do not fit anywhere",
+    "never fit in"
+   ],
+   "songs": [
+    "SR-F06-T01",
+    "SR-F06-T02",
+    "SR-F06-T06"
+   ],
+   "conf": "high",
+   "register": "slang",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-077",
+   "phrases": [
+    "I feel out of place",
+    "out of place"
+   ],
+   "songs": [
+    "SR-F06-T02",
+    "SR-F06-T01",
+    "SR-F06-T06"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-078",
+   "phrases": [
+    "I feel alienated",
+    "alienated",
+    "misunderstood",
+    "nobody understands me"
+   ],
+   "songs": [
+    "SR-F06-T06",
+    "SR-F06-T01",
+    "SR-F06-T02"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-079",
+   "phrases": [
+    "I feel like I'm from another planet",
+    "another planet",
+    "like an alien"
+   ],
+   "songs": [
+    "SR-F06-T01",
+    "SR-F06-T02",
+    "SR-F06-T04"
+   ],
+   "conf": "high",
+   "register": "metaphor",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-080",
+   "phrases": [
+    "I march to the beat of my own drum",
+    "my own drum",
+    "a different drum"
+   ],
+   "songs": [
+    "SR-F06-T01",
+    "SR-F02-T04"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-081",
+   "phrases": [
+    "I don't feel like myself",
+    "do not feel like myself",
+    "not myself lately",
+    "not feeling like myself",
+    "feel off"
+   ],
+   "songs": [
+    "SR-F04-T06",
+    "SR-F08-T02"
+   ],
+   "conf": "medium",
+   "register": "negation",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-082",
+   "phrases": [
+    "I don't know who I am anymore",
+    "who i am anymore",
+    "lost myself"
+   ],
+   "songs": [
+    "SR-F08-T02",
+    "SR-F04-T06"
+   ],
+   "conf": "low-medium",
+   "register": "negation",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-083",
+   "phrases": [
+    "I feel like I'm wearing a mask",
+    "wearing a mask",
+    "tired of pretending",
+    "pretending to be someone"
+   ],
+   "songs": [
+    "SR-F07-T03",
+    "SR-F04-T05",
+    "SR-F01-T08"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-084",
+   "phrases": [
+    "I feel invisible",
+    "invisible",
+    "nobody sees me",
+    "no one notices me"
+   ],
+   "songs": [
+    "SR-F06-T06"
+   ],
+   "conf": "low",
+   "register": "plain",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-085",
+   "phrases": [
+    "I'm homesick",
+    "homesick",
+    "miss home",
+    "live overseas"
+   ],
+   "songs": [
+    "SR-F06-T02"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Identity / feeling different / not fitting in",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-086",
+   "phrases": [
+    "I have writer's block",
+    "writers block",
+    "creative block",
+    "creatively blocked"
+   ],
+   "songs": [
+    "SR-F07-T10",
+    "SR-F02-T05"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-087",
+   "phrases": [
+    "I feel uninspired",
+    "uninspired",
+    "no inspiration",
+    "creative well has run dry",
+    "run out of ideas"
+   ],
+   "songs": [
+    "SR-F07-T10",
+    "SR-F02-T05",
+    "SR-F05-T06"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-088",
+   "phrases": [
+    "I'm scared to share my work",
+    "scared to share",
+    "afraid to share",
+    "share my work"
+   ],
+   "songs": [
+    "SR-F05-T04",
+    "SR-F06-T05"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-089",
+   "phrases": [
+    "I'm a perfectionist",
+    "perfectionist",
+    "perfectionism",
+    "nothing i make is good enough"
+   ],
+   "songs": [
+    "SR-F06-T05",
+    "SR-F05-T04"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-090",
+   "phrases": [
+    "I only create for likes",
+    "create for likes",
+    "for the likes",
+    "create for other people"
+   ],
+   "songs": [
+    "SR-F07-T10"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-091",
+   "phrases": [
+    "I feel like a fraud",
+    "fraud",
+    "imposter",
+    "impostor"
+   ],
+   "songs": [
+    "SR-F07-T08"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-092",
+   "phrases": [
+    "I'm comparing my work to everyone else's",
+    "comparing my art",
+    "comparing my work",
+    "everyone is ahead of me"
+   ],
+   "songs": [
+    "SR-F03-T06"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-093",
+   "phrases": [
+    "I want to make things just for fun again",
+    "just for fun",
+    "for fun again"
+   ],
+   "songs": [
+    "SR-F07-T10",
+    "SR-F02-T05"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-094",
+   "phrases": [
+    "I'm afraid people will judge my work",
+    "judge my work",
+    "think of my work"
+   ],
+   "songs": [
+    "SR-F07-T10"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-095",
+   "phrases": [
+    "I don't have time to create",
+    "time to create",
+    "never have time"
+   ],
+   "songs": [
+    "SR-F05-T06"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-096",
+   "phrases": [
+    "I'm in a creative rut",
+    "in a rut",
+    "stuck in a rut",
+    "creative rut"
+   ],
+   "songs": [
+    "SR-F07-T11",
+    "SR-F07-T10"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Creative frustration",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-097",
+   "phrases": [
+    "I can't finish anything I start",
+    "never finish",
+    "can not finish",
+    "keep starting projects"
+   ],
+   "songs": [
+    "SR-F07-T13"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-098",
+   "phrases": [
+    "I want to dream big",
+    "dream big",
+    "dreaming big"
+   ],
+   "songs": [
+    "SR-F05-T01"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Creative frustration",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-099",
+   "phrases": [
+    "I'm grieving",
+    "grieving",
+    "grief",
+    "mourning",
+    "lost someone",
+    "passed away"
+   ],
+   "songs": [
+    "SR-F03-T01"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Loss / grief",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-100",
+   "phrases": [
+    "I want to support someone who is grieving",
+    "support someone grieving",
+    "someone i love is grieving"
+   ],
+   "songs": [
+    "SR-F03-T07"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Loss / grief",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-101",
+   "phrases": [
+    "I miss how things used to be",
+    "how things used to be",
+    "the way things were"
+   ],
+   "songs": [
+    "SR-F06-T02"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Loss / grief",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-102",
+   "phrases": [
+    "I'm sad",
+    "sad",
+    "so sad",
+    "feeling down",
+    "feeling low",
+    "feeling blue",
+    "down in the dumps",
+    "heavy heart"
+   ],
+   "songs": [],
+   "conf": "n/a",
+   "register": "plain",
+   "theme": "Loss / grief",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-103",
+   "phrases": [
+    "I feel empty",
+    "feel empty"
+   ],
+   "songs": [],
+   "conf": "n/a",
+   "register": "plain",
+   "theme": "Loss / grief",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-104",
+   "phrases": [
+    "I feel numb",
+    "numb"
+   ],
+   "songs": [
+    "SR-F08-T02"
+   ],
+   "conf": "low",
+   "register": "plain",
+   "theme": "Loss / grief",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-105",
+   "phrases": [
+    "I can't stop crying",
+    "can not stop crying",
+    "crying alone",
+    "keep crying"
+   ],
+   "songs": [
+    "SR-F03-T03",
+    "SR-F06-T06"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Loss / grief",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-106",
+   "phrases": [
+    "I want to let go but I can't",
+    "want to let go",
+    "can not let go",
+    "holding on to the past"
+   ],
+   "songs": [
+    "SR-F06-T03",
+    "SR-F01-T01"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Loss / grief",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-107",
+   "phrases": [
+    "Life feels pointless",
+    "pointless",
+    "what is the point"
+   ],
+   "songs": [
+    "SR-F08-T06"
+   ],
+   "conf": "low",
+   "register": "plain",
+   "theme": "Loss / grief",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-108",
+   "phrases": [
+    "I want to feel free",
+    "feel free",
+    "break free",
+    "set myself free"
+   ],
+   "songs": [
+    "SR-F08-T01",
+    "SR-F01-T07"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-109",
+   "phrases": [
+    "I feel boxed in",
+    "boxed in",
+    "hemmed in",
+    "caged"
+   ],
+   "songs": [
+    "SR-F08-T01"
+   ],
+   "conf": "high",
+   "register": "metaphor",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-110",
+   "phrases": [
+    "I need a clear head",
+    "clear head",
+    "clear my head",
+    "want clarity",
+    "need clarity"
+   ],
+   "songs": [
+    "SR-F08-T03",
+    "SR-F07-T14"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-111",
+   "phrases": [
+    "I want to feel ready",
+    "feel ready",
+    "ready for something new"
+   ],
+   "songs": [
+    "SR-F08-T04"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-112",
+   "phrases": [
+    "I have cold feet",
+    "cold feet"
+   ],
+   "songs": [
+    "SR-F08-T04",
+    "SR-F02-T03"
+   ],
+   "conf": "high",
+   "register": "metaphor",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-113",
+   "phrases": [
+    "I have butterflies in my stomach",
+    "butterflies"
+   ],
+   "songs": [
+    "SR-F08-T04"
+   ],
+   "conf": "medium",
+   "register": "physical sensation",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-114",
+   "phrases": [
+    "I need strength",
+    "need strength",
+    "feel strong",
+    "want to feel strong",
+    "inner strength"
+   ],
+   "songs": [
+    "SR-F08-T05"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-115",
+   "phrases": [
+    "I'm at the end of my tether",
+    "end of my tether",
+    "end of my rope"
+   ],
+   "songs": [
+    "SR-F08-T05"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-116",
+   "phrases": [
+    "I want to feel hopeful again",
+    "feel hopeful",
+    "hope again",
+    "need hope",
+    "give me hope"
+   ],
+   "songs": [
+    "SR-F08-T06"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-117",
+   "phrases": [
+    "I want to feel whole",
+    "feel whole",
+    "feel connected",
+    "connected to something bigger",
+    "at one with everything",
+    "oneness"
+   ],
+   "songs": [
+    "SR-F08-T02"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-118",
+   "phrases": [
+    "I feel like I'm falling apart",
+    "falling apart",
+    "coming apart",
+    "torn apart"
+   ],
+   "songs": [
+    "SR-F08-T02"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-119",
+   "phrases": [
+    "I feel lost",
+    "feel lost",
+    "so lost",
+    "lost my way"
+   ],
+   "songs": [
+    "SR-F02-T02"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-120",
+   "phrases": [
+    "I want to be brave",
+    "be brave",
+    "feel brave",
+    "go all in"
+   ],
+   "songs": [
+    "SR-F05-T04",
+    "SR-F08-T04"
+   ],
+   "conf": "medium",
+   "register": "positive",
+   "theme": "Hope, freedom, clarity, readiness, strength, oneness (F08 I Am)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-121",
+   "phrases": [
+    "I can't sleep",
+    "help me sleep",
+    "can not sleep",
+    "something for bedtime",
+    "insomnia",
+    "lying awake",
+    "keep waking up",
+    "waking up at night",
+    "keeping me up at night",
+    "keeps me up at night"
+   ],
+   "songs": [
+    "SR-F07-T01",
+    "SR-F07-T02",
+    "SR-F07-T03"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Sleep / rest / can't switch off",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-122",
+   "phrases": [
+    "I can't switch off",
+    "can not switch off",
+    "can not turn my brain off",
+    "mind will not stop",
+    "too wired to sleep"
+   ],
+   "songs": [
+    "SR-F07-T02",
+    "SR-F07-T09"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Sleep / rest / can't switch off",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-123",
+   "phrases": [
+    "My thoughts are racing at night",
+    "racing thoughts",
+    "thoughts are racing",
+    "racing mind"
+   ],
+   "songs": [
+    "SR-F07-T09"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Sleep / rest / can't switch off",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-124",
+   "phrases": [
+    "I went to bed angry",
+    "bed angry",
+    "replaying the argument",
+    "replay the argument"
+   ],
+   "songs": [
+    "SR-F07-T06"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Sleep / rest / can't switch off",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-125",
+   "phrases": [
+    "I can't stop overthinking at night",
+    "overthinking at night",
+    "overthink at night",
+    "overthinking in bed"
+   ],
+   "songs": [
+    "SR-F07-T14",
+    "SR-F07-T09"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Sleep / rest / can't switch off",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-126",
+   "phrases": [
+    "I need to unwind",
+    "unwind",
+    "wind down",
+    "after a long day"
+   ],
+   "songs": [
+    "SR-F04-T06",
+    "SR-F05-T06"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Sleep / rest / can't switch off",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-127",
+   "phrases": [
+    "I'm restless",
+    "restless",
+    "antsy"
+   ],
+   "songs": [
+    "SR-F05-T01"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Sleep / rest / can't switch off",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-128",
+   "phrases": [
+    "I'm doing well but want to feel more inspired",
+    "more inspired",
+    "want inspiration",
+    "need inspiration",
+    "keep me inspired",
+    "feel inspired"
+   ],
+   "songs": [
+    "SR-F05-T06",
+    "SR-F05-T01",
+    "SR-F07-T05"
+   ],
+   "conf": "medium",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-129",
+   "phrases": [
+    "I'm happy but restless for something more",
+    "something more",
+    "want more from life"
+   ],
+   "songs": [
+    "SR-F05-T01"
+   ],
+   "conf": "medium",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-130",
+   "phrases": [
+    "I want to keep this good energy going",
+    "keep this energy",
+    "keep the momentum",
+    "keep this going"
+   ],
+   "songs": [
+    "SR-F07-T13",
+    "SR-F02-T05"
+   ],
+   "conf": "medium",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-131",
+   "phrases": [
+    "I want to celebrate",
+    "celebrate",
+    "celebration",
+    "celebrate a win",
+    "good news"
+   ],
+   "songs": [
+    "SR-F05-T04"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-132",
+   "phrases": [
+    "I want to dance",
+    "dance",
+    "dancing"
+   ],
+   "songs": [
+    "SR-F05-T04"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-133",
+   "phrases": [
+    "I'm feeling grateful",
+    "grateful",
+    "thankful",
+    "gratitude"
+   ],
+   "songs": [
+    "SR-F07-T04",
+    "SR-F02-T08",
+    "SR-F07-T16"
+   ],
+   "conf": "high",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-134",
+   "phrases": [
+    "I feel blessed",
+    "blessed"
+   ],
+   "songs": [
+    "SR-F07-T04",
+    "SR-F03-T01"
+   ],
+   "conf": "medium",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-135",
+   "phrases": [
+    "I'm on top of the world",
+    "on top of the world",
+    "over the moon",
+    "on cloud nine",
+    "chuffed"
+   ],
+   "songs": [
+    "SR-F05-T04",
+    "SR-F02-T05"
+   ],
+   "conf": "medium",
+   "register": "slang",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-136",
+   "phrases": [
+    "I'm pumped",
+    "pumped",
+    "fired up",
+    "excited about what is coming",
+    "exciting times"
+   ],
+   "songs": [
+    "SR-F04-T07",
+    "SR-F05-T04"
+   ],
+   "conf": "medium",
+   "register": "slang",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-137",
+   "phrases": [
+    "I just got engaged",
+    "got engaged",
+    "getting married"
+   ],
+   "songs": [
+    "SR-F05-T04"
+   ],
+   "conf": "medium",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-138",
+   "phrases": [
+    "I'm content",
+    "content",
+    "feel calm",
+    "calm and want to stay",
+    "peaceful"
+   ],
+   "songs": [
+    "SR-F02-T10",
+    "SR-F05-T06",
+    "SR-F04-T06"
+   ],
+   "conf": "medium",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-139",
+   "phrases": [
+    "I'm proud of myself",
+    "proud of myself",
+    "finished my degree"
+   ],
+   "songs": [
+    "SR-F07-T01"
+   ],
+   "conf": "low-medium",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-140",
+   "phrases": [
+    "Life is good right now",
+    "life is good",
+    "in a good place",
+    "in a really good place",
+    "feel great",
+    "feeling good",
+    "good mood"
+   ],
+   "songs": [
+    "SR-F04-T06",
+    "SR-F03-T01"
+   ],
+   "conf": "medium",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-141",
+   "phrases": [
+    "I want to stay grounded",
+    "stay grounded",
+    "feel grounded",
+    "grounding"
+   ],
+   "songs": [
+    "SR-F06-T04"
+   ],
+   "conf": "medium",
+   "register": "positive",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-142",
+   "phrases": [
+    "Vibing today",
+    "vibing",
+    "good vibes"
+   ],
+   "songs": [
+    "SR-F04-T06",
+    "SR-F05-T04"
+   ],
+   "conf": "low",
+   "register": "slang",
+   "theme": "Positive states (inspiration, celebration, gratitude)",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-143",
+   "phrases": [
+    "My chest feels tight",
+    "chest feels tight",
+    "tight chest",
+    "chest is tight",
+    "chest has been tight",
+    "tightness in my chest",
+    "weight on my chest"
+   ],
+   "songs": [
+    "SR-F04-T06",
+    "SR-F06-T04"
+   ],
+   "conf": "low",
+   "register": "physical sensation",
+   "theme": "Physical sensation",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-144",
+   "phrases": [
+    "I'm cautious to why I feel that way",
+    "cautious to why",
+    "cautious about why",
+    "not sure why i feel",
+    "do not know why i feel",
+    "unsure why i feel",
+    "can not tell if"
+   ],
+   "songs": [
+    "SR-F08-T03",
+    "SR-F07-T03",
+    "SR-F06-T04"
+   ],
+   "conf": "medium",
+   "register": "plain",
+   "theme": "Physical sensation",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-145",
+   "phrases": [
+    "My body is telling me something but I don't know what",
+    "body is telling me",
+    "listen to my body",
+    "listen to myself"
+   ],
+   "songs": [
+    "SR-F04-T06",
+    "SR-F07-T03",
+    "SR-F08-T03"
+   ],
+   "conf": "medium",
+   "register": "physical sensation",
+   "theme": "Physical sensation",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-146",
+   "phrases": [
+    "I have a knot in my stomach",
+    "knot in my stomach",
+    "stomach is in knots",
+    "stomach in knots",
+    "pit in my stomach"
+   ],
+   "songs": [
+    "SR-F06-T04",
+    "SR-F04-T06"
+   ],
+   "conf": "low",
+   "register": "physical sensation",
+   "theme": "Physical sensation",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-147",
+   "phrases": [
+    "My shoulders are so tense",
+    "tense",
+    "tension in my body",
+    "uptight",
+    "wound up",
+    "on edge"
+   ],
+   "songs": [
+    "SR-F06-T04",
+    "SR-F07-T09"
+   ],
+   "conf": "low",
+   "register": "physical sensation",
+   "theme": "Physical sensation",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-148",
+   "phrases": [
+    "I need to get something off my chest",
+    "off my chest"
+   ],
+   "songs": [
+    "SR-F06-T06"
+   ],
+   "conf": "medium",
+   "register": "metaphor",
+   "theme": "Physical sensation",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-149",
+   "phrases": [
+    "I feel heavy",
+    "feel heavy",
+    "body feels heavy",
+    "a heaviness"
+   ],
+   "songs": [
+    "SR-F01-T02",
+    "SR-F01-T01"
+   ],
+   "conf": "low",
+   "register": "physical sensation",
+   "theme": "Physical sensation",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-150",
+   "phrases": [
+    "My heart is racing",
+    "heart is racing",
+    "heart racing",
+    "can not catch my breath",
+    "head is pounding",
+    "i feel shaky"
+   ],
+   "songs": [],
+   "conf": "n/a",
+   "register": "physical sensation",
+   "theme": "Physical sensation",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-151",
+   "phrases": [
+    "I don't know what I need",
+    "do not know what i need",
+    "not sure what i need",
+    "dunno what i need",
+    "no idea what i need",
+    "i need something but"
+   ],
+   "songs": [
+    "SR-F05-T01",
+    "SR-F08-T03",
+    "SR-F07-T03"
+   ],
+   "conf": "medium",
+   "register": "negation",
+   "theme": "Unsure / don't know what I need",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-152",
+   "phrases": [
+    "I don't know how I feel",
+    "do not know how i feel",
+    "do not know what i am feeling",
+    "hard to explain how i feel",
+    "how to explain it"
+   ],
+   "songs": [
+    "SR-F08-T03",
+    "SR-F07-T03",
+    "SR-F06-T04"
+   ],
+   "conf": "medium",
+   "register": "negation",
+   "theme": "Unsure / don't know what I need",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-153",
+   "phrases": [
+    "I'm not sure what I want",
+    "not sure what i want",
+    "do not know what i want",
+    "unsure"
+   ],
+   "songs": [
+    "SR-F05-T01",
+    "SR-F08-T03"
+   ],
+   "conf": "medium",
+   "register": "negation",
+   "theme": "Unsure / don't know what I need",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-154",
+   "phrases": [
+    "I'm not okay",
+    "not okay",
+    "do not feel okay",
+    "not ok"
+   ],
+   "songs": [
+    "SR-F06-T06"
+   ],
+   "conf": "low",
+   "register": "negation",
+   "theme": "Unsure / don't know what I need",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-155",
+   "phrases": [
+    "I need help",
+    "i need help",
+    "can you help me"
+   ],
+   "songs": [
+    "SR-F06-T06",
+    "SR-F03-T03"
+   ],
+   "conf": "low-medium",
+   "register": "plain",
+   "theme": "Unsure / don't know what I need",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-156",
+   "phrases": [
+    "I feel meh",
+    "meh",
+    "blah",
+    "out of sorts"
+   ],
+   "songs": [
+    "SR-F02-T05",
+    "SR-F07-T11"
+   ],
+   "conf": "low-medium",
+   "register": "slang",
+   "theme": "Unsure / don't know what I need",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-157",
+   "phrases": [
+    "I'm all over the place",
+    "all over the place"
+   ],
+   "songs": [
+    "SR-F08-T02",
+    "SR-F07-T09"
+   ],
+   "conf": "high",
+   "register": "metaphor",
+   "theme": "Unsure / don't know what I need",
+   "source": "documented"
+  },
+  {
+   "id": "EXP-158",
+   "phrases": [
+    "Surprise me",
+    "surprise me",
+    "whatever works",
+    "just play something"
+   ],
+   "songs": [],
+   "conf": "n/a",
+   "register": "plain",
+   "theme": "Unsure / don't know what I need",
+   "source": "ai-generated"
+  },
+  {
+   "id": "EXP-159",
+   "phrases": [
+    "I'm tired of carrying everyone else's problems",
+    "carrying everyone else's problems",
+    "carrying other people's problems",
+    "everyone else's problems",
+    "other people's problems",
+    "not my problem"
+   ],
+   "songs": [
+    "SR-F01-T05",
+    "SR-F02-T06"
+   ],
+   "conf": "high",
+   "register": "plain",
+   "theme": "Relationships / betrayal / trust",
+   "source": "ai-generated"
+  }
+ ]
+}
