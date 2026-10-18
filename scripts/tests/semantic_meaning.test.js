@@ -111,15 +111,15 @@ ok(rec('Nobody in my class talks like me or likes what I like.').results.some(x 
 ok(!C('I feel like a balloon someone let go of.').lettingGo, 'R2 event inside a simile vehicle is not the visitor letting go');
 ok(!C('I lifted the heavy boxes at work.').burden, 'R2 literal physical weight in a task frame is not burden');
 r = rec("I'm homesick and far from where I belong.");
-ok(r.results.every(x => !/You said "I belong"/.test(x.explanation)), 'R2 no fragment quote under an absence predicate');
+ok(r.results.every(x => x.explanation === x.song.description), 'R2 description is the song\'s own (no quote of the visitor)');
 ok(!C('The whole world looks washed out lately.').connection, 'R2 "the whole X" is a quantity modifier, not wholeness');
 r = rec('Lately it feels like my candle is burning at both ends.');
 ok(!!C('Lately it feels like my candle is burning at both ends.').depleted && r.results.every(x => x.cls >= 2) && r.status !== 'ok', 'R2 figurative schema is tentative (never class 1, not ok status)');
 r = rec('I moved to a new country last year and even though it\'s great here I still feel like I don\'t belong.');
 ok(r.results.some(x => x.song.formula.number === 6), 'R2 F06 considered for not belonging after a move');
-ok(r.results.every(x => !/You said "[^"]*\b(and|even)"/.test(x.explanation)), 'R2 quotes end on a complete clause');
+ok(r.results.every(x => !/"/.test(x.explanation)), 'R2 descriptions contain no quotation');
 r = rec('It keeps me up that people with power get away with hurting others.');
-ok(r.results.every(x => !/^Your words connect with this record/.test(x.explanation)), 'R2 no unexplainable class-2 match');
+ok(r.results.every(x => !/^Your words connect with this record/.test(x.explanation) && x.cls !== 5), 'R2 no unexplainable class-2 match');
 
 if (src && fs.existsSync(src)) {
   const bad = path.join(tmp, 'bad.xlsx');

@@ -1,6 +1,6 @@
 {
- "dataVersion": "2026-10-18-f1bbc39d86db",
- "generated": "2026-10-18T07:39:03Z",
+ "dataVersion": "2026-10-18-b42416693f0e",
+ "generated": "2026-10-18T08:52:45Z",
  "source": "SONIC REMEDY — MASTER SONG INDEX",
  "sheetExport": {
   "file": "master-tab04-after.xlsx",
@@ -14,19 +14,19 @@
  ],
  "files": {
   "songs.json": {
-   "sha256": "cd0e592c77fd11c55eaf082f7af2cd4ff9089df2c9b54fbc177a35a8b242f2ca",
-   "bytes": 158267
+   "sha256": "c612dfa3cf9c26bd9a41a09b51cfb639f51eb22206890df7cb333af5b5c50ae6",
+   "bytes": 166353
   },
   "expressions.json": {
-   "sha256": "b65bb871c8a4e2c8f6f1a13ce05827e0b8314a3c6fd4621f7d385a6a4fffdb7f",
+   "sha256": "17f12d45cd6325a7e4220fa96071b6ee8e1f7736e3cc95543de5866e1b2f2a7e",
    "bytes": 51512
   },
   "affinities.json": {
-   "sha256": "e3c92f8a33d86c9c4451f50b21047fe1b8d12bb5b6c4e8796996748a96b78275",
+   "sha256": "0af6cd0f29d9654f7c3386ae78217d305a7e95c533b1584c048b76b1af72b042",
    "bytes": 4788
   },
   "meaning.json": {
-   "sha256": "c853f025882eb11d19a4ebb47c03abf6bf68429ffb66e85377fce2041c6efaa1",
+   "sha256": "35101fc76c6cbc7af036b2d407b2c8427d53215c1764e7a1b1730ea2d71a6678",
    "bytes": 31757
   }
  },
@@ -46,6 +46,8 @@
   "only F06 affinity artist-confirmed": "pass",
   "affinity formula names match TAB 01": "pass",
   "about line for every song, health-free": "pass",
+  "description for every song": "pass",
+  "descriptions: one sentence, no quotes/visitor wording/mechanism/health, type-accurate": "pass",
   "TAB 05 links valid": "pass",
   "every track has a vocal profile with a source": "pass",
   "vocal profiles consistent with composition type": "pass"

@@ -74,6 +74,10 @@ GUARDRAILS = OrderedDict([
 ])
 F06_CUE = 'ARTIST-CONFIRMED FORMULA-LEVEL LISTENING AFFINITY'
 GENERIC_H = 'Do not infer unstated causes, emotions or intentions.'
+DESC_MAX, DESC_MAX_WORDS = 140, 25
+# visible descriptions describe the composition only: no repetition of the visitor, no matching mechanism,
+# no claims about what the visitor feels (user decision 2026-10-18)
+DESC_BANNED = re.compile(r"\b(you said|you mentioned|you asked|you shared|you wrote|your words|your image|because you|you feel\w*|you're feeling|you are feeling|you seem|connects? (to|with)|connection (to|with)|possible connection|match\w*|close to a situation|nothing in the catalogue|related connection|another direction|open place to start)\b", re.I)
 HEALTH = re.compile(r'\b(chest|anxiety|anxious|panic|depress\w*|disorder|symptom\w*|diagnos\w*|doctor|medic\w*|health|therap\w*|illness|cure\w*|treat(ment)?)\b', re.I)
 
 
@@ -102,6 +106,7 @@ def build(xlsx, ddir):
     songs = build_songs.build(xlsx, os.path.join(HERE, 'why_lines.json'))
     errs += build_songs.validate(songs)
     about = json.load(open(os.path.join(HERE, 'about_lines.json')))
+    desc = json.load(open(os.path.join(HERE, 'description_lines.json')))
     t1 = {r['Song ID']: r for r in build_songs.rows(build_songs.tab(wb, 'TAB 01')) if ID_RE.match(r.get('Song ID', ''))}
     t2 = {r['Song ID']: r for r in build_songs.rows(build_songs.tab(wb, 'TAB 02')) if ID_RE.match(r.get('Song ID', ''))}
 
@@ -221,6 +226,29 @@ def build(xlsx, ddir):
     bad = [sid for sid in ids if not about.get(sid) or HEALTH.search(about[sid])]
     check('about line for every song, health-free', not bad, bad)
 
+    # public descriptions (one per song, independent of the visitor's input)
+    check('description for every song', all(desc.get(i) for i in ids) and not set(desc) - set(ids) - {'_note'},
+          [i for i in ids if not desc.get(i)] + sorted(set(desc) - set(ids) - {'_note'}))
+    bad = {}
+    types = {x['id']: x for x in songs}
+    for i in ids:
+        d = desc.get(i) or ''
+        why = []
+        if len(d) > DESC_MAX or len(d.split()) > DESC_MAX_WORDS: why.append('too long')
+        if not re.match(r'^[A-Z].*[.]$', d) or re.search(r'[.!?;]\s+\S', d): why.append('not one sentence')
+        if re.search(r'["\u201c\u201d\u2018\u2019\u00ab\u00bb]', d): why.append('quotation marks')
+        if DESC_BANNED.search(d): why.append('banned phrase: ' + DESC_BANNED.search(d).group(0))
+        if HEALTH.search(d) or re.search(r'\bheal\w*', d, re.I): why.append('health/treatment wording')
+        t = types[i]['type'] if i in types else ''
+        if t == 'spoken-sleep' and not d.startswith('A spoken'): why.append('F07 must say spoken sleep contemplation')
+        if t in ('instrumental', 'instrumental-wordless') and (not re.search(r'\binstrumental\b', d) or re.search(r'\b(song|sung|lyric\w*|sing\w*)\b', d, re.I)): why.append('instrumental wording')
+        if t == 'instrumental-wordless' and 'wordless' not in d: why.append('must mention wordless vocals')
+        if t == 'instrumental' and not re.search(r'\bwithout words\b', d): why.append('must say without words')
+        if i.startswith('SR-F06-') and not d.startswith('Sung in an invented language'): why.append('F06 must say invented language')
+        if t == 'spoken-sleep' and re.search(r'\b(song|sung)\b', d): why.append('spoken track called a song')
+        if why: bad[i] = why
+    check('descriptions: one sentence, no quotes/visitor wording/mechanism/health, type-accurate', not bad, bad)
+
     # TAB 05
     try:
         expr = build_expressions.build(xlsx, None, site_ids=set(ids))
@@ -282,6 +310,7 @@ def build(xlsx, ddir):
     for x in songs:
         x.update(vocal[x['id']])
         x['about'] = about[x['id']]
+        x['description'] = desc[x['id']]
         # the song's own TAB 02 circumstances (without the formula-wide F06 association merged into m.situations)
         x['m']['circ'] = build_songs.split(t2[x['id']].get('Specific circumstances where it may resonate', ''))
         x['rule'] = GUARDRAILS.get(x['id'], {}).get('rule') or ('f06_affinity_only' if x['id'] in f06 else None)
