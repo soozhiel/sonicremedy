@@ -37,7 +37,7 @@
     { key: 'pride', dim: 'positive', topic: 'something you are proud of',
       re: /\b(proud|accomplish\w*|i did it|nailed it|finished (the|my)|got the job|got promoted|promot(ed|ion)|passed (my|the) (exam|test))\b/ },
     { key: 'happy', dim: 'positive', topic: 'a good mood',
-      re: /\b(happy|great mood|good mood|over the moon|elated|thrilled|content|life is going well|going well|doing well|good day|feel good|feeling good|grateful|thankful)\b/ }
+      re: /\b(happy|great mood|good mood|over the moon|elated|thrilled|content|life is going well|going well|doing well|(good|lovely|wonderful|beautiful|great|perfect|amazing) (day|time|morning|evening|weekend|week)|feel good|feeling good|grateful|thankful)\b/ }
   ];
 
   var ROLE = {
@@ -78,6 +78,69 @@
     darker: /\b(dark|darker|moody|brooding)\b/
   };
   var NEG_BEFORE = /\b(not|never|no longer|no|without|nothing|isn not|am not)\s+(\w+\s+){0,2}$/;
+
+  /* ------------------------------------------------ clause reasoning (round 3, 2026-10-18)
+   * General, lightweight rules about the structure of what was written, used by discovery.js:
+   *  - who acts and who is affected (first person vs a third person), and who is responsible;
+   *  - when: something that happened (past), is happening, is expected (future) or is imagined ("what if");
+   *  - evaluative polarity of a clause (positive / negative / mixed / neutral) from a small evaluative lexicon;
+   *  - the desired LISTENING experience (calm, focus, celebration, savouring, sleep, nothing uplifting),
+   *    kept separate from the circumstance. Explicit = asked for; inferred = read from a positive moment. */
+  var POS_EVAL = /\b(love|loved|loving|like|liked|enjoy\w*|proud|happy|happier|glad|lovely|wonderful|beautiful|great|amazing|fantastic|good|grateful|thankful|content|excited|delighted|fun|joy\w*|celebrat\w*|wins?|won|success\w*|achiev\w*|best)\b/;
+  var NEG_EVAL = /\b(hate|hated|hates|scared|afraid|fear\w*|worried|worry|nervous|anxious|sad|awful|terrible|horrible|bad|wrong|mistakes?|failures?|failed|failing|stupid|regret\w*|ashamed|guilt\w*|hurt\w*|arguments?|fight\w*|lonely|tired of|sick of|fed up|exhausted|struggl\w*|problems?|pain\w*|miss|missing|lost)\b/;
+  function valence(text) {
+    text = text.replace(/\b(feel|feels|feeling|felt|look|looks|seem|seems|sound|sounds|is|was|just|more|something|anything|kind of|sort of) like\b|\blike (a|an|the|that|this|when|if|i|it)\b/g, ' ');   // comparison "like" is not liking
+    var p = POS_EVAL.test(text), n = NEG_EVAL.test(text);
+    return p && n ? 'mixed' : p ? 'pos' : n ? 'neg' : 'neutral';
+  }
+  var PERSON = '(someone|somebody|him|her|them|people|everyone|my (\\w+ ){0,2}?(daughter|son|kids?|child|children|partner|wife|husband|boyfriend|girlfriend|mum|mom|dad|mother|father|sister|brother|friend|friends|family|boss|colleague|team|coworker)s?)';
+  // the visitor acting against another person
+  var HARM_ACT = new RegExp('\\bi (have |had )?(\\w+ )?(hurt|upset|betrayed|ignored|neglected|snapp?ed at|yelled at|shouted at|screamed at|lashed out at|lost my temper (with|at)|was (so |too |really )?(harsh|mean|cruel|rude|horrible|unkind|nasty|awful|hard) (to|with|on)|let down|lied to|cheated on) ' + PERSON + '\\b');
+  // the visitor owning a fault
+  var SELF_FAULT = /\b(i (was|am) (wrong|to blame|responsible)|(it|that) (was|is) (all )?my fault|my fault|(that|it) (is|was) on me|my (own )?mistake|(a|the) mistake i (made|have made)|i (want to |need to |will |have to |should )?own (it|that|this|up|my)|(take|taking|accept|accepting) (full |all the |the |my )?responsibility|i should not have|i (want to |need to |will )?(apologi[sz]e|say sorry)|regret what i did)\b/;
+  var OTHER_FAULT = /\b(not my fault|their fault|(his|her) fault|theirs to carry|not my (problem|responsibility|mess))\b/;
+  var FUTURE = /\b(tomorrow|tonight|next (week|month|year|time)|this (weekend|evening|afternoon)|on (monday|tuesday|wednesday|thursday|friday|saturday|sunday)|upcoming|coming up|later today|soon)\b/;
+  var HYPOTHETICAL = /\b(what if|in case|might|in the future)\b/;
+  var PAST = /\b(ago|last (week|month|year|night|time)|years? back|back then|when i was (young|a kid|little|younger))\b/;
+  // listening experience cues (documented composition information is matched in discovery.js)
+  var WANT_FRAME = '(want|need|would like|would love|can i (just )?(have|get)|give me|looking for|in the mood for|help me|something|some|a little|just)';
+  var LISTEN = {
+    calm: new RegExp('\\b' + WANT_FRAME + '\\b[^.?!]{0,30}\\b(quiet|calm|calming|peace|peaceful|still|stillness|gentle|soothing|relax\\w*|unwind)\\b'),
+    focus: /\b((need|want|have|trying|try|help me|got) to (focus|concentrate|study|get through|work on|get on with|get (some|my|this|the) (\w+ )?(work|stuff|tasks?|things?) done)|(music|something) (to|for|while i) (focus|concentrate|study|work)|while i (work|study))\b/,
+    celebrate: /\b(celebrat\w*|dance|dancing|party)\b/,
+    savour: /\b((stay|stay in|hold on to|keep|savour|savor|soak (in|up)|enjoy) (this|the|that) (feeling|moment|mood|glow)|make (it|this) last|(a little|a bit) longer)\b/,
+    notUplifting: /\b((do not|dont) (need|want) (cheering up|to be cheered up|anything (upbeat|happy|cheerful))|nothing (upbeat|cheerful|happy)|not in the mood for (upbeat|happy|cheerful))\b/
+  };
+  function reason(f, n, lib) {
+    var cls = lib.clauses(n);
+    f.clauses = cls.map(function (c) {
+      var t = ' ' + c.text.trim() + ' ';
+      var subj = /^\s*(and |so |then |also )?(i|we)\b/.test(t) ? 'self' :
+        /^\s*(and |so |then |also )?(he|she|they|someone|somebody|everyone|everybody|people|my \w+|our \w+|his \w+|her \w+)\b/.test(t) ? 'other' : null;
+      return { text: c.text.trim(), subj: subj, val: valence(t), future: FUTURE.test(t), hypothetical: HYPOTHETICAL.test(t), past: PAST.test(t) };
+    });
+    // responsibility: the visitor owning a wrong done to someone, or someone else's fault
+    var selfFault = SELF_FAULT.test(n) && !OTHER_FAULT.test(n), harm = HARM_ACT.test(n);
+    if (f.role !== 'betrayed' && f.role !== 'blamed' && (harm || selfFault)) f.responsibility = 'self';
+    else if (f.role === 'betrayed' || f.role === 'blamed' || OTHER_FAULT.test(n)) f.responsibility = 'other';
+    if (harm && f.responsibility === 'self' && !f.role) {
+      f.role = 'caused';
+      f.explicit.push({ key: 'role:caused', dim: 'role', topic: null, words: (n.match(HARM_ACT) || [''])[0].trim() });
+    }
+    // a third person's experience ("my friend is going through a breakup") is theirs, not the visitor's
+    f.otherExperience = f.clauses.filter(function (c) { return c.subj === 'other' && /\b(is|are|was|has been|keeps?) (going through|struggling|dealing with|having a hard time|sad|upset|grieving|hurting)\b/.test(c.text); }).map(function (c) { return c.text; });
+    if (f.otherExperience.length) f.situation = f.situation.filter(function (k) { return k !== 'heartbreak' || !f.otherExperience.some(function (c) { return /heartbr|break ?up|broke up|my ex|dumped/.test(c); }); });
+    // listening experience
+    f.listening = {};
+    Object.keys(LISTEN).forEach(function (k) { if (LISTEN[k].test(n)) f.listening[k] = 'explicit'; });
+    if (f.listening.notUplifting) delete f.listening.celebrate;
+    // the visitor evaluating their own experience positively ("it felt great") is a positive state
+    if (!f.positive.length && f.clauses.some(function (c) { return c.val === 'pos' && /\b(i|it|that|today|this) (feel|felt|feels|was|is|am)\b/.test(c.text) && !NEG_EVAL.test(c.text); })) f.positive.push('happy');
+    f.anticipation = f.clauses.some(function (c) { return (c.future || c.hypothetical) && c.val !== 'pos'; });
+    // a short sentence whose only object is a bare pronoun ("I can't let it go") does not say what "it" is
+    f.referentUnclear = cls.length === 1 && n.trim().split(/\s+/).length <= 6 && /\b(it|this|that|them)\s*$/.test(n.replace(/[.!?\s]+$/, '').replace(/\b(go|on|up|off|out|back|down)$/, '').trim());
+    return f;
+  }
   var STATE_NEG_OK = /\b(can|could|will|would) not\s+(\w+\s+)?$/;
 
   function interpret(text, lib) {
@@ -142,6 +205,7 @@
     if (f.prefs.notSleepy && /\b(can|could|cannot|will) not (\w+ ){0,2}(sleep|fall asleep|get to sleep|stay asleep)\b/.test(n) && !/\b(not sleepy|not drowsy|stay awake|keep me awake|nothing (sleepy|that makes me (sleepy|drowsy)))\b/.test(n)) delete f.prefs.notSleepy;
     if (f.prefs.alien && /\b(feel|feels|felt|am|like) (an |a )?alien\b/.test(n)) delete f.prefs.alien;   // "I feel like an alien" is not a sound request
 
+    reason(f, n, lib);
     // a metaphor with no other stated meaning stays ambiguous
     if (/\b(feel|feels|felt|am) like (a|an) \w+/.test(n)) f.metaphor = true;
     return f;
@@ -164,7 +228,7 @@
     return f;
   }
 
-  var api = { interpret: interpret, settle: settle, SIGNALS: SIGNALS };
+  var api = { interpret: interpret, settle: settle, SIGNALS: SIGNALS, valence: valence, NEGATIVE_STATES: NEGATIVE_STATES, POS_EVAL: POS_EVAL, NEG_EVAL: NEG_EVAL };
   if (typeof module !== 'undefined' && module.exports) module.exports = api;
   else root.SonicRemedyMeaning = api;
 })(typeof window !== 'undefined' ? window : this);
