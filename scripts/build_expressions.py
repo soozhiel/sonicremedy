@@ -38,10 +38,10 @@ def col(r, start):
             return r[k]
     raise SystemExit(f'missing column {start!r} in TAB 05')
 
-def build(xlsx, songs_path):
+def build(xlsx, songs_path, site_ids=None):
     wb = load_workbook(xlsx, read_only=True, data_only=True)
     tab02 = {r['Song ID'] for r in rows(tab(wb, 'TAB 02')) if r.get('Song ID')}
-    site = {s['id'] for s in json.load(open(songs_path))['songs']}
+    site = site_ids if site_ids is not None else {s['id'] for s in json.load(open(songs_path))['songs']}
     out, errors = [], []
     for r in rows(tab(wb, 'TAB 05')):
         eid = col(r, 'Expression ID')

@@ -6,7 +6,8 @@ const data = JSON.parse(fs.readFileSync(path.join(__dirname, '..', 'data', 'song
 // the live site loads the TAB 05 expression library too; test what visitors get
 const exprPath = path.join(__dirname, '..', 'data', 'expressions.json');
 const expr = fs.existsSync(exprPath) ? JSON.parse(fs.readFileSync(exprPath, 'utf8')) : null;
-const eng = createEngine(data, expr);
+// same engine as the site: songs + TAB 05 + TAB 06 affinities/pairs + meaning layer
+const eng = require('./load_engine.js')().eng;
 const INPUTS = require('./test_inputs.json');
 const rows = [];
 for (const [cat, q, expect] of INPUTS) {

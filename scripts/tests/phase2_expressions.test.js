@@ -7,7 +7,8 @@ const { createEngine } = require('../../discovery.js');
 const root = path.join(__dirname, '..', '..');
 const data = JSON.parse(fs.readFileSync(path.join(root, 'data', 'songs.json'), 'utf8'));
 const expr = JSON.parse(fs.readFileSync(path.join(root, 'data', 'expressions.json'), 'utf8'));
-const eng = createEngine(data, expr);
+// same engine as the site: songs + TAB 05 + TAB 06 affinities/pairs + meaning layer
+const eng = require('../load_engine.js')().eng;
 const byId = {}; data.songs.forEach(function (s) { byId[s.id] = s; });
 
 let pass = 0, fail = 0;
@@ -38,7 +39,10 @@ const CASES = [
   ["I'm doing well but want to feel more inspired.", ['SR-F05-T06']],
   ["I don't know what I need.", ['SR-F05-T01', 'SR-F08-T03']],
   ["My chest feels tight. I'm cautious to why I feel that way.", ['SR-F08-T03']],
-  ["I've been thinking about the injustice in the world in general. I'd like to feel less congested.", ['SR-F01-T01', 'SR-F01-T09']],
+  // Expectation changed 2026-10-18 (semantic stage, TAB 06): SR-F01-T09 Pick Your Battles is no longer expected here.
+  // TAB 06 guardrail for F01-T09: "Do not assume concern about injustice means visitor wants to disengage or pick battles";
+  // this visitor states an injustice concern and a wish to feel less congested, not a wish to step back.
+  ["I've been thinking about the injustice in the world in general. I'd like to feel less congested.", ['SR-F01-T01'], null, ['SR-F01-T09']],
 ];
 const record = [];
 CASES.forEach(function (c) {
@@ -50,6 +54,7 @@ CASES.forEach(function (c) {
     check(label + ' -> real match (not fallback)', r.status !== 'fallback' && r.status !== 'empty', r.status);
     check(label + ' -> includes ' + c[1].join(', '), c[1].every(function (id) { return got.indexOf(id) >= 0; }), got);
     if (c[2]) check(label + ' -> leads with ' + c[2], got[0] === c[2], got);
+    if (c[3]) check(label + ' -> excludes ' + c[3].join(', '), c[3].every(function (id) { return got.indexOf(id) < 0; }), got);
     check(label + ' -> no Rebuild Trust', got.indexOf('SR-F07-T07') < 0, got);
     if (!k) record.push({ input: t, status: r.status, songs: r.results.map(function (x) { return { id: x.song.id, title: x.song.title, fill: x.fill || null, why: x.song.why }; }) });
   });

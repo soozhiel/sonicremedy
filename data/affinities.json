@@ -1,0 +1,88 @@
+{
+ "schemaVersion": 1,
+ "generated": "2026-10-18T06:36:07Z",
+ "source": "SONIC REMEDY — MASTER SONG INDEX / TAB 06 formula affinity table",
+ "note": "Affinity is a listening connection, not a claim that every track shares the meaning.",
+ "formulas": {
+  "1": {
+   "number": 1,
+   "name": "Emotional Detox",
+   "status": "proposed",
+   "affinity": "Carrying accumulated emotional or mental weight; seeking to clear, release or disentangle",
+   "current": "mental overload; conflict; blame; burdens; resentment; mental congestion",
+   "desired": "space; clarity; emotional release; lighter perspective",
+   "boundary": "Do not assume the visitor is at fault, projecting, or should abandon a justified concern.",
+   "evidence": "Proposed from formula identity and TAB 02 songs; awaiting artist confirmation"
+  },
+  "2": {
+   "number": 2,
+   "name": "Trust Your Path",
+   "status": "proposed",
+   "affinity": "Uncertainty about one's direction, decisions or self-trust; seeking confidence in one's own path",
+   "current": "second-guessing; conflicting advice; fear of unknown; wavering conviction",
+   "desired": "self-trust; willingness to move; independent direction",
+   "boundary": "Uncertainty is not proof a decision is wrong; do not prescribe a life choice.",
+   "evidence": "Proposed from formula identity and TAB 02 songs; user affirmed example of shaky decisions"
+  },
+  "3": {
+   "number": 3,
+   "name": "No Regret",
+   "status": "proposed",
+   "affinity": "Awareness of time, delayed action and what matters; desire to live deliberately",
+   "current": "postponement; drifting; distraction; concern about missed chances",
+   "desired": "presence; intentional living; action; appreciation",
+   "boundary": "Grief does not automatically imply regret; avoid pressuring a visitor to act.",
+   "evidence": "Proposed from formula identity and TAB 02 songs; awaiting artist confirmation"
+  },
+  "4": {
+   "number": 4,
+   "name": "Letting Go",
+   "status": "proposed",
+   "affinity": "Inherited expectations, emotional obligations and patterns that constrain autonomy",
+   "current": "family scripts; guilt; imposed roles; relational control; pretence",
+   "desired": "freedom from unwanted obligations; discernment; own definitions",
+   "boundary": "Do not presume all family ties or obligations are harmful; do not prescribe separation.",
+   "evidence": "Proposed from formula identity and TAB 02 songs; awaiting artist confirmation"
+  },
+  "5": {
+   "number": 5,
+   "name": "Unapologetic Creation",
+   "status": "proposed",
+   "affinity": "Creative possibility, expression, courage, play and agency",
+   "current": "self-censorship; perfectionism; stalling; creative fatigue; longing to play",
+   "desired": "creative freedom; experimentation; joy; beginning",
+   "boundary": "Not every expression of joy implies a creative problem or need to improve.",
+   "evidence": "Proposed from formula identity and TAB 02 songs; awaiting artist confirmation"
+  },
+  "6": {
+   "number": 6,
+   "name": "Alien Frequencies",
+   "status": "artist-confirmed",
+   "affinity": "Feeling different, isolated, misunderstood or outside a group; an invitation to connect through unfamiliar sonic expression",
+   "current": "not fitting in; alienation; outsider experience; unfamiliarity",
+   "desired": "acceptance of difference; connection; permission to be unlike others",
+   "boundary": "ARTIST-CONFIRMED listening affinity only; individual six songs retain distinct meanings; no promise of therapeutic benefit.",
+   "evidence": "Artist-confirmed in conversation 2026-10-18; song meanings remain TAB 02"
+  },
+  "7": {
+   "number": 7,
+   "name": "Sleep Sequence",
+   "status": "proposed",
+   "affinity": "At bedtime, reflective spoken contemplation around patterns of thought, learning and self-direction",
+   "current": "night-time rumination; self-questioning; reflection; desire to switch off",
+   "desired": "quiet reflection; settling; considered attention",
+   "boundary": "Spoken sleep contemplations, not interchangeable relaxation music; choose individual topic and do not promise sleep outcomes.",
+   "evidence": "Proposed from formula identity and TAB 02; awaiting artist confirmation"
+  },
+  "8": {
+   "number": 8,
+   "name": "Angel Recall",
+   "status": "proposed",
+   "affinity": "Instrumental or wordless listening oriented to freedom, unity, clarity, readiness, strength and hope",
+   "current": "need for freedom; disconnection; uncertainty; hesitation; depletion; discouragement",
+   "desired": "freedom; wholeness; clarity; readiness; strength; hope",
+   "boundary": "Instrumental listening experience; do not claim sung lyrics, medical effects or guaranteed emotional transformation.",
+   "evidence": "Proposed from formula identity and TAB 02; awaiting artist confirmation"
+  }
+ }
+}
