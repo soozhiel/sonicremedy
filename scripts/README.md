@@ -13,3 +13,8 @@
   `node scripts/test_engine.js`
 - Covers live in `assets/covers/<song-id>.webp` (600px, from the public covers on the
   formula sites / song pages; all 70 are the original square artwork).
+- `tests/real_user_regressions.test.js` — permanent checks built from real visitors' sentences
+  that were once turned away (both straight ' and curly ’ apostrophes). Every meaningful input
+  must be accepted with recommendations; only empty or meaningless input gets the prompt; why-lines
+  never diagnose or refer to health. Run on every change (exits non-zero on failure):
+  `node scripts/tests/real_user_regressions.test.js && node scripts/test_engine.js`

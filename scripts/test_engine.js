@@ -14,7 +14,9 @@ for (const [cat, q, expect] of INPUTS) {
     const ids = res.map(x => x.id);
     if (expect.startsWith('!')) check = ids.includes(expect.slice(1)) ? 'FAIL' : 'ok';
     else if (expect === 'F06') check = ids.length && ids.every(i => i.startsWith('SR-F06')) ? 'ok(all F06)' : ids[0] && ids[0].startsWith('SR-F06') ? 'ok(1st F06)' : 'MISS';
-    else if (expect === 'NONE') check = r.status === 'none' || r.status === 'empty' ? 'ok' : 'FAIL';
+    else if (expect === 'NONE') check = r.status === 'empty' && !ids.length ? 'ok(prompt)' : 'FAIL';
+    else if (expect === 'FALLBACK') check = r.status === 'fallback' && ids.length === 3 ? 'ok(fallback 3)' : 'FAIL';
+    else if (expect === 'THREE') check = ids.length === 3 ? 'ok(3 results)' : 'FAIL';
     else if (expect === 'SR-F07-T01' && r.sleepDefault) check = ids.join(',') === 'SR-F07-T01,SR-F07-T02,SR-F07-T03' ? 'ok(Ep1-3)' : 'MISS';
     else check = ids[0] === expect ? 'ok(1st)' : ids.includes(expect) ? 'ok(top3)' : 'MISS';
   }
@@ -27,3 +29,4 @@ for (const r of rows) {
 }
 const checked = rows.filter(r => r.expect);
 console.log(`\n${checked.filter(r => r.check.startsWith('ok')).length}/${checked.length} expectation checks pass; ${rows.length} inputs`);
+process.exitCode = checked.every(r => r.check.startsWith('ok')) ? 0 : 1;

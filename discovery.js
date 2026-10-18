@@ -258,6 +258,12 @@
   // A sleep request with no particular subject ("help me sleep", "I just want to switch off and
   // sleep") starts at the beginning of the Sleep Sequence: Episodes 1, 2, 3 (user decision 2026-10-18).
   var SLEEP_DEFAULT = ['SR-F07-T01', 'SR-F07-T02', 'SR-F07-T03'];
+  // When nothing in the song records clearly matches, the visitor still gets three songs: these are
+  // broad starting points whose verified meanings suit almost anyone (a clear head, an honest
+  // check-in, feeling like yourself). They are framed as "A place to start", never as a match.
+  var START_HERE = ['SR-F08-T03', 'SR-F07-T03', 'SR-F04-T06'];
+  // Keyboard rows, to recognise mashed keys such as "asdf" or "qwer" as random characters.
+  var ROWS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
   var GENERIC_SLEEP = /\b((i )?(just |really |only )?(want|need|would like|would love|wanna) to (switch off|sleep|rest|relax|wind down|unwind|fall asleep|drift off|get some sleep)|help me (to )?(sleep|switch off|relax|wind down|unwind|fall asleep|drift off|rest)|something (to help me |for )?(sleep|sleeping|bed|bedtime)|(go to |get to |get some )?sleep\w*|asleep|bed(time)?|tonight|at night|insomnia|please|so tired|tired)\b/g;
   var CONF = { high: 1, 'medium-high': 0.97, medium: 0.94, 'low-medium': 0.9, low: 0.85 };
   // Channel weights. Lyrics/spoken-term bags are a light supporting signal only, so songs
@@ -376,12 +382,28 @@
       return { score: s * e.mult, detail: why };
     }
 
+    // Only empty or meaningless input (whitespace, punctuation, random characters) is turned away.
+    // Unfamiliar but real words are accepted: low confidence never blocks a recommendation.
+    function wordLike(w) {
+      if (STOP.has(w) || dfT[stem(w)] || dfT[w]) return true;
+      if (w.length === 1) return w === 'i' || w === 'a';
+      if (!/[aeiouy]/.test(w)) return false;
+      if (/([a-z])\1\1/.test(w)) return false;                  // aaa, kkkk
+      if (/[bcdfghjklmnpqrstvwxz]{5,}/.test(w)) return false;     // long consonant runs
+      if (w.length >= 3 && ROWS.some(function (r) { return r.indexOf(w) >= 0; })) return false;   // asdf, qwer, jkl
+      return true;
+    }
+    function meaningful(raw) {
+      if (/[^\u0000-\u024f\s\d\p{P}\p{S}]/u.test(raw) && /\p{L}/u.test(raw)) return true;   // other scripts
+      if (Object.keys(conceptsIn(normalise(raw))).length) return true;
+      return words(raw).some(wordLike);
+    }
+
     function recommend(text, opts) {
       opts = opts || {};
       var raw = String(text || '').trim();
       var q = parseQuery(raw);
-      var nConcepts = Object.keys(q.concepts).length;
-      if (!raw || (q.n === 0 && nConcepts === 0)) return { status: 'empty', results: [], query: q };
+      if (!raw || !meaningful(raw)) return { status: 'empty', results: [], query: q };
       if (q.pref.sleep === 1) {
         var rest = parseQuery(normalise(raw).replace(GENERIC_SLEEP, ' '));
         var topical = Object.keys(rest.concepts).filter(function (c) { return !rest.concepts[c].context && c !== 'calm' && c !== 'sleep'; });
@@ -402,13 +424,20 @@
       });
       var top = scored.length ? scored[0].score : 0;
       var lead = scored[0] ? scored[0].detail : { state: 0, phrase: 0 };
-      // confidence gate: never present weak overlaps as a match
+      // confidence: decides how results are framed, never whether the visitor gets any.
+      // 'ok' = clear match; 'weak' = some real evidence ("A place to start" note);
+      // 'fallback' = no defensible match, so broad starting points are offered with the same note.
       var status = 'ok';
       if (top < 4 || (lead.state === 0 && lead.phrase < 0.6)) status = 'weak';
-      if (top < 2 || (lead.state === 0 && lead.phrase < 0.6 && top < 6)) status = 'none';
-      // one or two words: only answer when the word clearly names a felt state in a song's record
-      if (words(raw).length <= 2) status = (lead.phrase >= 0.75 || (lead.state >= 1 && top >= 5)) ? 'weak' : 'none';
-      if (status === 'none') return { status: 'none', results: [], query: q };
+      if (top < 2 || (lead.state === 0 && lead.phrase < 0.6 && top < 6)) status = 'fallback';
+      // one or two words: only treat as a match when the word clearly names a felt state in a song's record
+      if (words(raw).length <= 2) status = (lead.phrase >= 0.75 || (lead.state >= 1 && top >= 5)) ? 'weak' : 'fallback';
+      if (status === 'fallback') {
+        // keep only songs whose own record contains the visitor's phrasing, then complete the three
+        // with the broad starting points. Bare word or loose concept overlaps are not used.
+        scored = scored.filter(function (c) { return c.detail.phrase >= 0.6; });
+        top = scored.length ? scored[0].score : 0;
+      }
       // pick three: relevance first; skip a near-duplicate when a similarly relevant alternative exists
       var picked = [], groups = {};
       for (var i = 0; i < scored.length && picked.length < 3; i++) {
@@ -437,6 +466,17 @@
           picked.push(o);
           if (o.e.song.group) groups[o.e.song.group] = true;
         }
+      }
+      // Clear matches keep their own count (one to three) exactly as before. Only when the visitor's
+      // words found nothing defensible are the three broad starting points added.
+      if (status === 'fallback' || !picked.length) {
+        status = 'fallback';
+        var have = picked.map(function (p) { return p.e.song.id; });
+        START_HERE.forEach(function (id) {
+          if (picked.length >= 3 || have.indexOf(id) >= 0) return;
+          var e = idx.filter(function (x) { return x.song.id === id; })[0];
+          if (e) picked.push({ e: e, score: 0, detail: { concepts: [], state: 0, tokens: 0, phrase: 0 } });
+        });
       }
       return {
         debug: opts.debug ? scored.slice(0, 8).map(function (x) { return [x.e.song.id, x.e.song.title, +x.score.toFixed(2), JSON.stringify(x.detail)]; }) : undefined,
@@ -491,7 +531,16 @@
   function read() { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
   function write(v) { try { if (v) sessionStorage.setItem(KEY, JSON.stringify(v)); else sessionStorage.removeItem(KEY); } catch (e) { /* storage unavailable */ } }
 
-  function syncButton() { submit.disabled = !textarea.value.trim(); }
+  // The button is never truly disabled: when the box is empty it is dimmed (aria-disabled) but a
+  // press still explains what is needed, so it never looks actionable while silently doing nothing.
+  var busy = false;
+  var PROMPT = 'Say a little more: what is happening, or how you would like to feel.';
+  function syncButton() { submit.setAttribute('aria-disabled', textarea.value.trim() ? 'false' : 'true'); }
+  function say(msg) {
+    // clear first so a repeated message is announced again and visibly refreshed
+    hint.textContent = '';
+    setTimeout(function () { hint.textContent = msg; }, 60);
+  }
 
   function el(tag, cls, text) {
     var n = document.createElement(tag);
@@ -554,7 +603,7 @@
     primarySlot.appendChild(renderPrimary(songs[0]));
     songs.slice(1).forEach(function (s) { alsoList.appendChild(renderCard(s)); });
     alsoWrap.hidden = songs.length < 2;
-    note.hidden = state.status !== 'weak';
+    note.hidden = state.status !== 'weak' && state.status !== 'fallback';
     inputView.hidden = true;
     resultsView.hidden = false;
     section.setAttribute('data-state', 'results');
@@ -575,13 +624,17 @@
   }
 
   function run() {
+    if (busy) return;
     var text = textarea.value.trim();
-    if (!text) { syncButton(); return; }
+    syncButton();
+    if (!text) { say(PROMPT); textarea.focus(); return; }
     hint.textContent = '';
+    busy = true;
+    form.setAttribute('aria-busy', 'true');
     load().then(function (eng) {
       var r = eng.recommend(text);
-      if (r.status === 'empty' || r.status === 'none' || !r.results.length) {
-        hint.textContent = 'Say a little more: what is happening, or how you would like to feel.';
+      if (r.status === 'empty' || !r.results.length) {
+        say(PROMPT);
         write({ text: textarea.value, ids: [] });
         textarea.focus();
         return;
@@ -590,7 +643,10 @@
       write(state);
       showResults(state, true);
     }).catch(function () {
-      hint.textContent = 'Discovery is unavailable right now. Please try again in a moment.';
+      say('Discovery is unavailable right now. Please try again in a moment.');
+    }).then(function () {
+      busy = false;
+      form.removeAttribute('aria-busy');
     });
   }
 
@@ -614,9 +670,9 @@
   });
   textarea.addEventListener('keydown', function (ev) {
     // Enter adds a new line (multiline); Ctrl/Cmd+Enter submits.
-    if (ev.key === 'Enter' && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); if (!submit.disabled) run(); }
+    if (ev.key === 'Enter' && (ev.ctrlKey || ev.metaKey)) { ev.preventDefault(); run(); }
   });
-  form.addEventListener('submit', function (ev) { ev.preventDefault(); if (!submit.disabled) run(); });
+  form.addEventListener('submit', function (ev) { ev.preventDefault(); run(); });
   reset.addEventListener('click', function () {
     write(null);
     textarea.value = '';

@@ -131,21 +131,21 @@
 .discovery-submit span { color: var(--gold-soft); letter-spacing: 0; transition: transform 180ms ease; }
 
 @media (hover: hover) {
-  .discovery-submit:not(:disabled):hover {
+  .discovery-submit:not([aria-disabled="true"]):hover {
     border-color: rgba(var(--gold-rgb), .9);
     box-shadow: 0 0 22px rgba(var(--gold-rgb), .18);
   }
-  .discovery-submit:not(:disabled):hover span { transform: translateX(3px); }
+  .discovery-submit:not([aria-disabled="true"]):hover span { transform: translateX(3px); }
 }
 
-.discovery-submit:disabled {
+.discovery-submit[aria-disabled="true"] {
   border-color: rgba(255, 255, 255, .06);
   background: rgba(255, 255, 255, .04);
   color: rgba(243, 238, 230, .4);
   cursor: default;
 }
 
-.discovery-submit:disabled span { color: rgba(243, 238, 230, .4); }
+.discovery-submit[aria-disabled="true"] span { color: rgba(243, 238, 230, .4); }
 
 /* results */
 .discovery-results { animation: discovery-in 420ms ease both; }

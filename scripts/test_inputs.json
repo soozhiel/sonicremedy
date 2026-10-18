@@ -247,12 +247,12 @@
  [
   "irrelevant",
   "what's the weather",
-  "NONE"
+  "FALLBACK"
  ],
  [
   "irrelevant",
   "pizza",
-  "NONE"
+  "FALLBACK"
  ],
  [
   "empty",
@@ -333,5 +333,70 @@
   "sleep default",
   "I need to wind down and get some sleep tonight",
   "SR-F07-T01"
+ ],
+ [
+  "phase1 bug (B)",
+  "I've been thinking about the injustice in the world in general. I'd like to feel less congested.",
+  "THREE"
+ ],
+ [
+  "phase1 bug (B)",
+  "I’ve been thinking about the injustice in the world in general. I’d like to feel less congested.",
+  "THREE"
+ ],
+ [
+  "phase1 short",
+  "I feel congested.",
+  "THREE"
+ ],
+ [
+  "phase1 short",
+  "tired",
+  "THREE"
+ ],
+ [
+  "phase1 short",
+  "sad",
+  "THREE"
+ ],
+ [
+  "phase1 short",
+  "help",
+  "THREE"
+ ],
+ [
+  "phase1 long",
+  "I have been carrying a lot lately. Work has been relentless, my family keeps asking me for things, and I barely have a moment to myself. When I finally sit down at night I feel heavy and scattered, like my head is full of noise. I keep thinking about the injustice in the world and feel powerless to change anything. I would like to feel lighter, clearer and more like myself again, without having to fix everything at once. I am not looking for advice, just something that helps me breathe and settle for a while before I start again tomorrow.",
+  "THREE"
+ ],
+ [
+  "phase1 meaningless",
+  "asdf ;;;",
+  "NONE"
+ ],
+ [
+  "phase1 meaningless",
+  "   ",
+  "NONE"
+ ],
+ [
+  "phase1 meaningless",
+  ";;; !!",
+  "NONE"
+ ],
+ [
+  "phase1 meaningless",
+  "qwerty kkkk",
+  "NONE"
+ ],
+ [
+  "phase1 real user (chest)",
+  "My chest feels tight. I'm cautious to why I feel that way.",
+  "THREE"
+ ],
+ [
+  "phase1 real user (chest)",
+  "My chest feels tight. I’m cautious to why I feel that way.",
+  "THREE"
  ]
 ]
