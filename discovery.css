@@ -87,7 +87,8 @@
   transition: border-color 180ms ease, box-shadow 180ms ease;
 }
 
-.discovery textarea::placeholder { color: #8e887f; opacity: 1; }
+.discovery textarea::-webkit-input-placeholder { color: rgba(243, 238, 230, .45); opacity: 1; }
+.discovery textarea::placeholder { color: rgba(243, 238, 230, .45); opacity: 1; }
 
 .discovery textarea:hover { border-color: rgba(243, 238, 230, .36); }
 
