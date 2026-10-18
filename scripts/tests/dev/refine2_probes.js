@@ -13,7 +13,7 @@ const noTrouble = r => !ids(r).some(id => ['SR-F01-T09', 'SR-F07-T13', 'SR-F03-T
 
 console.log('\n== R1 achievement / positive moment: celebratory tone only, no need attributed');
 for (const t of ['I passed my driving test this morning!', 'We won the regional chess final.', 'Just handed in my thesis after three years.', 'Landed my first paid gig as a designer.', 'Our team finally shipped the app.'])
-  check('R1', t, r => noTrouble(r) && r.results.every(x => x.fill || /good news|proud|You said/.test(x.explanation)) && r.results.every(x => !/progress|struggl|need/i.test(x.explanation.split(':')[0])));
+  check('R1', t, r => noTrouble(r) && r.results.every(x => x.explanation === x.song.description));
 console.log('\n== R2 literal domain frame: physical words in sport / task / object clauses are literal');
 check('R2', 'I carried six heavy boxes up the stairs today.', r => !has(r, 'burden'));
 check('R2', 'Our team lost the match on Saturday.', r => !has(r, 'defeat'));
@@ -42,10 +42,10 @@ check('R7', 'I feel different from everyone and I want something with no words.'
 check('R7', "I feel disconnected and I'm homesick for my old town.", r => r.results.some(x => x.song.formula.number === 6));
 console.log('\n== R8 quote only complete clauses');
 for (const t of ["I'm far from the place where I feel at home.", 'Everyone tells me where I belong but I disagree.', 'I do not feel calm when people shout.'])
-  check('R8', t, r => r.results.every(x => !/You said "[^"]{1,12}"/.test(x.explanation) || /You said "[A-Z][^"]+ [^"]+ [^"]+"/.test(x.explanation)));
+  check('R8', t, r => r.results.every(x => !/You said/.test(x.explanation)));
 console.log('\n== R9 figurative schemas (inferred, tentative, never class 1)');
 for (const t of ['My battery is completely flat these days.', 'Life feels like wading through mud.', 'Everything in my head is static and noise.', 'The whole world looks washed out lately.'])
-  check('R9', t, r => (has(r, 'overwhelm') && !r.query.concepts.overwhelm.inferred) || (r.status !== 'ok' && r.results.every(x => x.cls >= 2) && r.results.some(x => /possible connection, not a certainty|open/.test(x.explanation))), 'explicit noise word is a stated overwhelm, so class 1 is allowed there');
+  check('R9', t, r => (has(r, 'overwhelm') && !r.query.concepts.overwhelm.inferred) || (r.status !== 'ok' && r.results.every(x => x.cls >= 2) && r.results.every(x => x.explanation === x.song.description)), 'explicit noise word is a stated overwhelm, so class 1 is allowed there');
 console.log('\n== R10 closed-class overlap is not a match');
 for (const t of ['Every time I call my sister she is busy.', 'I keep getting the bus at the same time.', 'People always ask me the way to the station.'])
   check('R10', t, r => r.results.every(x => x.cls >= 2));

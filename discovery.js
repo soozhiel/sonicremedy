@@ -775,90 +775,10 @@
       return 5;
     }
 
-    var KIND = { 'spoken-sleep': 'a spoken bedtime contemplation about ', instrumental: 'an instrumental piece embodying ',
-      'instrumental-wordless': 'an instrumental piece embodying ', song: '' };
-    function aboutOf(song) { return (KIND[song.type] || '') + (song.about || song.m.meaning); }
-    function cap(s) { return s.charAt(0).toUpperCase() + s.slice(1); }
-    var TOPIC = { trapped: 'being boxed in', freedom: 'freedom', overwhelm: 'having too much going on', fog: 'things feeling unclear',
-      clarity: 'clarity', uncertain: 'not knowing what comes next', controlLoss: 'things feeling out of control', selfDoubt: 'doubting yourself',
-      approval: "other people's approval", procrastination: 'putting things off', creative: 'creating', perfection: 'perfection and mistakes',
-      courage: 'taking a leap', lettingGo: 'letting go', burden: 'carrying weight and responsibility', notMine: "problems that aren't yours",
-      boundaries: 'boundaries', blameOthers: 'blaming or judging others', blamed: 'being blamed', envy: 'comparison and envy', anger: 'anger',
-      frustration: 'frustration', sleep: 'night-time and sleep', rumination: 'thoughts that keep going round', distraction: 'focus and distraction',
-      hope: 'hope', defeat: 'feeling discouraged', strength: 'strength', depleted: 'exhaustion', disconnected: 'feeling disconnected',
-      connection: 'connection and belonging', newStart: 'something new', hesitant: 'nerves and hesitation', readiness: 'being ready',
-      celebration: 'joy and good news', different: 'feeling different or not fitting in', home: 'home and being far from it', heard: 'being heard',
-      betrayed: 'being let down by someone you trusted', causedHurt: 'repairing hurt you caused', guilt: 'guilt', gratitude: 'gratitude',
-      family: 'family', expectations: 'expectations and obligations', love: 'love', supportOther: 'supporting someone',
-      selfWorth: 'being enough', regret: 'regret and time', direction: 'direction', routine: 'routine and sameness', stagnant: 'feeling stuck',
-      honesty: 'honesty with yourself', potential: 'who you could become', advice: 'advice', patience: 'patience', calm: 'calm',
-      complain: 'complaining', authentic: 'being yourself', improvise: 'control and going with the flow', meTime: 'time for yourself',
-      together: 'getting through things together', discomfort: 'discomfort', sadness: 'sadness', work: 'work',
-      sufferingAlone: 'struggling on your own', selfFirst: 'looking after yourself', complainingOthers: 'people who talk big',
-      play: 'play', decision: 'a decision' };
-    var WANT = { play: 'time to play', calm: 'some calm', sleep: 'rest', freedom: 'more freedom', clarity: 'more clarity', hope: 'more hope',
-      strength: 'more strength', connection: 'more connection', readiness: 'to feel ready', courage: 'more courage', meTime: 'time for yourself',
-      decision: 'to make a decision', lettingGo: 'to let go', newStart: 'something new', celebration: 'to celebrate' };
-    var ROLE_TOPIC = { betrayed: 'someone breaking your trust', caused: 'repairing hurt you caused', blamed: 'being blamed',
-      blaming: 'blaming or judging others', supporting: 'supporting someone' };
-
-    // Quote only a complete clause the visitor wrote (12 words or fewer); never an isolated fragment.
-    var QORIG = {};
-    function quoteOf(con) {
-      if (!con || !con.clause) return null;
-      var cl = (QORIG[con.clause.trim()] || con.clause).replace(/^(and|so|but|because|cause|then)\s+/i, '').replace(/\s+(and|so|but|even|or|because)$/i, '').trim();
-      if (!cl || cl.split(/\s+/).length > 12) return null;
-      return '"' + cl.replace(/\bi\b/g, 'I').replace(/^./, function (x) { return x.toUpperCase(); }) + '"';
-    }
-    function explain(c, cls, f, q, ctx) {
-      var song = c.e.song, about = aboutOf(song), d = c.detail;
-      if (ctx.sleepDefault) return 'You asked for something for sleep, so the Sleep Sequence starts at the beginning: ' + about + '.';
-      if (cls === 4 && ctx.hasLead) return 'Another direction you could explore: ' + about + '.';
-      if (cls === 4) {
-        if (f && f.uncertainty === 'need') return "You said you're not sure what you need, so this is an open place to start: " + about + '.';
-        if (f && f.metaphor) return "Your image could mean different things, so this is an open suggestion rather than a match: " + about + '.';
-        return 'Nothing in the catalogue clearly matches your words, so this is an open place to start: ' + about + '.';
-      }
-      if (cls === 3 || d.confirmedAffinity) {
-        var a = AFF && AFF[String(song.formula.number)];
-        if (song.formula.number === 6 && a && a.status === 'artist-confirmed')
-          return 'The artist made ' + song.formula.name + ' for listeners who feel different or outside the group; this track itself is about ' + about + '.';
-        return 'A broader listening connection through ' + song.formula.name + '; this track itself is about ' + about + '.';
-      }
-      var desire = (d.concepts || []).filter(function (k) { return q.concepts[k] && q.concepts[k].role === 'desire' && !q.concepts[k].context; });
-      var own = (d.concepts || []).filter(function (k) { return q.concepts[k] && !q.concepts[k].context && q.concepts[k].role !== 'desire'; })
-        .sort(function (a, b) { return idfC(b) - idfC(a); });   // the most specific thing they said first
-      var topic = null;
-      if (f && f.role && ROLE_TOPIC[f.role] && (song.rule === 'requires_caused_hurt' || own.indexOf('betrayed') >= 0 || own.indexOf('blamed') >= 0 || own.indexOf('blameOthers') >= 0 || own.indexOf('supportOther') >= 0)) topic = ROLE_TOPIC[f.role];
-      var said = null;
-      if (!topic && own.length) {
-        var oc = q.concepts[own[0]];
-        if (own[0] === 'sadness' && f && f.situation.indexOf('grief') >= 0) topic = 'grief';
-        else if (own[0] === 'celebration' && oc.inferred && f) topic = f.positive.indexOf('pride') >= 0 && /\bproud\b/.test(q.raw) ? 'feeling proud' : null, said = topic ? null : 'You shared some good news';
-        else if (oc.schema) return 'Your image ' + (quoteOf(oc) || '') + ' may point to ' + (TOPIC[own[0]] || own[0]) + '; this is a possible connection, not a certainty: ' + about + '.';
-        else if (quoteOf(oc)) said = 'You said ' + quoteOf(oc);
-        else topic = TOPIC[own[0]];
-      }
-      var lead;
-      if (f && f.uncertainty === 'need') lead = "You said you're not sure what you need";
-      else if (d.prefCompanion === 'alien sounds') return 'You asked about alien sounds: this track is from ' + song.formula.name + ', and it is about ' + about + '.';
-      else if (d.prefCompanion && cls === 2 && !own.length) lead = 'You asked for ' + d.prefCompanion;
-      else if (topic) lead = 'You mentioned ' + topic;
-      else if (said) lead = said;
-      else if (desire.length && q.concepts[desire[0]].fromNeg && TOPIC[desire[0]]) lead = 'You mentioned ' + TOPIC[desire[0]];   // "not hopeful": a need we infer, not a stated want
-      else if (desire.length && quoteOf(q.concepts[desire[0]])) lead = 'You said ' + quoteOf(q.concepts[desire[0]]);
-      // a want read from the shape of the message (a question, "I keep flip-flopping") is not a stated wish
-      else if (desire.length && q.concepts[desire[0]].frameWant && TOPIC[desire[0]]) lead = 'You mentioned ' + TOPIC[desire[0]];
-      else if (desire.length && WANT[desire[0]]) lead = "You said you'd like " + WANT[desire[0]];
-      else if (desire.length && TOPIC[desire[0]]) lead = "You said you'd like " + TOPIC[desire[0]];
-      else if (d.exprPhrase) lead = (d.exprExact ? 'You said "' : 'Your words are close to "') + d.exprPhrase.replace(/\bi\b/g, 'I').replace(/^./, function (x) { return x.toUpperCase(); }) + '"';
-      else if (d.prefCompanion) lead = 'You asked for ' + d.prefCompanion;
-      else if (d.phraseText && d.phrase >= 0.6) return 'Close to a situation this song was written around ("' + d.phraseText.replace(/\.$/, '') + '"): ' + about + '.';
-      else lead = 'Your words connect with this record';
-      var tail = cls === 1 ? '; this song is about ' : '; a related connection rather than an exact match: ';
-      if (song.type !== 'song') tail = cls === 1 ? '; this is ' : '; a related connection rather than an exact match: ';
-      return lead + tail + about + '.';
-    }
+    // The line under each title is the song's own description (scripts/description_lines.json, built into
+    // songs.json from TAB 02). It is the same for every search: it never quotes or repeats the visitor's
+    // words, never explains the matching, and never says what the visitor feels (user decision 2026-10-18).
+    function describe(song) { return song.description || song.why || ''; }
 
     // Who did what to whom decides which reading of a shared word stands (TAB 06 R08).
     function prune(q, f) {
@@ -898,7 +818,6 @@
       if (!raw || !meaningful(raw)) return { status: 'empty', results: [], query: parseQuery(raw) };
       raw = respell(raw);
       var q = parseQuery(raw);
-      QORIG = q.orig || {};
       var f = frameOf(raw, q);
       var noSleepDefault = f && (f.prefs.noSpoken || f.prefs.notSleepy);
       if (f && f.prefs.notSleepy) q.pref.sleep = -1;
@@ -909,7 +828,7 @@
           return { status: 'ok', sleepDefault: true, query: q, frame: f, results: SLEEP_DEFAULT.map(function (id) {
             var song = byIdFn(id);
             return song && { song: song, score: 0, cls: 2, basis: 'sleep default (user decision 2026-10-18)',
-              explanation: explain({ e: { song: song }, detail: {} }, 2, f, q, { sleepDefault: true }),
+              explanation: describe(song),
               detail: { concepts: ['sleep'], state: 1, tokens: 0, phrase: 0 } };
           }).filter(Boolean) };
         }
@@ -1066,7 +985,7 @@
           basis: p.fill ? 'exploratory start' : p.cls === 3 ? 'formula affinity (' + (AFF ? AFF[String(p.e.song.formula.number)].status : '?') + ')' :
             [p.detail.exprStrong ? 'TAB 05 phrase' : p.detail.expr ? 'TAB 05 phrase (low)' : null, p.detail.phrase >= 0.6 ? 'TAB 02 phrase' : null,
               p.detail.own ? 'TAB 02 record' : null, p.detail.prefCompanion ? 'listening preference' : null].filter(Boolean).join(' + ') || 'TAB 02 related field',
-          explanation: explain(p, p.cls, f, q, { hasLead: picked[0].cls < 4 }) };
+          explanation: describe(p.e.song) };
         if (p.fill) o.fill = p.fill;
         return o;
       });
@@ -1168,9 +1087,11 @@
     a.appendChild(hint);
   }
 
-  // The line under each title explains this search's connection (per-search explanation); the
-  // fixed description is only used if no explanation exists (e.g. a stored session from before).
-  function renderPrimary(song, why) {
+  // The line under each title is the song's own description, the same for every search; it never
+  // repeats the visitor's words. Sessions stored before 2026-10-18 carried per-search text ("why");
+  // it is ignored, so a restored session shows the current descriptions.
+  function songLine(song) { return song.description || song.why || ''; }
+  function renderPrimary(song) {
     var a = el('a', 'remedy-primary');
     link(a, song);
     var fig = el('div', 'remedy-primary-art'); fig.appendChild(cover(song, 600));
@@ -1178,13 +1099,13 @@
     body.appendChild(el('p', 'remedy-label', '01 / FIRST LISTEN'));
     body.appendChild(el('h3', 'remedy-title', song.title));
     body.appendChild(el('p', 'remedy-formula', formulaName(song)));
-    body.appendChild(el('p', 'remedy-why', why || song.why));
+    body.appendChild(el('p', 'remedy-why', songLine(song)));
     var l = el('span', 'remedy-listen'); l.innerHTML = 'LISTEN <span aria-hidden="true">↗</span>';
     body.appendChild(l);
     a.appendChild(fig); a.appendChild(body);
     return a;
   }
-  function renderCard(song, why) {
+  function renderCard(song) {
     var li = el('li');
     var a = el('a', 'remedy-card');
     link(a, song);
@@ -1192,7 +1113,7 @@
     var body = el('div', 'remedy-card-body');
     body.appendChild(el('h4', 'remedy-card-title', song.title));
     body.appendChild(el('p', 'remedy-formula', formulaName(song)));
-    body.appendChild(el('p', 'remedy-card-why', why || song.why));
+    body.appendChild(el('p', 'remedy-card-why', songLine(song)));
     var arrow = el('span', 'remedy-arrow', '↗'); arrow.setAttribute('aria-hidden', 'true');
     a.appendChild(art); a.appendChild(body); a.appendChild(arrow);
     li.appendChild(a);
@@ -1204,9 +1125,8 @@
     if (!songs.length) return showInput();
     primarySlot.innerHTML = '';
     alsoList.innerHTML = '';
-    var why = state.why || [];
-    primarySlot.appendChild(renderPrimary(songs[0], why[0]));
-    songs.slice(1).forEach(function (s, i) { alsoList.appendChild(renderCard(s, why[i + 1])); });
+    primarySlot.appendChild(renderPrimary(songs[0]));
+    songs.slice(1).forEach(function (s) { alsoList.appendChild(renderCard(s)); });
     alsoWrap.hidden = songs.length < 2;
     note.hidden = state.status !== 'weak' && state.status !== 'fallback';
     inputView.hidden = true;
@@ -1244,8 +1164,7 @@
         textarea.focus();
         return;
       }
-      var state = { text: textarea.value, ids: r.results.map(function (x) { return x.song.id; }), status: r.status,
-        why: r.results.map(function (x) { return x.explanation || ''; }) };
+      var state = { text: textarea.value, ids: r.results.map(function (x) { return x.song.id; }), status: r.status };
       write(state);
       showResults(state, true);
     }).catch(function () {
@@ -1262,12 +1181,9 @@
     if (typeof st.text === 'string' && textarea.value !== st.text) textarea.value = st.text;
     syncButton();
     if (st.ids && st.ids.length) {
-      load().then(function (eng) {
-        // a session stored before per-search explanations: rebuild them from the same text
-        if (!st.why && typeof st.text === 'string') {
-          var r = eng.recommend(st.text);
-          if (r.results.map(function (x) { return x.song.id; }).join() === st.ids.join()) st.why = r.results.map(function (x) { return x.explanation || ''; });
-        }
+      load().then(function () {
+        // older sessions stored per-search text ("why"); drop it so only the song descriptions show
+        if (st.why) { delete st.why; write(st); }
         showResults(st, false);
       }).catch(function () { showInput(); });
     } else {

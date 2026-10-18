@@ -76,3 +76,16 @@ Run everything on every change:
 
 Run everything on every change:
 `node scripts/test_engine.js && node scripts/tests/real_user_regressions.test.js && node scripts/tests/phase2_expressions.test.js && node scripts/tests/semantic_meaning.test.js && node scripts/tests/listening_prefs.test.js`
+
+## Result descriptions (2026-10-18)
+
+- Each result shows the song's own one-sentence description (`scripts/description_lines.json` → `songs.json`
+  `description`), grounded in TAB 02 Central meaning / Intended listening experience / Composition type.
+  It is identical for every search: it never quotes or repeats the visitor's words, never explains the matching
+  (TAB 06 still drives relevance and formula affinity behind the scenes) and never says what the visitor feels.
+- The build fails unless every song has a description that is one sentence (25 words / 140 characters at most),
+  free of quotation marks, visitor-referencing or mechanism wording ("you said", "matches", "connects to", …)
+  and health/treatment words, and type-accurate (F07 "A spoken sleep contemplation…", F08 instrumental "without
+  words", I Am Hope "wordless vocal sounds", F06 "Sung in an invented language…").
+- Sessions no longer store per-search text; a session saved before this change is shown with the current descriptions.
+- Tests: `node scripts/tests/descriptions.test.js`.
