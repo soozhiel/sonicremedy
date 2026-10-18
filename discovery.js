@@ -39,6 +39,8 @@
       .replace(/\b(\w+)n't\b/g, '$1 not')
       .replace(/\b(do|does|did|is|are|was|were|have|has|had|could|would|should)nt\b/g, '$1 not')
       .replace(/\bi'm\b|\bim\b/g, 'i am')
+      .replace(/\bidk\b/g, 'i do not know').replace(/\bdunno\b/g, 'do not know').replace(/\brn\b/g, 'right now')
+      .replace(/\b(pls|plz)\b/g, 'please').replace(/\bwanna\b/g, 'want to').replace(/\bgonna\b/g, 'going to')
       .replace(/\b(\w+)'ve\b/g, '$1 have').replace(/\b(\w+)'re\b/g, '$1 are')
       .replace(/\b(\w+)'ll\b/g, '$1 will').replace(/\b(\w+)'d\b/g, '$1 would')
       .replace(/\b(\w+)'s\b/g, '$1').replace(/'/g, '')
@@ -253,6 +255,130 @@
     return q;
   }
 
+  /* ------------------------------------------------- expression library (TAB 05)
+   * data/expressions.json is generated from TAB 05 — HUMAN EXPRESSION LIBRARY by
+   * scripts/build_expressions.py. Each row maps how people actually say things (plain words,
+   * slang, metaphors, negations, physical sensations) to TAB 02 songs, strongest first. Rows are
+   * matched as phrases (word by word, allowing plural/tense variants) or, for phrases with two or
+   * more content words, by all of those words appearing close together. A phrase that is
+   * negated in the visitor's text ("I'm not tired") does not count, unless the row is itself a
+   * negation ("I don't want to be angry anymore") or names a wanted state ("I don't feel ready"
+   * still means readiness is the need). */
+  var EXPR_CONF = { high: 1, medium: 0.85, 'low-medium': 0.7, low: 0.55 };
+  var NEG_WORD = /^(not|never|no|without|nothing|nobody|none|neither|nor)$/;
+  var EXPR_RANK = [1, 0.86, 0.74, 0.64, 0.56];
+  function exprWords(s) { return normalise(s).replace(/[^a-z\s]/g, ' ').split(/\s+/).filter(Boolean); }
+  function buildExpressions(lib) {
+    var out = [];
+    ((lib && lib.expressions) || []).forEach(function (x) {
+      if (!x.songs || !x.songs.length || !(x.conf in EXPR_CONF)) return;
+      var keepsOnNeg = /negation/i.test(x.register || '') || /^hope/i.test(x.theme || '');
+      x.phrases.forEach(function (p) {
+        var w = exprWords(p);
+        if (!w.length) return;
+        var content = w.filter(function (t) { return t.length > 2 && !STOP.has(t); }).map(stem);
+        out.push({ id: x.id, words: w, wstems: w.map(stem), content: Array.from(new Set(content)), songs: x.songs,
+          conf: EXPR_CONF[x.conf], low: x.conf === 'low' || x.conf === 'low-medium',
+          selfNeg: w.some(function (t) { return NEG_WORD.test(t); }), keepsOnNeg: keepsOnNeg });
+      });
+    });
+    return out;
+  }
+  // Returns non-overlapping phrase hits in the visitor's text, longest/most specific first.
+  function matchExpressions(lib, text) {
+    if (!lib.length) return [];
+    var qw = exprWords(text), qs = qw.map(stem), hits = [];
+    function negatedAt(i) {
+      for (var k = Math.max(0, i - 3); k < i; k++) if (NEG_WORD.test(qw[k])) {
+        // "do not want to (feel|be) X" describes X as the situation, so it still counts
+        if (/^(want|wanna)$/.test(qw[k + 1] || '') || /^(want)$/.test(qw[k + 2] || '')) return false;
+        return true;
+      }
+      return false;
+    }
+    lib.forEach(function (e) {
+      var n = e.words.length, found = null;
+      // 1) phrase, word by word (stems allow plurals and tenses)
+      for (var i = 0; i + n <= qw.length && !found; i++) {
+        var ok = true;
+        for (var j = 0; j < n && ok; j++) ok = qw[i + j] === e.words[j] || (qs[i + j] === e.wstems[j] && e.wstems[j].length > 3);
+        if (ok) found = { start: i, end: i + n, exact: true };
+      }
+      // 2) two or more content words close together and in the same order ("my chest has been
+      //    so tight"), none of them negated in the visitor's text
+      if (!found && e.content.length >= 2 && !e.selfNeg) {
+        var span = e.words.length + 3;
+        for (var a = 0; a < qs.length && !found; a++) {
+          if (qs[a] !== e.content[0]) continue;
+          var next = 1, last = a, clean = true;
+          for (var b = a + 1; b < Math.min(qs.length, a + span) && next < e.content.length; b++) {
+            if (qs[b] === e.content[next]) { if (negatedAt(b)) clean = false; next++; last = b; }
+          }
+          if (next === e.content.length && clean) found = { start: a, end: last + 1, exact: false };
+        }
+      }
+      if (!found) return;
+      if (!e.selfNeg && !e.keepsOnNeg && negatedAt(found.start)) return;
+      var spec = Math.min(4, Math.max(e.content.length, 1));
+      hits.push({ e: e, start: found.start, end: found.end, len: found.end - found.start,
+        strength: e.conf * (0.7 + 0.1 * spec) * (found.exact ? 1 : 0.85) });
+    });
+    hits.sort(function (x, y) { return y.len - x.len || y.strength - x.strength; });
+    var taken = [], kept = [];
+    hits.forEach(function (h) {
+      for (var i = h.start; i < h.end; i++) if (taken[i]) return;   // a longer phrase already covers these words
+      for (var k = h.start; k < h.end; k++) taken[k] = true;
+      kept.push(h);
+    });
+    // one hit per library row (variants of the same row do not stack)
+    var byRow = {};
+    kept.forEach(function (h) { if (!byRow[h.e.id] || byRow[h.e.id].strength < h.strength) byRow[h.e.id] = h; });
+    return Object.keys(byRow).map(function (k) { return byRow[k]; });
+  }
+
+  /* ------------------------------------------------------------ typo repair
+   * Mistyped words ("overwelmed", "congestd", "wolrd") are corrected to the nearest word the
+   * song records or TAB 05 use, by one edit (insert, delete, swap or change one letter), and only
+   * when the typed word is unknown and the correction is unambiguous. */
+  function edit1(a, b) {
+    if (a === b) return false;
+    var la = a.length, lb = b.length;
+    if (Math.abs(la - lb) > 1) return false;
+    var i = 0; while (i < la && i < lb && a[i] === b[i]) i++;
+    if (la === lb) {
+      if (a.slice(i + 1) === b.slice(i + 1)) return true;                      // substitution
+      return a[i] === b[i + 1] && a[i + 1] === b[i] && a.slice(i + 2) === b.slice(i + 2);   // swap
+    }
+    return la > lb ? a.slice(i + 1) === b.slice(i) : a.slice(i) === b.slice(i + 1);         // delete / insert
+  }
+  function makeSpeller(vocab) {
+    var byLen = {};
+    vocab.forEach(function (w) { (byLen[w.length] = byLen[w.length] || []).push(w); });
+    var cache = {};
+    function fix(w) {
+      if (w.length < 4 || vocab.has(w) || STOP.has(w)) return w;
+      if (cache[w] !== undefined) return cache[w];
+      var c = w.replace(/([a-z])\1{2,}/g, '$1$1');           // "rooom" -> "room"
+      if (vocab.has(c)) return (cache[w] = c);
+      var single = c.replace(/([a-z])\1/g, '$1');             // "ouut" -> "out"
+      if (single !== c && vocab.has(single)) return (cache[w] = single);
+      var found = [];
+      [c.length - 1, c.length, c.length + 1].forEach(function (L) {
+        (byLen[L] || []).forEach(function (v) { if (v[0] === c[0] && edit1(c, v)) found.push(v); });
+      });
+      cache[w] = (c.length >= 5 && found.length === 1) ? found[0] : w;
+      return cache[w];
+    }
+    return function (text) {
+      return String(text || '').replace(/[A-Za-z\u2019']+/g, function (tok) {
+        var lower = tok.toLowerCase();
+        if (/['\u2019]/.test(lower)) return tok;
+        var f = fix(lower);
+        return f === lower ? tok : f;
+      });
+    };
+  }
+
   /* ---------------------------------------------------------------- engine */
   var EVIDENCE = { 'artist-confirmed': 1, 'artist-script': 1, 'source-supported': 1, 'artist-confirmed+ai-inferred': 1, 'ai-inferred': 0.95 };
   // A sleep request with no particular subject ("help me sleep", "I just want to switch off and
@@ -270,8 +396,9 @@
   // without lyrics are not disadvantaged (no title-only penalty).
   var W = { S: 1.0, X: 1.0, M: 0.8, D: 0.7, F: 0.6, Mo: 0.45, I: 0.45, L: 0.25, T: 0.7 };
 
-  function createEngine(data) {
+  function createEngine(data, exprData) {
     var songs = data.songs;
+    var EXPR = buildExpressions(exprData);
     var idx = songs.map(function (s) {
       var m = s.m;
       var ch = {
@@ -315,6 +442,15 @@
     });
     function idfT(t) { return Math.log((N + 1) / ((dfT[t] || 0) + 1)) + 0.3; }
     function idfC(c) { return Math.log((N + 1) / ((dfC[c] || 0) + 1)) + 0.6; }
+    // vocabulary for typo repair: words used by the song records and by TAB 05
+    var VOCAB = new Set();
+    songs.forEach(function (s) {
+      var m = s.m;
+      [].concat(m.situations, m.expressions, m.desired, m.moods, m.themes, m.patterns, m.intentions, [m.meaning, s.title])
+        .forEach(function (t) { (normalise(t).match(/[a-z]+/g) || []).forEach(function (w) { VOCAB.add(w); }); });
+    });
+    EXPR.forEach(function (e) { e.words.forEach(function (w) { VOCAB.add(w); }); });
+    var respell = makeSpeller(VOCAB);
 
     var SLEEP_WORDS = new Set(stems('sleep sleeping asleep bed bedtime night nights tonight awake lie lying rest insomnia'));
     function scoreSong(e, q) {
@@ -402,8 +538,9 @@
     function recommend(text, opts) {
       opts = opts || {};
       var raw = String(text || '').trim();
+      if (!raw || !meaningful(raw)) return { status: 'empty', results: [], query: parseQuery(raw) };
+      raw = respell(raw);
       var q = parseQuery(raw);
-      if (!raw || !meaningful(raw)) return { status: 'empty', results: [], query: q };
       if (q.pref.sleep === 1) {
         var rest = parseQuery(normalise(raw).replace(GENERIC_SLEEP, ' '));
         var topical = Object.keys(rest.concepts).filter(function (c) { return !rest.concepts[c].context && c !== 'calm' && c !== 'sleep'; });
@@ -413,10 +550,22 @@
           }).filter(function (r) { return r.song; }) };
         }
       }
+      // TAB 05 expression hits: a boost for each linked song, strongest link first
+      var hits = matchExpressions(EXPR, raw), boost = {}, exprConf = 0, exprLowOnly = true;
+      hits.forEach(function (h) {
+        exprConf = Math.max(exprConf, h.strength);
+        if (!h.e.low) exprLowOnly = false;
+        h.e.songs.forEach(function (id, i) {
+          var b = 9 * h.strength * EXPR_RANK[Math.min(i, EXPR_RANK.length - 1)];
+          boost[id] = boost[id] ? boost[id] + 0.6 * b : b;
+        });
+      });
       var scored = [];
       idx.forEach(function (e) {
-        for (var i = 0; i < e.notFor.length; i++) if (e.notFor[i].test(q.raw)) return;
+        for (var i = 0; i < e.notFor.length; i++) if (e.notFor[i].test(q.raw)) return;   // e.g. Rebuild Trust for betrayal wording
         var r = scoreSong(e, q);
+        var b = boost[e.song.id] || 0;
+        if (b) { r.detail.base = { score: r.score, state: r.detail.state }; r.detail.expr = +b.toFixed(2); r.detail.state++; r.score += b * e.mult; }
         if (r.score > 0) scored.push({ e: e, score: r.score, detail: r.detail });
       });
       scored.sort(function (a, b) {
@@ -432,6 +581,12 @@
       if (top < 2 || (lead.state === 0 && lead.phrase < 0.6 && top < 6)) status = 'fallback';
       // one or two words: only treat as a match when the word clearly names a felt state in a song's record
       if (words(raw).length <= 2) status = (lead.phrase >= 0.75 || (lead.state >= 1 && top >= 5)) ? 'weak' : 'fallback';
+      // a TAB 05 expression in the visitor's own words is a real match; low-confidence rows keep
+      // the "A place to start" framing
+      if (hits.length && lead.expr) {
+        if (!exprLowOnly) status = 'ok';
+        else status = (lead.base.score >= 4 && (lead.base.state >= 1 || lead.phrase >= 0.6) && words(raw).length > 2) ? 'ok' : 'weak';
+      }
       if (status === 'fallback') {
         // keep only songs whose own record contains the visitor's phrasing, then complete the three
         // with the broad starting points. Bare word or loose concept overlaps are not used.
@@ -453,6 +608,22 @@
         picked.push(c);
         if (g) groups[g] = true;
       }
+      // When the visitor said two different things ("the world is unfair and I'm tired of thinking
+      // about it"), each TAB 05 expression they used keeps its strongest available song in the set.
+      if (hits.length > 1 && picked.length) {
+        hits.slice().sort(function (x, y) { return y.strength - x.strength; }).forEach(function (h) {
+          if (picked.some(function (p) { return h.e.songs.indexOf(p.e.song.id) >= 0; })) return;
+          var cand = scored.filter(function (o) { return h.e.songs.indexOf(o.e.song.id) >= 0 && picked.indexOf(o) < 0 &&
+            !(o.e.song.group && groups[o.e.song.group]); })[0];
+          if (!cand) return;
+          if (picked.length < 3) { picked.push(cand); }
+          else {
+            // replace the lowest pick that no expression asked for
+            for (var r = picked.length - 1; r > 0; r--) if (!picked[r].detail.expr) { picked[r] = cand; break; }
+          }
+          if (cand.e.song.group) groups[cand.e.song.group] = true;
+        });
+      }
       // If the visitor named a listening preference (e.g. sleep), other tracks made for that
       // experience are honest companions even without a topical overlap.
       var prefKeys = Object.keys(q.pref).filter(function (k) { return q.pref[k] === 1; });
@@ -467,21 +638,38 @@
           if (o.e.song.group) groups[o.e.song.group] = true;
         }
       }
-      // Clear matches keep their own count (one to three) exactly as before. Only when the visitor's
-      // words found nothing defensible are the three broad starting points added.
-      if (status === 'fallback' || !picked.length) {
-        status = 'fallback';
+      // Any real match gets three songs: remaining slots go to the next-best songs with their own
+      // evidence for these words (a felt state, a phrase or a TAB 05 link), near-duplicates last.
+      if (status !== 'fallback' && picked.length && picked.length < 3) {
+        var real = function (o) { return o.detail.state >= 1 || o.detail.phrase >= 0.5 || o.detail.expr; };
+        [false, true].forEach(function (allowDup) {
+          for (var k = 0; k < scored.length && picked.length < 3; k++) {
+            var o = scored[k];
+            if (picked.indexOf(o) >= 0 || !real(o)) continue;
+            if (!allowDup && o.e.song.group && groups[o.e.song.group]) continue;
+            if (allowDup && o.e.song.group && groups[o.e.song.group] && scored.some(function (x) { return picked.indexOf(x) < 0 && x !== o && real(x) && !(x.e.song.group && groups[x.e.song.group]); })) continue;
+            picked.push(o);
+            if (o.e.song.group) groups[o.e.song.group] = true;
+          }
+        });
+      }
+      // Fixed starting points are the last resort: when nothing defensible was found, or to complete
+      // the three. They are marked fill: 'start' and the set is framed "A place to start".
+      if (status === 'fallback' || !picked.length || picked.length < 3) {
+        if (status === 'fallback' || !picked.length) status = 'fallback';
+        else status = 'weak';
         var have = picked.map(function (p) { return p.e.song.id; });
         START_HERE.forEach(function (id) {
           if (picked.length >= 3 || have.indexOf(id) >= 0) return;
           var e = idx.filter(function (x) { return x.song.id === id; })[0];
-          if (e) picked.push({ e: e, score: 0, detail: { concepts: [], state: 0, tokens: 0, phrase: 0 } });
+          if (e) picked.push({ e: e, score: 0, fill: 'start', detail: { concepts: [], state: 0, tokens: 0, phrase: 0 } });
         });
       }
       return {
         debug: opts.debug ? scored.slice(0, 8).map(function (x) { return [x.e.song.id, x.e.song.title, +x.score.toFixed(2), JSON.stringify(x.detail)]; }) : undefined,
         status: status,
-        results: picked.map(function (p) { return { song: p.e.song, score: p.score, detail: p.detail }; }),
+        results: picked.map(function (p) { var o = { song: p.e.song, score: p.score, detail: p.detail }; if (p.fill) o.fill = p.fill; return o; }),
+        expressions: hits.map(function (h) { return h.e.id; }),
         query: q
       };
     }
@@ -520,9 +708,12 @@
   function load() {
     if (engine) return Promise.resolve(engine);
     if (!loading) {
+      // the expression library (TAB 05) is optional: if it cannot load, matching still works
+      var lib = fetch('data/expressions.json', { credentials: 'same-origin' })
+        .then(function (r) { return r.ok ? r.json() : null; }).catch(function () { return null; });
       loading = fetch('data/songs.json', { credentials: 'same-origin' })
         .then(function (r) { if (!r.ok) throw new Error('data ' + r.status); return r.json(); })
-        .then(function (d) { engine = createEngine(d); return engine; });
+        .then(function (d) { return lib.then(function (x) { engine = createEngine(d, x); return engine; }); });
       loading.catch(function () { loading = null; });
     }
     return loading;
