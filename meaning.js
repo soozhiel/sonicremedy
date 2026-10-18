@@ -15,7 +15,7 @@
   var SIGNALS = [
     // what is happening (situation)
     { key: 'grief', dim: 'situation', topic: 'losing someone',
-      re: /\b(griev\w*|grief|mourn\w*|bereave\w*|passed away|passed on|(has|had|just) passed|died|death of|funeral|buried|lost my (mum|mom|mother|dad|father|grandad|grandpa|grandfather|grandma|grandmother|nan|nana|brother|sister|son|daughter|wife|husband|partner|friend|best friend|baby|dog|cat))\b/ },
+      re: /\b(griev\w*|grief|mourn\w*|bereave\w*|passed away|passed on|(has|had|just) passed|(my|our|her|his|their) \w+ (passed|died)|(she|he|they) (passed|died)|put (our|my|the) (dog|cat|pet) down|died|death of|funeral|buried|lost my (mum|mom|mother|dad|father|grandad|grandpa|grandfather|grandma|grandmother|nan|nana|brother|sister|son|daughter|wife|husband|partner|friend|best friend|baby|dog|cat))\b/ },
     { key: 'injustice', dim: 'situation', topic: 'injustice',
       re: /\b(injustice\w*|unjust|unfair\w*|inequalit\w*|oppress\w*|corrupt\w*|cruelty|the news|the war|wars|state of the world|the world is)\b/ },
     { key: 'heartbreak', dim: 'situation', topic: 'heartbreak',
@@ -44,7 +44,7 @@
     // the visitor was hurt / let down by someone else
     betrayed: /\b(betrayed (me|my)|(he|she|they|someone|somebody|my \w+) (betrayed|cheated on|lied to|broke|hurt) (me|my)|i (was|have been|got|been) (betrayed|cheated on|lied to|hurt by)|cheated on me|lied to me|broke my trust|betrayed my trust|stabbed me in the back|backstab\w*)\b/,
     // the visitor caused the hurt
-    caused: /\b(i (hurt|betrayed|cheated on|lied to|let down) (someone|somebody|him|her|them|my \w+)|i (was|have been) (cruel|horrible|mean|awful|nasty|unkind) to|i said something (cruel|awful|horrible|mean|hurtful)|i messed up|my fault|i broke (their|his|her|my \w+|someone) trust|earn (back )?(their |his |her )?trust|win (back )?(their |his |her )?trust|make it right|make amends|regret what i did)\b/,
+    caused: /\b(i (hurt|betrayed|cheated on|lied to|let down) (someone|somebody|him|her|them|my \w+)|i (was|have been) (cruel|horrible|mean|awful|nasty|unkind) to|i said something (cruel|awful|horrible|mean|hurtful)|i messed up|my fault|i (\w+ ){1,4}behind (their|his|her|my \w+) back|i broke (their|his|her|my \w+|someone) trust|earn (back )?(their |his |her )?trust|win (back )?(their |his |her )?trust|make it right|make amends|regret what i did)\b/,
     // someone blames the visitor
     blamed: /\b(((they|he|she|everyone|everybody|people|my \w+) (keep |keeps |always )?(blame|blames|blamed|blaming) me)|blam(ed|ing) me|i (am|was|got|get|keep getting) (being )?blamed|scapegoat\w*|accus\w* me|(say|says|saying|said) (it is|it was|i am|i was) (my fault|the reason)|lie(d|s)? about me|thrown under the bus)\b/,
     // the visitor blames / judges others
@@ -52,7 +52,7 @@
     // talking about blame without being part of it
     describing: /\b(blame game|(people|everyone|they) (blame|judge) (each other|one another|others))\b/,
     // supporting someone else
-    supporting: /\b(stay(ing)? strong for|be there for|support(ing)? (my|a|someone|them|him|her)|look(ing)? after (my|a) \w+|car(e|ing) for (my|a) \w+|my friend is struggling|someone i love is)\b/
+    supporting: /\b(stay(ing)? strong for|(be|being|trying to be) strong for|be there for|support(ing)? (my|a|someone|them|him|her)|look(ing)? after (my|a) \w+|car(e|ing) for (my|a) \w+|my friend is struggling|someone i love is)\b/
   };
 
   var UNCERTAIN = [
@@ -64,7 +64,7 @@
 
   // listening preferences and constraints
   var PREF = {
-    noSpoken: /\b(no (spoken|talking|voice|voices|speaking|narration|words|lyrics)|without (talking|a voice|words|lyrics|speaking|narration)|nothing spoken|wordless|instrumental|no one talking|just music)\b/,
+    noSpoken: /\b((do not|dont) want (anyone|anybody|someone|somebody|a voice|people|any voice) (talking|speaking)|no (spoken|talking|voice|voices|speaking|narration|words|lyrics)|without (talking|a voice|words|lyrics|speaking|narration)|nothing spoken|wordless|instrumental|no one talking|just music)\b/,
     noLyrics: /\b(no (spoken )?(words|lyrics|singing|vocals)|without (words|lyrics|singing|vocals)|wordless|instrumental|just music)\b/,
     noVocals: /\b(no (vocals|voice|voices|singing)|without (vocals|a voice|any voice|singing)|purely instrumental|fully instrumental|only instrumental)\b/,
     wantSpoken: /\b(spoken|talk me through|guided|guide me|narrat\w*|a voice to|voice (to )?(talk|guide)|someone talking|meditation)\b/,
