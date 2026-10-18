@@ -1,0 +1,147 @@
+{
+ "dataVersion": "2026-10-18-f1bbc39d86db",
+ "generated": "2026-10-18T07:39:03Z",
+ "source": "SONIC REMEDY — MASTER SONG INDEX",
+ "sheetExport": {
+  "file": "master-tab04-after.xlsx",
+  "sha256": "8aba565ff49939e914f5e549ebd4b49f6193290d9d525d6884bc97a52c113824"
+ },
+ "tabs": [
+  "TAB 01",
+  "TAB 02",
+  "TAB 05",
+  "TAB 06"
+ ],
+ "files": {
+  "songs.json": {
+   "sha256": "cd0e592c77fd11c55eaf082f7af2cd4ff9089df2c9b54fbc177a35a8b242f2ca",
+   "bytes": 158267
+  },
+  "expressions.json": {
+   "sha256": "b65bb871c8a4e2c8f6f1a13ce05827e0b8314a3c6fd4621f7d385a6a4fffdb7f",
+   "bytes": 51512
+  },
+  "affinities.json": {
+   "sha256": "e3c92f8a33d86c9c4451f50b21047fe1b8d12bb5b6c4e8796996748a96b78275",
+   "bytes": 4788
+  },
+  "meaning.json": {
+   "sha256": "c853f025882eb11d19a4ebb47c03abf6bf68429ffb66e85377fce2041c6efaa1",
+   "bytes": 31757
+  }
+ },
+ "validation": {
+  "70 IDs match TAB 01": "pass",
+  "70 IDs match TAB 02": "pass",
+  "70 IDs match TAB 06": "pass",
+  "70 unique IDs": "pass",
+  "songs per formula": "pass",
+  "URLs match TAB 01": "pass",
+  "composition types consistent with TAB 02 and formula": "pass",
+  "artwork file present for every song (and TAB 01 cover ref)": "pass",
+  "TAB 06 source columns == TAB 02 text": "pass",
+  "near-duplicate pairs valid with TAB 02 basis": "pass",
+  "every specific TAB 06 guardrail has a reviewed machine rule": "pass",
+  "8 formula affinities": "pass",
+  "only F06 affinity artist-confirmed": "pass",
+  "affinity formula names match TAB 01": "pass",
+  "about line for every song, health-free": "pass",
+  "TAB 05 links valid": "pass",
+  "every track has a vocal profile with a source": "pass",
+  "vocal profiles consistent with composition type": "pass"
+ },
+ "affinityStatus": {
+  "1": "proposed",
+  "2": "proposed",
+  "3": "proposed",
+  "4": "proposed",
+  "5": "proposed",
+  "6": "artist-confirmed",
+  "7": "proposed",
+  "8": "proposed"
+ },
+ "pairs": {
+  "shay": {
+   "ids": [
+    "SR-F05-T02",
+    "SR-F05-T03"
+   ],
+   "kind": "version",
+   "basis": [
+    {
+     "id": "SR-F05-T03",
+     "field": "Verification status",
+     "text": "Shared meaning artist-confirmed 2026-10-17 (= SR-F05-T02)"
+    },
+    {
+     "id": "SR-F05-T03",
+     "field": "Composition type",
+     "text": "darker musical treatment of Shay (same lyrics)"
+    }
+   ]
+  },
+  "city-of-gold": {
+   "ids": [
+    "SR-F05-T04",
+    "SR-F05-T05"
+   ],
+   "kind": "version",
+   "basis": [
+    {
+     "id": "SR-F05-T05",
+     "field": "Verification status",
+     "text": "Shared meaning artist-confirmed 2026-10-17 (= SR-F05-T04)"
+    },
+    {
+     "id": "SR-F05-T05",
+     "field": "Composition type",
+     "text": "sung in the artist's extracelestial language with English"
+    }
+   ]
+  },
+  "bet": {
+   "ids": [
+    "SR-F02-T08",
+    "SR-F02-T09"
+   ],
+   "kind": "related",
+   "basis": [
+    {
+     "id": "SR-F02-T09",
+     "field": "Central meaning",
+     "text": "Answer song to Track 08"
+    }
+   ]
+  }
+ },
+ "notNearDuplicates": {
+  "progress": {
+   "ids": [
+    "SR-F07-T12",
+    "SR-F07-T13"
+   ],
+   "reason": "Removed 2026-10-18 (user decision): similar themes do not make compositions duplicates. The only source link is TAB 02 T13 \"Overlaps thematically with T12 (title-based)\"; no composition-level basis (shared lyrics, recording or version) was found."
+  }
+ },
+ "vocalProfiles": {
+  "values": [
+   "spoken_narration",
+   "sung_lyrics",
+   "wordless_vocals",
+   "instrumental",
+   "unverified"
+  ],
+  "counts": {
+   "spoken_narration": 16,
+   "sung_lyrics": 13,
+   "wordless_vocals": 1,
+   "instrumental": 5,
+   "unverified": 35
+  },
+  "mixed": [
+   "SR-F05-T02",
+   "SR-F05-T03"
+  ],
+  "note": "Listening constraints use vocal_flags per track; unverified tracks are excluded from constrained requests."
+ }
+}

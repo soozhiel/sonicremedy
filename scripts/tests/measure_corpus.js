@@ -14,7 +14,13 @@ const api = require(path.join(dir, 'discovery.js'));
 const data = JSON.parse(fs.readFileSync(path.join(dir, 'data/songs.json'), 'utf8'));
 let expr = null;
 try { expr = JSON.parse(fs.readFileSync(path.join(dir, 'data/expressions.json'), 'utf8')); } catch (e) { /* baseline has none */ }
-const eng = api.createEngine(data, expr);
+let extras = null;
+try {
+  const aff = JSON.parse(fs.readFileSync(path.join(dir, 'data/affinities.json'), 'utf8'));
+  const mm = JSON.parse(fs.readFileSync(path.join(dir, 'data/meaning.json'), 'utf8'));
+  extras = { affinities: aff, pairs: mm.pairs, meaning: require(path.join(dir, 'meaning.js')) };
+} catch (e) { /* engines before the TAB 06 stage have none */ }
+const eng = api.createEngine(data, expr, extras);
 const corpus = JSON.parse(fs.readFileSync(path.join(__dirname, 'corpus/phase2_corpus.json'), 'utf8'));
 function isFixed(r, res) { return r.fill === 'start' || (!res.sleepDefault && r.score === 0); }
 const rows = corpus.items.map(function (it) {

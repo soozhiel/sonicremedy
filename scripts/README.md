@@ -46,3 +46,33 @@
 
 Run everything on every change:
 `node scripts/test_engine.js && node scripts/tests/real_user_regressions.test.js && node scripts/tests/phase2_expressions.test.js`
+
+## Semantic engine — near-duplicates and listening preferences (2026-10-18)
+
+- Data build: `python3 scripts/build_data.py master.xlsx` writes songs / expressions / affinities /
+  meaning / manifest and aborts (writing nothing) on any validation failure.
+- **Near-duplicate pairs** (`meaning.json` → `pairs`, mirrored in `manifest.json`): Shay / Shay Darkened
+  and City of Gold / City of Gold Alien (versions, artist-confirmed shared meaning) and the bet pair
+  SR-F02-T08 / T09 (answer song; flagged as a partial basis: a lyric cross-reference, not a shared
+  composition). The Formula 07 pair **Spot The Changes / Keep Progressing (SR-F07-T12 / T13) is not a
+  near-duplicate**: similar themes do not make compositions duplicates, and the only source link is
+  TAB 02's "Overlaps thematically with T12 (title-based)". It is recorded under `notNearDuplicates`
+  in the manifest, and the build fails if either track is grouped again.
+- **Vocal profile per track** (`songs.json`: `vocal_profile`, `vocal_flags`, `vocal_source`,
+  `lyrics_verified`): spoken_narration | sung_lyrics | wordless_vocals | instrumental | unverified,
+  derived only from source text (TAB 02 Composition type / Support type / circumstances, TAB 03,
+  TAB 04) with the quote stored in `vocal_source`. Mixed tracks carry several flags (Shay: sung +
+  scat). When no source states how a track is voiced it is `unverified`. The build checks every
+  track has a value with a source and that it agrees with the composition type.
+- **Three listening constraints**, applied per track (`discovery.js` `allowed()`):
+  - no spoken narration / no talking / no voice-over → excludes spoken narration (sung tracks stay eligible);
+  - no lyrics / no words / nothing with words / "something without words" → excludes sung and spoken words
+    (wordless vocals and instrumentals stay eligible);
+  - instrumental only / just music / no vocals → only purely instrumental tracks.
+  Unverified tracks are excluded from all three. "I don't mind lyrics", "vocals are fine",
+  "I don't mind the narration" lift the matching constraint; "I have no words" is not a request.
+- Tests: `tests/listening_prefs.test.js`, `tests/semantic_meaning.test.js`
+  (`SR_MASTER_XLSX=<export> ` enables the negative build test), `tests/dev/refine2_probes.js`.
+
+Run everything on every change:
+`node scripts/test_engine.js && node scripts/tests/real_user_regressions.test.js && node scripts/tests/phase2_expressions.test.js && node scripts/tests/semantic_meaning.test.js && node scripts/tests/listening_prefs.test.js`

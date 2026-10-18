@@ -23,12 +23,12 @@ FORMULA_STATE = {1: 'CONFLICTED?', 2: 'SECOND-GUESSING?', 3: 'PUTTING IT OFF?', 
                  5: 'HOLDING BACK?', 6: "DON'T FIT IN?", 7: "CAN'T SWITCH OFF?", 8: 'NEED TO RECONNECT?'}
 FORMULA_URL = {7: 'https://sonicremedy07.vercel.app', 8: 'https://sonicremedy08.vercel.app'}
 # Pairs/groups whose meaning overlaps strongly (artist-confirmed shared meanings and
-# answer-song pairs, plus title-based F07 neighbours flagged in TAB 02 col T).
+# answer-song pairs).
 OVERLAP_GROUPS = {
     'shay': ['SR-F05-T02', 'SR-F05-T03'],            # artist-confirmed shared meaning
     'city-of-gold': ['SR-F05-T04', 'SR-F05-T05'],    # artist-confirmed shared meaning
     'bet': ['SR-F02-T08', 'SR-F02-T09'],             # answer song to Track 08
-    'progress': ['SR-F07-T12', 'SR-F07-T13'],        # TAB 02 notes thematic overlap (title-based)
+    # 'progress' (SR-F07-T12 / T13) removed 2026-10-18: similar themes do not make compositions duplicates
 }
 # Site-config exclusions (artist-confirmed in TAB 02 col T): not intended for these visitors.
 NOT_FOR = {
