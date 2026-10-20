@@ -86,6 +86,6 @@ Run everything on every change:
 - The build fails unless every song has a description that is one sentence (25 words / 140 characters at most),
   free of quotation marks, visitor-referencing or mechanism wording ("you said", "matches", "connects to", …)
   and health/treatment words, and type-accurate (F07 "A spoken sleep contemplation…", F08 instrumental "without
-  words", I Am Hope "wordless vocal sounds", F06 "Sung in an invented language…").
+  words", I Am Hope "wordless vocal sounds", F06 "Sung in a channelled alien language…").
 - Sessions no longer store per-search text; a session saved before this change is shown with the current descriptions.
 - Tests: `node scripts/tests/descriptions.test.js`.

@@ -1,10 +1,10 @@
 {
- "dataVersion": "2026-10-18-b42416693f0e",
- "generated": "2026-10-18T08:52:45Z",
+ "dataVersion": "2026-10-20-8c0f79fed589",
+ "generated": "2026-10-20T08:02:56Z",
  "source": "SONIC REMEDY — MASTER SONG INDEX",
  "sheetExport": {
-  "file": "master-tab04-after.xlsx",
-  "sha256": "8aba565ff49939e914f5e549ebd4b49f6193290d9d525d6884bc97a52c113824"
+  "file": "master-alien-language.xlsx",
+  "sha256": "bbcca6f9e0c6589468c0ce9746ec266511f93b7bfe65514c602abe415c705fe1"
  },
  "tabs": [
   "TAB 01",
@@ -14,19 +14,19 @@
  ],
  "files": {
   "songs.json": {
-   "sha256": "c612dfa3cf9c26bd9a41a09b51cfb639f51eb22206890df7cb333af5b5c50ae6",
-   "bytes": 166353
+   "sha256": "9fe80526f10721fb200a807d7f3ee116897418a4ea54e4dda395df5e485a3b9a",
+   "bytes": 166473
   },
   "expressions.json": {
-   "sha256": "17f12d45cd6325a7e4220fa96071b6ee8e1f7736e3cc95543de5866e1b2f2a7e",
+   "sha256": "008cf01f4a1f167e6ac30939db023f557780733c857291c413a822875f25b5bd",
    "bytes": 51512
   },
   "affinities.json": {
-   "sha256": "0af6cd0f29d9654f7c3386ae78217d305a7e95c533b1584c048b76b1af72b042",
+   "sha256": "afcdfb91008f8c770b436bea8dc4ff4ca4af529d2cbf99a3f8da64a54c44a15c",
    "bytes": 4788
   },
   "meaning.json": {
-   "sha256": "35101fc76c6cbc7af036b2d407b2c8427d53215c1764e7a1b1730ea2d71a6678",
+   "sha256": "976f2a9c61fa1912d110b890d11929b7e74ac58e526d666fe577de942b6b67a9",
    "bytes": 31757
   }
  },

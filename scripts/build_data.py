@@ -244,7 +244,7 @@ def build(xlsx, ddir):
         if t in ('instrumental', 'instrumental-wordless') and (not re.search(r'\binstrumental\b', d) or re.search(r'\b(song|sung|lyric\w*|sing\w*)\b', d, re.I)): why.append('instrumental wording')
         if t == 'instrumental-wordless' and 'wordless' not in d: why.append('must mention wordless vocals')
         if t == 'instrumental' and not re.search(r'\bwithout words\b', d): why.append('must say without words')
-        if i.startswith('SR-F06-') and not d.startswith('Sung in an invented language'): why.append('F06 must say invented language')
+        if i.startswith('SR-F06-') and not d.startswith('Sung in a channelled alien language'): why.append('F06 must say channelled alien language')
         if t == 'spoken-sleep' and re.search(r'\b(song|sung)\b', d): why.append('spoken track called a song')
         if why: bad[i] = why
     check('descriptions: one sentence, no quotes/visitor wording/mechanism/health, type-accurate', not bad, bad)
@@ -282,7 +282,7 @@ def build(xlsx, ddir):
             m3 = [r for r in t3.get(sid, []) if re.search(r'\bsung\b', s(r.get('Related theme or situation')))]
             m4 = [r for r in t4.get(sid, []) if 'sung lyric version' in s(r.get('Recommended corrective action'))]
             if 'sung lyrics' in k:
-                flags.append('sung_lyrics'); src.append('TAB 02 Support type: "sung lyrics are in an invented/\"alien\" language"')
+                flags.append('sung_lyrics'); src.append('TAB 02 Support type: "sung lyrics are in a channelled alien language"')
                 if m3: src.append(f'TAB 03 Related theme: "{s(m3[0].get("Related theme or situation"))}"')
             elif m4:
                 flags.append('sung_lyrics'); src.append(f'TAB 04 Recommended corrective action: "{s(m4[0].get("Recommended corrective action"))}"')
