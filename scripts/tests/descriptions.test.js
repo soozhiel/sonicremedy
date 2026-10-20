@@ -22,7 +22,7 @@ ok(songs.every(s => /^[A-Z].*\.$/.test(s.description) && !/[.!?;]\s+\S/.test(s.d
 ok(songs.filter(s => s.type === 'spoken-sleep').every(s => /^A spoken/.test(s.description)), 'F07 described as spoken');
 ok(songs.filter(s => /^SR-F08-T0[1-5]$/.test(s.id)).every(s => /instrumental/.test(s.description) && !/\b(song|sung|lyric)/i.test(s.description)), 'F08 T01-T05 instrumental, no lyrics implied');
 ok(/wordless/.test(lines['SR-F08-T06']) && !/\b(song|sung|lyric)/i.test(lines['SR-F08-T06']), 'I Am Hope: wordless vocals');
-ok(songs.filter(s => s.id.startsWith('SR-F06-')).every(s => /^Sung in an invented language/.test(s.description)), 'F06 sung in an invented language');
+ok(songs.filter(s => s.id.startsWith('SR-F06-')).every(s => /^Sung in a channelled alien language/.test(s.description)), 'F06 sung in a channelled alien language');
 ok(lines['SR-F02-T10'] === "A song about allowing calm to feel natural again, even when you've become accustomed to chaos and defence.", "user's wording: Let It Be Okay");
 ok(lines['SR-F05-T06'] === 'Imagining peace and space for yourself, like an eagle soaring above the trees.', "user's wording: Eagle");
 ok(lines['SR-F04-T06'] === 'The bliss of an unobligated day, with the freedom to simply feel yourself.', "user's wording: I Can Feel Me");
