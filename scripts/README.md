@@ -36,8 +36,8 @@
   corrected to known words by one edit when unambiguous; common shorthand (idk, dunno, rn, wanna)
   is expanded.
 - Any real match returns three songs: remaining slots are filled with the next-best songs that
-  have their own evidence; the fixed "A place to start" songs are the last resort and are marked
-  `fill: 'start'`.
+  have their own evidence; exploratory "A place to start" songs are the last resort and are marked
+  `fill: 'start'` (since 2026-10-25 no longer a fixed trio — see Diversity below).
 - `tests/phase2_expressions.test.js` — the Phase 2 phrases (straight and curly apostrophes),
   edit-and-resubmit, negation, typos, slang, sleep default, Rebuild Trust exclusion, near-duplicates.
 - `tests/corpus/phase2_corpus.json` + `tests/measure_corpus.js` — the frozen visitor-input corpus
@@ -89,3 +89,26 @@ Run everything on every change:
   words", I Am Hope "wordless vocal sounds", F06 "Sung in a channelled alien language…").
 - Sessions no longer store per-search text; a session saved before this change is shown with the current descriptions.
 - Tests: `node scripts/tests/descriptions.test.js`.
+
+## Diversity (2026-10-25)
+
+- Cause of the repeated "I Am Clear / Be Honest With Yourself / I Can Feel Me" set: there was no caching; every input
+  without song-level evidence (about 28% of the test inputs) got the same fixed fallback trio, and the same list
+  filled empty alternative places.
+- **Exploratory fill** (`exploreFill`): drawn from songs whose own TAB 02 meaning / circumstances / desired state are
+  open-ended and positive (no narrow situation such as betrayal, guilt or blame; not Formula 06; one version of a pair),
+  filtered by listening constraints and tone (spoken sleep only with a sleep cue, energetic songs only when the
+  moment is lively, no celebratory songs for a low moment). One song per formula; formulas not already shown first,
+  then songs not just shown; ties are rotated by a hash of the input, so the same text always gives the same songs.
+  Exploratory places are class 4 and never presented as relevance claims.
+- **Formula spread for supported songs**: an alternative from a formula not yet shown is preferred when it is the
+  same class or better (a same-formula song still wins when it is clearly stronger, ×1.25); formula affinity alone
+  (class 3) supports one track of a formula unless nothing else supported remains.
+- **Title words are not evidence** (`W.T = 0`).
+- **Session recency** (UI, `sessionStorage` `sonicRemedy.discovery.recent.v1`): the next *different* search in the tab
+  passes the songs just shown as `recommend(text, { recent })`; they lose ties within a class (×0.8), never a
+  direct first listen. Repeating the same text gives the same result.
+- Tests: `node scripts/tests/diversity.test.js`.
+
+Run everything on every change:
+`node scripts/test_engine.js && node scripts/tests/real_user_regressions.test.js && node scripts/tests/phase2_expressions.test.js && node scripts/tests/semantic_meaning.test.js && node scripts/tests/listening_prefs.test.js && node scripts/tests/descriptions.test.js && node scripts/tests/diversity.test.js`
