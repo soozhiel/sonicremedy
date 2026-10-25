@@ -495,17 +495,25 @@
   // A sleep request with no particular subject ("help me sleep", "I just want to switch off and
   // sleep") starts at the beginning of the Sleep Sequence: Episodes 1, 2, 3 (user decision 2026-10-18).
   var SLEEP_DEFAULT = ['SR-F07-T01', 'SR-F07-T02', 'SR-F07-T03'];
-  // When nothing in the song records clearly matches, the visitor still gets three songs: these are
-  // broad starting points whose verified meanings suit almost anyone (a clear head, an honest
-  // check-in, feeling like yourself). They are framed as "A place to start", never as a match.
-  var START_HERE = ['SR-F08-T03', 'SR-F07-T03', 'SR-F04-T06'];
+  // When nothing in the song records clearly matches, the visitor still gets three songs, framed as
+  // "A place to start", never as a match. They are no longer a fixed trio (that trio came back for every
+  // unmatched search: refinement 2026-10-25). Exploratory starting points are drawn from the songs whose own
+  // TAB 02 meaning offers a broadly wanted state (POSITIVE) without presuming a particular history or
+  // relationship (NARROW), one formula per place, honouring the guardrails, the listening constraints and the
+  // tone of what was written. Their order varies from search to search (see exploreFill).
+  var OPEN_RULES = { no_diagnosis_wording: 1, wordless_vocals: 1, version_pair: 1 };
+  var NARROW = ['blameOthers', 'blamed', 'causedHurt', 'supportOther', 'betrayed', 'heartbreak', 'family', 'envy', 'guilt', 'regret'];
+  // Stable string hash (FNV-1a with a final mix): the same words always give the same starting points.
+  function hash(str) { var h = 2166136261; for (var i = 0; i < str.length; i++) { h ^= str.charCodeAt(i); h = Math.imul(h, 16777619); }
+    h ^= h >>> 16; h = Math.imul(h, 2246822507); h ^= h >>> 13; h = Math.imul(h, 3266489909); h ^= h >>> 16; return h >>> 0; }
   // Keyboard rows, to recognise mashed keys such as "asdf" or "qwer" as random characters.
   var ROWS = ['qwertyuiop', 'asdfghjkl', 'zxcvbnm'];
   var GENERIC_SLEEP = /\b((i )?(just |really |only )?(want|need|would like|would love|wanna) to (switch off|sleep|rest|relax|wind down|unwind|fall asleep|drift off|get some sleep)|help me (to )?(sleep|switch off|relax|wind down|unwind|fall asleep|drift off|rest)|something (to help me |for )?(sleep|sleeping|bed|bedtime)|(go to |get to |get some )?sleep\w*|asleep|bed(time)?|tonight|at night|insomnia|please|so tired|tired)\b/g;
   var CONF = { high: 1, 'medium-high': 0.97, medium: 0.94, 'low-medium': 0.9, low: 0.85 };
   // Channel weights. Lyrics/spoken-term bags are a light supporting signal only, so songs
-  // without lyrics are not disadvantaged (no title-only penalty).
-  var W = { S: 1.0, X: 1.0, M: 0.8, D: 0.7, F: 0.6, Mo: 0.45, I: 0.45, L: 0.25, T: 0.7 };
+  // without lyrics are not disadvantaged (no title-only penalty). A word shared with the song's
+  // title is not evidence (refinement 2026-10-25): the title channel carries no weight.
+  var W = { S: 1.0, X: 1.0, M: 0.8, D: 0.7, F: 0.6, Mo: 0.45, I: 0.45, L: 0.25, T: 0 };
 
   // Near-duplicate pairs (data/meaning.json is the source; this mirrors it if that file is unavailable).
   var DEFAULT_PAIRS = { shay: { kind: 'version', prefer: 'darker' }, 'city-of-gold': { kind: 'version', prefer: 'alien' },
@@ -515,6 +523,7 @@
   // extras (all optional): { affinities: data/affinities.json, pairs: meaning.json pairs, meaning: meaning module }
   function createEngine(data, exprData, extras) {
     var songs = data.songs;
+    var PAIRS_INIT = (extras && extras.pairs) || DEFAULT_PAIRS;
     var EXPR = buildExpressions(exprData);
     var idx = songs.map(function (s) {
       var m = s.m;
@@ -551,8 +560,15 @@
       // or the track is energetic. Only these answer a purely positive moment (refinement 2).
       var tone = [].concat(m.moods || [], m.intentions || [], m.desired || [], [m.meaning]).join(' ; ');
       var celebratory = /\b(celebrat\w*|joy|joyful|playful\w*|savouring|glamorous|exuberan\w*|euphori\w*|festive|bliss)\b/i.test(tone) || (s.experience || []).indexOf('energetic') >= 0;
-      return { song: s, tok: tok, con: con, phrases: phrases, notFor: notFor, mult: mult, ownCon: ownCon, celebratory: celebratory };
+      var broad = conceptsIn([m.meaning].concat(m.circ || [], m.desired || []).join(' ; '));
+      var explore = (!s.rule || !!OPEN_RULES[s.rule]) && s.formula.number !== 6 &&
+        broad.some(function (c) { return POSITIVE.has(c); }) && !broad.some(function (c) { return NARROW.indexOf(c) >= 0; });
+      return { song: s, tok: tok, con: con, phrases: phrases, notFor: notFor, mult: mult, ownCon: ownCon, celebratory: celebratory,
+        broad: broad, explore: explore };
     });
+    // a version pair offers its first version as an exploratory start, not both
+    var seenGroup = {};
+    idx.forEach(function (e) { var g = e.song.group; if (g && PAIRS_INIT[g] && PAIRS_INIT[g].kind === 'version') { if (seenGroup[g]) e.explore = false; seenGroup[g] = true; } });
     // inverse document frequencies over songs (any channel)
     var N = idx.length, dfT = {}, dfC = {};
     idx.forEach(function (e) {
@@ -692,11 +708,54 @@
     var M = (extras && extras.meaning) || (typeof module !== 'undefined' && module.exports ? safeRequire('./meaning.js') : root.SonicRemedyMeaning);
     var AFF = (extras && extras.affinities && extras.affinities.formulas) || null;
     var PAIRS = (extras && extras.pairs) || DEFAULT_PAIRS;
-    var affConcepts = {};
+    var affConcepts = {}, affAll = {};
     if (AFF) Object.keys(AFF).forEach(function (k) {
       var a = AFF[k];
       affConcepts[a.number] = conceptsIn([a.affinity, a.current, a.desired].join(' ; ')).filter(function (c) { return !CONTEXT.has(c) && c !== 'sleep'; });
+      affAll[a.number] = conceptsIn([a.affinity, a.current, a.desired].join(' ; '));
     });
+
+    /* Exploratory starting points (fallback and empty places). Never presented as a match.
+     * One formula per place; a song shown in the visitor's previous (different) search is used only when
+     * nothing else fits; a formula or song whose own record names something the visitor mentioned (including
+     * where it happens: work, family, creative work) comes first; a stated good mood prefers celebratory
+     * tracks; a painful, grieving or physical moment gets calm or wordless tracks first and nothing energetic or celebratory; spoken sleep contemplations need a night,
+     * sleep or rest cue (TAB 06 F07 affinity: bedtime). Remaining ties rotate with the words written (first the
+     * formula, each formula equally, then the song within it), so different searches do not all start in the same
+     * place and no formula dominates because it has more eligible tracks. */
+    function exploreFill(picked, f, q, recent, seed) {
+      var sleepCue = q.pref.sleep === 1 || !!(q.concepts.sleep && q.concepts.sleep.weight > 0) || !!(f && f.prefs && f.prefs.wantSpoken);
+      var lively = (f && f.polarity === 'positive') || q.pref.energetic === 1;
+      // a loss, a painful moment or a body sensation is met with calm or wordless tracks first, never celebratory ones
+      var low = !lively && !!f && (f.polarity === 'negative' || f.situation.indexOf('grief') >= 0 || f.situation.indexOf('physical') >= 0);
+      var mentioned = Object.keys(q.concepts).filter(function (k) { return q.concepts[k].weight > 0; });
+      var pool = idx.filter(function (e) {
+        if (!e.explore || picked.some(function (p) { return p.e === e; })) return false;
+        if (e.song.type === 'spoken-sleep' && !sleepCue) return false;
+        if ((e.song.experience || []).indexOf('energetic') >= 0 && !lively) return false;
+        if (low && e.celebratory) return false;
+        for (var i = 0; i < e.notFor.length; i++) if (e.notFor[i].test(q.raw)) return false;
+        return allowed(e.song, f, q, null);
+      }).map(function (e) {
+        var n = e.song.formula.number;
+        var hint = mentioned.filter(function (c) { return e.broad.indexOf(c) >= 0 || (affAll[n] || []).indexOf(c) >= 0; }).length;
+        var ex = e.song.experience || [];
+        var soft = low && (ex.indexOf('calm') >= 0 || ex.indexOf('instrumental') >= 0) ? 1 : 0;
+        return { e: e, hint: Math.min(hint, 2), rec: recent[e.song.id] ? 1 : 0, cel: lively && e.celebratory ? 1 : 0, soft: soft,
+          frot: hash(seed + '|F' + n), rot: hash(seed + '|' + e.song.id) };
+      });
+      var out = [];
+      while (picked.length + out.length < 3 && pool.length) {
+        var used = picked.concat(out).map(function (p) { return p.e.song.formula.number; });
+        pool.sort(function (a, b) {
+          var ua = used.indexOf(a.e.song.formula.number) >= 0 ? 1 : 0, ub = used.indexOf(b.e.song.formula.number) >= 0 ? 1 : 0;
+          return ua - ub || a.rec - b.rec || b.soft - a.soft || b.hint - a.hint || b.cel - a.cel || a.frot - b.frot || a.rot - b.rot;
+        });
+        var x = pool.shift();
+        out.push({ e: x.e, score: 0, fill: 'start', cls: 4, detail: { concepts: [], state: 0, tokens: 0, phrase: 0 } });
+      }
+      return out;
+    }
 
     function frameOf(raw, q) {
       if (!M) return null;
@@ -817,6 +876,12 @@
       var raw = String(text || '').trim();
       if (!raw || !meaningful(raw)) return { status: 'empty', results: [], query: parseQuery(raw) };
       raw = respell(raw);
+      // Songs shown for the visitor's previous, different search in this tab (the page passes them; nothing is
+      // stored server-side). They yield to an equally supported song so consecutive searches do not keep
+      // returning the same tracks; they are never removed when they are the clear answer.
+      var recent = {};
+      (Array.isArray(opts.recent) ? opts.recent : []).forEach(function (id) { recent[id] = true; });
+      var seed = normalise(raw);
       var q = parseQuery(raw);
       var f = frameOf(raw, q);
       var noSleepDefault = f && (f.prefs.noSpoken || f.prefs.notSleepy);
@@ -901,6 +966,14 @@
       cands.sort(function (a, b) {
         return a.cls - b.cls || b.score - a.score || b.detail.phrase - a.detail.phrase || b.e.mult - a.e.mult || (a.e.song.id < b.e.song.id ? -1 : 1);
       });
+      // recency: within the same class, a recently shown song counts as 20% weaker. A song-specific (class 1)
+      // lead keeps its place: recency never displaces the clearest connection.
+      if (Object.keys(recent).length && cands.length) {
+        var keepLead = cands[0].cls === 1 ? cands[0] : null;
+        var adj = function (c) { return recent[c.e.song.id] ? c.score * 0.8 : c.score; };
+        cands.sort(function (a, b) { return a.cls - b.cls || adj(b) - adj(a) || (a.e.song.id < b.e.song.id ? -1 : 1); });
+        if (keepLead) { cands.splice(cands.indexOf(keepLead), 1); cands.unshift(keepLead); }
+      }
       // optional re-rank hook (not wired in the site): may only reorder already-allowed candidates
       if (typeof opts.rerank === 'function') {
         var re = opts.rerank(cands.map(function (c) { return { id: c.e.song.id, cls: c.cls, score: c.score }; }), f);
@@ -922,19 +995,29 @@
         if (p.kind === 'version') return !(f && p.prefer && f.prefs[p.prefer]);
         return cands.some(function (o) { return picked.indexOf(o) < 0 && o !== c && o.e.song.group !== g && o.cls <= c.cls; });
       }
+      // A formula-level connection (TAB 06 affinity, or the F06 artist-confirmed affinity without the track's own
+      // meaning) supports one track of that formula, not several interchangeable ones (refinement 2026-10-25): a second
+      // such track is used only when no other supported song is left, and always before an exploratory start.
+      function viaAffinity(c) { return c.cls === 3 || !!c.detail.confirmedAffinity; }
+      function affinityDup(c) { return viaAffinity(c) && picked.some(function (p) { return viaAffinity(p) && p.e.song.formula.number === c.e.song.formula.number; }); }
       for (var i = 0; i < cands.length && picked.length < 3; i++) {
         var c = cands[i];
         if (picked.length && c.cls === picked[0].cls && c.cls <= 2 && c.score < top * 0.3) continue;
         if (pairBlocked(c)) continue;
+        if (affinityDup(c)) { deferred.push(c); continue; }
         var same = picked.filter(function (x) { return x.e.song.formula.number === c.e.song.formula.number; }).length;
         if (same) {
-          var alt = cands.some(function (o) { return picked.indexOf(o) < 0 && o !== c && o.e.song.formula.number !== c.e.song.formula.number && o.cls <= c.cls && !pairBlocked(o); });
-          var bestAlt = cands.filter(function (o) { return picked.indexOf(o) < 0 && o !== c && o.e.song.formula.number !== c.e.song.formula.number && o.cls <= c.cls && !pairBlocked(o); })[0];
+          // an alternative from a formula not yet in the set, with at least the same kind of support
+          var fresh = function (o) { return picked.indexOf(o) < 0 && o !== c && !picked.some(function (p) { return p.e.song.formula.number === o.e.song.formula.number; }) &&
+            o.cls <= c.cls && !pairBlocked(o) && !affinityDup(o) && !(o.cls === picked[0].cls && o.cls <= 2 && o.score < top * 0.3); };
+          var alt = cands.some(fresh);
+          var bestAlt = cands.filter(fresh)[0];
           var clearlyBetter = same < 2 && bestAlt && c.cls === bestAlt.cls && c.score >= 1.25 * bestAlt.score;
           if (alt && !clearlyBetter && (same >= 2 || c.cls >= picked[0].cls)) { deferred.push(c); continue; }
         }
         picked.push(c);
       }
+      deferred.sort(function (a, b) { return (affinityDup(a) ? 1 : 0) - (affinityDup(b) ? 1 : 0); });   // stable: other deferrals first
       for (var j = 0; j < deferred.length && picked.length < 3; j++) if (!pairBlocked(deferred[j]) && picked.indexOf(deferred[j]) < 0) picked.push(deferred[j]);
       // When the visitor said two different things ("the world is unfair and I'm tired of thinking
       // about it"), each TAB 05 expression they used keeps its strongest allowed song in the set.
@@ -952,7 +1035,8 @@
       // Alien Frequencies track is always among the three. It leads only when nothing has a stronger song-specific
       // (class 1) connection; otherwise it takes the last place instead of a weaker alternative.
       if (f06Core && !picked.some(function (p) { return p.e.song.formula.number === 6; })) {
-        var f6 = cands.filter(function (o) { return o.e.song.formula.number === 6 && !pairBlocked(o); })[0];
+        var f6s = cands.filter(function (o) { return o.e.song.formula.number === 6 && !pairBlocked(o); });
+        var f6 = f6s.filter(function (o) { return !recent[o.e.song.id] && o.cls === f6s[0].cls; })[0] || f6s[0];
         if (f6) {
           if (picked.length < 3) picked.push(f6);
           else picked[2] = f6;
@@ -960,17 +1044,7 @@
         }
       }
       // exploratory starting points last, respecting the visitor's constraints and the guardrails
-      if (picked.length < 3) {
-        var starts = START_HERE.concat(['SR-F08-T02', 'SR-F08-T01', 'SR-F08-T06', 'SR-F08-T05', 'SR-F07-T01', 'SR-F07-T02', 'SR-F02-T05', 'SR-F01-T01']);
-        for (var s = 0; s < starts.length && picked.length < 3; s++) {
-          var id = starts[s];
-          if (picked.some(function (p) { return p.e.song.id === id; })) continue;
-          var e = idx.filter(function (x) { return x.song.id === id; })[0];
-          var det = { concepts: [], state: 0, tokens: 0, phrase: 0 };
-          if (!e || !allowed(e.song, f, q, null)) continue;
-          picked.push({ e: e, score: 0, fill: 'start', cls: 4, detail: det });
-        }
-      }
+      if (picked.length < 3) picked = picked.concat(exploreFill(picked, f, q, recent, seed));
       var lead = picked[0];
       var status = !lead || lead.cls >= 4 ? 'fallback' : lead.cls === 3 ? 'weak' : 'ok';
       if (status === 'ok' && lead.cls === 2 && picked.filter(function (p) { return !p.fill; }).length < 2) status = 'weak';
@@ -1051,6 +1125,13 @@
 
   function read() { try { return JSON.parse(sessionStorage.getItem(KEY) || 'null'); } catch (e) { return null; } }
   function write(v) { try { if (v) sessionStorage.setItem(KEY, JSON.stringify(v)); else sessionStorage.removeItem(KEY); } catch (e) { /* storage unavailable */ } }
+  // The songs shown for the previous different search in this tab, so the next search can prefer other songs of equal
+  // standing instead of repeating them (diversity fix 2026-10-25). Same text gives the same result; nothing leaves the
+  // browser and nothing outlives the tab. Kept apart from KEY so "New search" does not wipe it.
+  var RECENT_KEY = 'sonicRemedy.discovery.recent.v1';
+  function textKey(t) { return String(t || '').toLowerCase().replace(/\s+/g, ' ').trim(); }
+  function readRecent() { try { return JSON.parse(sessionStorage.getItem(RECENT_KEY) || 'null'); } catch (e) { return null; } }
+  function writeRecent(v) { try { sessionStorage.setItem(RECENT_KEY, JSON.stringify(v)); } catch (e) { /* storage unavailable */ } }
 
   // The button is never truly disabled: when the box is empty it is dimmed (aria-disabled) but a
   // press still explains what is needed, so it never looks actionable while silently doing nothing.
@@ -1157,7 +1238,10 @@
     busy = true;
     form.setAttribute('aria-busy', 'true');
     load().then(function (eng) {
-      var r = eng.recommend(text);
+      var k = textKey(text), prev = readRecent();
+      // a repeated search ignores history (deterministic); a new one avoids the songs just shown where it can
+      var hist = prev && prev.key !== k ? prev.ids : (prev && prev.before) || [];
+      var r = eng.recommend(text, { recent: hist });
       if (r.status === 'empty' || !r.results.length) {
         say(PROMPT);
         write({ text: textarea.value, ids: [] });
@@ -1166,6 +1250,7 @@
       }
       var state = { text: textarea.value, ids: r.results.map(function (x) { return x.song.id; }), status: r.status };
       write(state);
+      writeRecent({ key: k, ids: state.ids, before: hist });
       showResults(state, true);
     }).catch(function () {
       say('Discovery is unavailable right now. Please try again in a moment.');
