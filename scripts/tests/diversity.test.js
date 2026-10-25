@@ -66,5 +66,20 @@ aff.forEach((t) => {
     r.results.map((x) => x.song.title + '(' + x.cls + ')').join(' / '));
 });
 
+// 7. exposure balance (eagle-balance 2026-10-25): for low moments without song-level evidence the starting places must
+// spread across the open songs; the one calm song of a formula (Eagle, Let It Be Okay, I Am My Own Energy Source)
+// and the only open song of a small formula (Be Ready For It All) must not take most of them.
+{
+  const A = ['rubbish', 'awful', 'grey', 'heavy', 'pointless', 'miserable'];
+  const B = ['the weather', 'my commute', 'the news', 'the bins', 'my phone', 'the neighbours', 'the queue', 'the traffic', 'the noise', 'the paperwork'];
+  const c = {}; let n = 0;
+  A.forEach((a) => B.forEach((b) => eng.recommend('everything feels ' + a + ' today because of ' + b).results
+    .filter((x) => x.fill === 'start').forEach((x) => { n++; c[x.song.title] = (c[x.song.title] || 0) + 1; })));
+  const v = Object.values(c).sort((x, y) => x - y), med = v[v.length >> 1], max = v[v.length - 1];
+  check('low-moment starting places spread across songs', max <= 3 * med, 'max ' + max + ', median ' + med + ', ' + v.length + ' songs');
+  const single = ['Eagle', 'Let It Be Okay', 'I Am My Own Energy Source', 'Be Ready For It All'].reduce((t, k) => t + (c[k] || 0), 0);
+  check('single open or calm songs of a formula do not dominate', single <= 0.3 * n, single + ' of ' + n);
+}
+
 console.log(fail ? fail + ' diversity check(s) failed' : 'all diversity checks pass');
 process.exit(fail ? 1 : 0);
