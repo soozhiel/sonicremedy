@@ -110,5 +110,21 @@ Run everything on every change:
   direct first listen. Repeating the same text gives the same result.
 - Tests: `node scripts/tests/diversity.test.js`.
 
+## Exposure balance (eagle-balance, 2026-10-25)
+
+- Cause of Eagle (and Be Ready For It All, Let It Be Okay, I Am My Own Energy Source) repeating: exploratory places
+  gave every formula an equal share, so the only open song of a small formula (Be Ready For It All is F03's only one;
+  Skies and Eagle are F05's only non-energetic ones) took a large share, and the strict "calm first for a low moment"
+  key always chose the one calm song of its formula (Eagle in F05). Not a hash bias and not a Sheet error.
+- **Fit before rotation**: a song whose own record (situations, expressions, meaning, desired state) carries a concept
+  the visitor mentioned wins an exploratory place before any rotation.
+- **Weighted rotation**: key = -ln(u) / w with u from the input hash (deterministic). A formula's share grows with
+  k^0.75 (k = its open songs); calm-for-low and celebratory-for-lively tone (x1.5) only chooses *which* song of a
+  formula, normalised within it; formula-level affinity raises the formula (x1.5 per concept, max 2).
+- **Eligibility**: a record with a stated TAB 02 desired state (e.g. "inner steadiness", "momentum") and no narrow
+  situation is open-ended too (adds F07 T09/T12/T13/T15, still sleep-cue only).
+- **Session history** now covers the last three different searches (up to 9 songs).
+- Test 7 in `diversity.test.js` checks the spread for low-moment inputs.
+
 Run everything on every change:
 `node scripts/test_engine.js && node scripts/tests/real_user_regressions.test.js && node scripts/tests/phase2_expressions.test.js && node scripts/tests/semantic_meaning.test.js && node scripts/tests/listening_prefs.test.js && node scripts/tests/descriptions.test.js && node scripts/tests/diversity.test.js`

@@ -561,8 +561,12 @@
       var tone = [].concat(m.moods || [], m.intentions || [], m.desired || [], [m.meaning]).join(' ; ');
       var celebratory = /\b(celebrat\w*|joy|joyful|playful\w*|savouring|glamorous|exuberan\w*|euphori\w*|festive|bliss)\b/i.test(tone) || (s.experience || []).indexOf('energetic') >= 0;
       var broad = conceptsIn([m.meaning].concat(m.circ || [], m.desired || []).join(' ; '));
+      // open-ended: the record offers a broadly wanted state (a POSITIVE concept, or a stated TAB 02 desired state such as
+      // "inner steadiness" or "momentum") and presumes no particular history (NARROW). Widened 2026-10-25 (eagle-balance)
+      // to records whose desired state is stated in words the concept list does not name.
       var explore = (!s.rule || !!OPEN_RULES[s.rule]) && s.formula.number !== 6 &&
-        broad.some(function (c) { return POSITIVE.has(c); }) && !broad.some(function (c) { return NARROW.indexOf(c) >= 0; });
+        (broad.some(function (c) { return POSITIVE.has(c); }) || (m.desired || []).some(function (x) { return String(x).trim(); })) &&
+        !broad.some(function (c) { return NARROW.indexOf(c) >= 0; });
       return { song: s, tok: tok, con: con, phrases: phrases, notFor: notFor, mult: mult, ownCon: ownCon, celebratory: celebratory,
         broad: broad, explore: explore };
     });
@@ -720,9 +724,9 @@
      * nothing else fits; a formula or song whose own record names something the visitor mentioned (including
      * where it happens: work, family, creative work) comes first; a stated good mood prefers celebratory
      * tracks; a painful, grieving or physical moment gets calm or wordless tracks first and nothing energetic or celebratory; spoken sleep contemplations need a night,
-     * sleep or rest cue (TAB 06 F07 affinity: bedtime). Remaining ties rotate with the words written (first the
-     * formula, each formula equally, then the song within it), so different searches do not all start in the same
-     * place and no formula dominates because it has more eligible tracks. */
+     * sleep or rest cue (TAB 06 F07 affinity: bedtime). A song whose own record carries a concept the visitor
+     * mentioned comes first; remaining places use a weighted rotation seeded by the words written (eagle-balance
+     * 2026-10-25), balanced so neither a large formula nor the only open song of a small one dominates. */
     function exploreFill(picked, f, q, recent, seed) {
       var sleepCue = q.pref.sleep === 1 || !!(q.concepts.sleep && q.concepts.sleep.weight > 0) || !!(f && f.prefs && f.prefs.wantSpoken);
       var lively = (f && f.polarity === 'positive') || q.pref.energetic === 1;
@@ -738,18 +742,31 @@
         return allowed(e.song, f, q, null);
       }).map(function (e) {
         var n = e.song.formula.number;
+        // fit: concepts the visitor mentioned that this record itself carries (situations, expressions, meaning,
+        // desired state); a closer song wins before any rotation. Formula-level affinity is a weaker hint.
+        var fit = mentioned.filter(function (c) { return !q.concepts[c].context && (e.con.S.has(c) || e.con.X.has(c) || e.con.M.has(c) || e.con.D.has(c)); }).length;
         var hint = mentioned.filter(function (c) { return e.broad.indexOf(c) >= 0 || (affAll[n] || []).indexOf(c) >= 0; }).length;
         var ex = e.song.experience || [];
-        var soft = low && (ex.indexOf('calm') >= 0 || ex.indexOf('instrumental') >= 0) ? 1 : 0;
-        return { e: e, hint: Math.min(hint, 2), rec: recent[e.song.id] ? 1 : 0, cel: lively && e.celebratory ? 1 : 0, soft: soft,
-          frot: hash(seed + '|F' + n), rot: hash(seed + '|' + e.song.id) };
+        var soft = low && (ex.indexOf('calm') >= 0 || ex.indexOf('instrumental') >= 0);
+        return { e: e, fit: Math.min(fit, 2), hint: Math.min(hint, 2), rec: recent[e.song.id] ? 1 : 0,
+          // tone (calm for a low moment, celebratory for a lively one) and formula-level affinity are preferences, not
+          // gates: each raises a song's chance (x1.5) instead of always putting the one calm or celebratory track of a
+          // formula first, which is what made Eagle, Let It Be Okay and I Am My Own Energy Source repeat (eagle-balance 2026-10-25)
+          t: (soft ? 1.5 : 1) * (lively && e.celebratory ? 1.5 : 1), h: Math.pow(1.5, Math.min(hint, 2)), u: (hash(seed + '|' + e.song.id) + 0.5) / 4294967296 };
       });
+      // exposure balance: a formula's share of exploratory places grows with k^0.75 (k = its open songs here), so each
+      // song's share falls only slowly as k grows. Equal shares per formula over-exposed the only open song of a
+      // small formula (Be Ready For It All, Eagle); equal shares per song would let the largest formula take over. Weighted rotation (key = -ln(u) / w): deterministic for the same words.
+      // Tone weights only decide which song of a formula is favoured, never how often the formula itself comes up:
+      // they are normalised within the formula (wF), so a formula with one calm track is not shown more for it.
+      var kF = {}, wF = {}; pool.forEach(function (x) { var n = x.e.song.formula.number; kF[n] = (kF[n] || 0) + 1; wF[n] = (wF[n] || 0) + x.t; });
+      pool.forEach(function (x) { var n = x.e.song.formula.number; x.key = -Math.log(x.u) / (x.h * Math.pow(kF[n], 0.75) * x.t / wF[n]); });
       var out = [];
       while (picked.length + out.length < 3 && pool.length) {
         var used = picked.concat(out).map(function (p) { return p.e.song.formula.number; });
         pool.sort(function (a, b) {
           var ua = used.indexOf(a.e.song.formula.number) >= 0 ? 1 : 0, ub = used.indexOf(b.e.song.formula.number) >= 0 ? 1 : 0;
-          return ua - ub || a.rec - b.rec || b.soft - a.soft || b.hint - a.hint || b.cel - a.cel || a.frot - b.frot || a.rot - b.rot;
+          return ua - ub || a.rec - b.rec || b.fit - a.fit || a.key - b.key;
         });
         var x = pool.shift();
         out.push({ e: x.e, score: 0, fill: 'start', cls: 4, detail: { concepts: [], state: 0, tokens: 0, phrase: 0 } });
@@ -1240,7 +1257,10 @@
     load().then(function (eng) {
       var k = textKey(text), prev = readRecent();
       // a repeated search ignores history (deterministic); a new one avoids the songs just shown where it can
-      var hist = prev && prev.key !== k ? prev.ids : (prev && prev.before) || [];
+      // eagle-balance 2026-10-25: history covers the last three different searches (up to 9 songs), so a song that
+      // keeps fitting loosely does not come back search after search in the same tab
+      var hist = prev && prev.key !== k ? prev.ids.concat(prev.before || []).filter(function (id, i, a) { return a.indexOf(id) === i; }).slice(0, 9)
+        : (prev && prev.before) || [];
       var r = eng.recommend(text, { recent: hist });
       if (r.status === 'empty' || !r.results.length) {
         say(PROMPT);
